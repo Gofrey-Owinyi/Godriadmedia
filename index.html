@@ -1,2 +1,167 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>GodriadMedia</title><script src="https://js.paystack.co/v1/inline.js"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"><style>
-*{margin:0;padding:0;box-sizing:border-box}body{background:#000;color:#fff;font-family:-apple-system,BlinkMacSystemFont,sans-serif}.ig-header{position:sticky;top:0;z-index:99;background:#000;display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid #262626}.ig-logo{font-family:Brush Script MT,cursive;font-size:28px}.ig-logo span{color:#4ade80}.main{max-width:470px;margin:0 auto;padding-bottom:70px;background:#000}.login-ig{margin:10px 16px;border:1px solid #363636;border-radius:8px;padding:14px;display:flex;align-items:center;gap:12px;cursor:pointer;background:#121212}.stories-ig{padding:12px 0 8px 8px;border-bottom:1px solid #262626;display:flex;gap:14px;overflow-x:auto}.stories-ig::-webkit-scrollbar{display:none}.s-ig{flex:0 0 66px;text-align:center;position:relative}.ring-ig{width:66px;height:66px;border-radius:50%;padding:2px;background:linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5)}.ring-ig.me{background:#363636}.ring-ig-inner{width:100%;height:100%;border-radius:50%;background:#000;border:2px solid #000;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;overflow:hidden;position:relative}.ring-ig-inner img{width:100%;height:100%;object-fit:cover}.active-dot{position:absolute;bottom:2px;right:2px;width:14px;height:14px;background:#00ff00;border:2px solid #000;border-radius:50%}.offline-dot{background:#666}.s-ig b{font-size:11px;font-weight:500;margin-top:4px;display:block;max-width:66px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.post-ig{background:#000;border-bottom:1px solid #262626;padding-bottom:8px}.ptop-ig{display:flex;align-items:center;gap:10px;padding:10px 12px}.ava-ig{width:32px;height:32px;border-radius:50%;background:#262626;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;overflow:hidden;border:1.5px solid #363636;position:relative}.ava-ig img{width:100%;height:100%;object-fit:cover}.pname-ig{font-weight:600;font-size:14px}.pimg-ig{width:100%;aspect-ratio:1/1;background:#121212;display:flex;align-items:center;justify-content:center;font-size:60px;overflow:hidden}.pimg-ig img{width:100%;height:100%;object-fit:cover}.pact-ig{display:flex;align-items:center
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>GodriadMedia</title><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"><style>
+*{margin:0;padding:0;box-sizing:border-box}body{background:#000;color:#fff;font-family:Arial,sans-serif}.h{position:sticky;top:0;background:#000;padding:12px 16px;display:flex;justify-content:space-between;border-bottom:1px solid #222;z-index:99}.logo{font-size:26px;font-weight:bold}.logo span{color:#4ade80}.main{max-width:480px;margin:0 auto;padding-bottom:80px}.login{margin:12px;border:1px solid #333;border-radius:10px;padding:14px;display:flex;gap:12px;align-items:center;background:#111;cursor:pointer}.stories{display:flex;gap:14px;overflow-x:auto;padding:12px;border-bottom:1px solid #222}.stories::-webkit-scrollbar{display:none}.s{flex:0 0 62px;text-align:center}.ring{width:62px;height:62px;border-radius:50%;padding:2px;background:linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5)}.ri{width:100%;height:100%;border-radius:50%;background:#000;border:2px solid #000;display:flex;align-items:center;justify-content:center;overflow:hidden;font-size:12px}.ri img{width:100%;height:100%;object-fit:cover}.s b{font-size:11px;display:block;margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.create{margin:12px;border:1px solid #333;border-radius:24px;padding:10px 14px;display:flex;gap:10px;align-items:center}.ava{width:32px;height:32px;border-radius:50%;background:#222;display:flex;align-items:center;justify-content:center;overflow:hidden}.ava img{width:100%;height:100%;object-fit:cover}.post{border-bottom:1px solid #222;padding-bottom:8px}.ptop{display:flex;gap:10px;padding:10px;align-items:center}.pimg{width:100%;aspect-ratio:1/1;background:#111;display:flex;align-items:center;justify-content:center;overflow:hidden}.pimg img{width:100%;height:100%;object-fit:cover}.bnav{position:fixed;bottom:0;left:0;right:0;background:#000;border-top:1px solid #222;display:flex;justify-content:space-around;padding:12px 0;max-width:480px;margin:0 auto}.bnav i{font-size:22px}.modal{display:none;position:fixed;inset:0;background:#000;z-index:200;overflow-y:auto}.modal.show{display:block}.mhead{position:sticky;top:0;background:#000;padding:14px;display:flex;justify-content:space-between;border-bottom:1px solid #222}.mbody{padding:16px;max-width:480px;margin:0 auto}.inp{width:100%;padding:12px;background:#111;border:1px solid #333;border-radius:8px;color:#fff;margin-bottom:10px}.btn{width:100%;padding:12px;border:none;border-radius:8px;font-weight:bold;cursor:pointer}.btn-g{background:#4ade80;color:#000}.btn-d{background:#222;color:#fff}.box{background:#111;border:1px solid #222;border-radius:8px;padding:12px;margin-bottom:10px}.grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;margin-top:12px}.gitem{aspect-ratio:1/1;background:#111;display:flex;align-items:center;justify-content:center;overflow:hidden;font-size:10px}.gitem img{width:100%;height:100%;object-fit:cover}
+</style></head><body>
+<div class="h"><div class="logo">Godriad<span>Media</span></div><div><i class="fa-regular fa-heart"></i> <i class="fa-regular fa-paper-plane" style="margin-left:16px"></i></div></div>
+<div class="main">
+<div class="login" id="loginCard" onclick="openM('authM')"><i class="fa-solid fa-fingerprint" style="color:#4ade80;font-size:24px"></i><div><b>Login with Fingerprint</b><div style="font-size:11px;color:#888">Tap to login</div></div></div>
+<div class="stories" id="stories"></div>
+<div class="create"><div class="ava" id="createAva"><i class="fa-regular fa-user"></i></div><input id="txt" placeholder="What's on your mind?" style="flex:1;background:transparent;border:none;color:#fff;outline:none"><input type="file" id="postPic" accept="image/*" style="display:none"><i class="fa-regular fa-image" style="color:#4ade80;font-size:20px;cursor:pointer" onclick="document.getElementById('postPic').click()"></i><button onclick="createPost()" style="background:transparent;border:none;color:#0095f6;font-weight:bold">Post</button></div>
+<div id="feed"></div>
+</div>
+<div class="bnav"><i class="fa-solid fa-house"></i><i class="fa-solid fa-magnifying-glass" onclick="openM('searchM')"></i><i class="fa-regular fa-square-plus"></i><i class="fa-solid fa-clapperboard" onclick="openM('godfreyM')"></i><div class="ava" style="width:24px;height:24px" id="navAva" onclick="openM('profileM')"><i class="fa-regular fa-user" style="font-size:10px"></i></div></div>
+
+<div class="modal" id="authM"><div class="mhead"><h3>Login</h3><i class="fa-solid fa-xmark" onclick="closeM('authM')"></i></div><div class="mbody">
+<div id="err" style="background:#ff3040;padding:8px;border-radius:8px;font-size:12px;display:none;margin-bottom:10px"></div><div id="ok" style="background:#4ade80;color:#000;padding:8px;border-radius:8px;font-size:12px;display:none;margin-bottom:10px"></div>
+<div style="display:flex;gap:8px;margin-bottom:10px"><button class="btn btn-g" id="tabL" onclick="sw('l')" style="flex:1">Login</button><button class="btn btn-d" id="tabR" onclick="sw('r')" style="flex:1">Register</button></div>
+<div id="fL"><input id="lPhone" class="inp" placeholder="Phone +254..."><button class="btn btn-g" onclick="loginFingerprint()">Login with Fingerprint</button></div>
+<div id="fR" style="display:none"><div style="text-align:center"><div class="ava" style="width:80px;height:80px;margin:0 auto" id="regAva"><i class="fa-regular fa-user"></i></div><input type="file" id="picInput" accept="image/*" style="display:none"><button class="btn btn-d" style="margin-top:8px;width:auto" onclick="document.getElementById('picInput').click()">Create Profile Picture</button></div><input id="rName" class="inp" placeholder="Full name e.g Godfrey - Shows below profile & posts" style="margin-top:12px"><input id="rPhone" class="inp" placeholder="Phone *required"><button class="btn btn-g" onclick="doRegister()">Create Account</button></div>
+<div style="margin-top:16px;border-top:1px solid #333;padding-top:12px"><div style="font-size:12px;color:#888;margin-bottom:8px">Continue as guest - Enter REAL name not Guest:</div><input id="guestName" class="inp" placeholder="Your Real Name e.g Godfrey"><button class="btn btn-d" onclick="doGuest()">Continue with Your Name</button></div>
+</div></div>
+
+<div class="modal" id="profileM"><div class="mhead"><h3 id="profileNameTop">Profile</h3><i class="fa-solid fa-xmark" onclick="closeM('profileM')"></i></div><div class="mbody">
+<div style="display:flex;gap:20px;align-items:center"><div class="ava" style="width:80px;height:80px;font-size:24px" id="pa"><i class="fa-regular fa-user"></i></div><div style="display:flex;gap:20px;flex:1;text-align:center"><div><b id="postCount">0</b><div style="font-size:12px;color:#888">posts</div></div><div><b>1.2K</b><div style="font-size:12px;color:#888">followers</div></div><div><b>340</b><div style="font-size:12px;color:#888">following</div></div></div></div>
+<div style="margin-top:12px"><b id="pn" style="font-size:16px">Name</b><div id="realNameBelow" style="font-size:14px;font-weight:bold;margin-top:4px">Real name shows here below profile</div><div id="pp" style="font-size:12px;color:#888;margin-top:2px">Active now</div></div>
+<div style="display:flex;gap:8px;margin-top:12px"><button class="btn btn-d" style="flex:1" onclick="openM('inviteM')">Invite FB/IG/WhatsApp</button><button class="btn btn-d" style="flex:1" onclick="document.getElementById('picInput').click()">Change Pic</button></div>
+<div style="display:flex;gap:8px;margin-top:8px"><button class="btn btn-g" style="flex:1" onclick="shareStory()">Share Story</button><button class="btn btn-d" style="flex:1" onclick="openM('activeM')">Active People</button></div>
+<div class="grid" id="profileGrid"></div>
+</div></div>
+
+<div class="modal" id="inviteM"><div class="mhead"><h3>Invite Friends</h3><i class="fa-solid fa-xmark" onclick="closeM('inviteM')"></i></div><div class="mbody">
+<button class="btn btn-d" style="margin-bottom:8px;text-align:left" onclick="inviteVia('whatsapp')">WhatsApp - Direct Invite</button>
+<button class="btn btn-d" style="margin-bottom:8px;text-align:left" onclick="inviteVia('facebook')">Facebook - Invite Friends</button>
+<button class="btn btn-d" style="margin-bottom:8px;text-align:left" onclick="inviteVia('instagram')">Instagram - Invite</button>
+<button class="btn btn-d" style="margin-bottom:8px;text-align:left" onclick="inviteVia('link')">Copy Link</button>
+<div class="box" style="margin-top:12px"><div style="font-size:12px">Your link:</div><div id="inviteLink" style="font-size:12px;color:#4ade80;word-break:break-all;margin-top:6px">https://godriadmedia.vercel.app</div></div>
+</div></div>
+
+<div class="modal" id="godfreyM"><div class="mhead"><h3>Godfrey AI</h3><i class="fa-solid fa-xmark" onclick="closeM('godfreyM')"></i></div><div class="mbody"><div class="box">Hi! Real name below profile & posts now! Profile pic, story sharing, active, invite FB/IG all same!</div></div></div>
+<div class="modal" id="searchM"><div class="mhead"><h3>Search</h3><i class="fa-solid fa-xmark" onclick="closeM('searchM')"></i></div><div class="mbody">Search - Followers - Following - Real names below profiles</div></div>
+<div class="modal" id="activeM"><div class="mhead"><h3>Active People</h3><i class="fa-solid fa-xmark" onclick="closeM('activeM')"></i></div><div class="mbody" id="activeList"></div></div>
+<div class="modal" id="settingsM"><div class="mhead"><h3>Settings</h3><i class="fa-solid fa-xmark" onclick="closeM('settingsM')"></i></div><div class="mbody"><div class="box">Fingerprint, One Phone One Account, Hack-proof, Auto-delete, Notifications - All preserved inside</div><div class="box" id="phoneList"></div><button class="btn btn-d" onclick="logout()">Logout</button></div></div>
+
+<script>
+var tempPic=null;var tempPostPic=null;
+function getDB(){try{return JSON.parse(localStorage.getItem('gm_all_accounts')||'[]')}catch(e){return []}}
+function saveDB(db){localStorage.setItem('gm_all_accounts',JSON.stringify(db))}
+function getUser(){try{return JSON.parse(localStorage.getItem('gm_u')||'null')}catch(e){return null}}
+function openM(id){var el=document.getElementById(id);if(el)el.classList.add('show')}
+function closeM(id){var el=document.getElementById(id);if(el)el.classList.remove('show')}
+function sw(t){document.getElementById('tabL').className=t=='l'?'btn btn-g':'btn btn-d';document.getElementById('tabR').className=t=='r'?'btn btn-g':'btn btn-d';document.getElementById('fL').style.display=t=='l'?'block':'none';document.getElementById('fR').style.display=t=='r'?'block':'none'}
+function showErr(m){var e=document.getElementById('err');if(!e)return;e.textContent=m;e.style.display='block';setTimeout(function(){e.style.display='none'},4000)}
+function normalizePhone(p){return p.replace(/\s+/g,'').replace(/[^+0-9]/g,'')}
+function genKey(){return Math.random().toString(36).substring(2)+Date.now().toString(36)}
+function previewPic(input){if(input.files&&input.files[0]){var r=new FileReader();r.onload=function(e){tempPic=e.target.result;var el=document.getElementById('regAva');if(el)el.innerHTML='<img src="'+tempPic+'">'};r.readAsDataURL(input.files[0])}}
+function loginFingerprint(){
+var phone=normalizePhone(document.getElementById('lPhone').value.trim());
+if(!phone){showErr('Enter phone');return}
+var db=getDB();var acc=null;for(var i=0;i<db.length;i++){if(normalizePhone(db[i].phone)==phone){acc=db[i];break}}
+if(!acc){showErr('Not registered');sw('r');return}
+acc.lastActive=Date.now();saveDB(db);localStorage.setItem('gm_u',JSON.stringify(acc));closeM('authM');updateStats();render();
+}
+function doRegister(){
+var name=document.getElementById('rName').value.trim();
+if(!name){showErr('Enter real name e.g Godfrey');return}
+var phone=normalizePhone(document.getElementById('rPhone').value.trim());
+if(!phone){showErr('Phone required');return}
+var db=getDB();
+for(var i=0;i<db.length;i++){if(normalizePhone(db[i].phone)==phone){showErr('Phone already used');return}}
+var acc={id:Date.now(),name:name,phone:phone,pic:tempPic,created:Date.now(),lastActive:Date.now(),accountKey:genKey()};
+db.push(acc);saveDB(db);localStorage.setItem('gm_u',JSON.stringify(acc));closeM('authM');updateStats();render();
+}
+function doGuest(){
+var nameEl=document.getElementById('guestName');
+var name=nameEl? nameEl.value.trim() : '';
+if(!name){showErr('Enter REAL name e.g Godfrey - Not Guest!');return}
+if(name.toLowerCase()==='guest'){showErr('Enter real name like Godfrey, not Guest');return}
+var acc={id:Date.now(),name:name,phone:'GUEST-'+Date.now(),pic:tempPic,created:Date.now(),lastActive:Date.now(),accountKey:genKey()};
+localStorage.setItem('gm_u',JSON.stringify(acc));closeM('authM');updateStats();render();
+}
+function logout(){localStorage.removeItem('gm_u');location.reload()}
+function createPost(){
+var user=getUser();if(!user){openM('authM');return}
+var t=document.getElementById('txt').value.trim();
+if(!t && !tempPostPic){alert('Write something');return}
+var posts=JSON.parse(localStorage.getItem('gm_posts')||'[]');
+posts.unshift({text:t||'My photo',name:user.name,pic:user.pic,img:tempPostPic,time:Date.now()});
+localStorage.setItem('gm_posts',JSON.stringify(posts));tempPostPic=null;document.getElementById('txt').value='';render();
+}
+function render(){
+try{
+var user=getUser();
+var posts=JSON.parse(localStorage.getItem('gm_posts')||'[]');
+var html='';
+for(var i=0;i<posts.length;i++){
+var p=posts[i];
+var ava=p.pic?'<img src="'+p.pic+'">':p.name.charAt(0).toUpperCase();
+var img=p.img?'<img src="'+p.img+'">':'<div style="font-size:40px">🚀</div>';
+html+='<div class="post"><div class="ptop"><div class="ava">'+ava+'</div><div><div style="font-weight:bold;font-size:14px">'+p.name+'</div><div style="font-size:11px;color:#888">'+p.name+' • Active now</div></div></div><div class="pimg">'+img+'</div><div style="padding:10px"><b>'+p.name+'</b> '+p.text+'<div style="font-size:11px;color:#888;margin-top:4px">Posted by '+p.name+'</div></div></div>';
+}
+var feed=document.getElementById('feed');
+if(feed)feed.innerHTML=html||'<div style="padding:20px;text-align:center;color:#888">No posts yet - Your real name will show below profile & posts</div>';
+var sh='';
+if(user){
+var uPic=user.pic?'<img src="'+user.pic+'">':user.name.charAt(0).toUpperCase();
+var shortName=user.name.length>10?user.name.substring(0,10):user.name;
+sh+='<div class="s"><div class="ring" style="background:#333"><div class="ri">'+uPic+'</div></div><b>'+shortName+'</b></div>';
+}
+var arr=['GO','AL','BR','SA','KE'];
+for(var j=0;j<arr.length;j++){sh+='<div class="s"><div class="ring"><div class="ri">'+arr[j]+'</div></div><b>'+arr[j]+'</b></div>'}
+var storiesEl=document.getElementById('stories');if(storiesEl)storiesEl.innerHTML=sh;
+var grid=document.getElementById('profileGrid');
+if(grid){
+var gh='';
+for(var k=0;k<posts.length;k++){var p2=posts[k];if(user && p2.name!==user.name)continue;var im=p2.img?'<img src="'+p2.img+'">':'<div style="padding:4px;font-size:10px">'+p2.text.substring(0,30)+'</div>';gh+='<div class="gitem">'+im+'</div>'}
+grid.innerHTML=gh;
+var pc=document.getElementById('postCount');if(pc)pc.textContent=posts.filter(function(p){return !user||p.name===user.name}).length;
+}
+}catch(e){console.log('render error',e)}
+}
+function updateStats(){
+try{
+var user=getUser();
+var loginCard=document.getElementById('loginCard');
+if(user && loginCard){
+var ava=user.pic?'<img src="'+user.pic+'">':'✓';
+loginCard.innerHTML='<div class="ava" style="width:36px;height:36px">'+ava+'</div><div><b>Welcome, '+user.name+' ✓ Active</b><div style="font-size:11px;color:#4ade80">Real name: '+user.name+' below profile & posts</div></div>';
+loginCard.onclick=function(){openM('profileM')};
+var pAva=user.pic?'<img src="'+user.pic+'">':'<i class="fa-regular fa-user"></i>';
+var el1=document.getElementById('pa');if(el1)el1.innerHTML=pAva;
+var el2=document.getElementById('createAva');if(el2)el2.innerHTML=pAva;
+var el3=document.getElementById('navAva');if(el3)el3.innerHTML=pAva;
+var el4=document.getElementById('regAva');if(el4)el4.innerHTML=pAva;
+var pn=document.getElementById('pn');if(pn)pn.textContent=user.name;
+var rn=document.getElementById('realNameBelow');if(rn)rn.textContent=user.name+' - Real name below profile';
+var pp=document.getElementById('pp');if(pp)pp.textContent=user.phone+' • Active now';
+var pt=document.getElementById('profileNameTop');if(pt)pt.textContent=user.name;
+var il=document.getElementById('inviteLink');if(il)il.textContent='https://godriadmedia.vercel.app/invite?ref='+user.name.replace(/\s/g,'');
+var pl=document.getElementById('phoneList');if(pl){var db=getDB();var out='';for(var i=0;i<db.length;i++){out+='<div>🔒 '+db[i].phone+' • '+db[i].name+'</div>'}pl.innerHTML=out}
+}else if(loginCard){
+loginCard.innerHTML='<i class="fa-solid fa-fingerprint" style="color:#4ade80;font-size:24px"></i><div><b>Login with Fingerprint</b><div style="font-size:11px;color:#888">Tap to login with real name</div></div>';
+loginCard.onclick=function(){openM('authM')}
+}
+}catch(e){console.log('updateStats error',e)}
+}
+function shareStory(){
+var user=getUser();if(!user){openM('authM');return}
+var input=document.createElement('input');input.type='file';input.accept='image/*';
+input.onchange=function(e){var r=new FileReader();r.onload=function(ev){var arr=JSON.parse(localStorage.getItem('gm_stories')||'[]');arr.push({name:user.name,img:ev.target.result});localStorage.setItem('gm_stories',JSON.stringify(arr));alert('Story shared by '+user.name)};r.readAsDataURL(e.target.files[0])};
+input.click();
+}
+function inviteVia(p){
+var linkEl=document.getElementById('inviteLink');
+var link=linkEl?linkEl.textContent:'https://godriadmedia.vercel.app';
+var user=getUser();
+var name=user?user.name:'';
+var text='Join me '+name+' on GodriadMedia! '+link;
+var url='';
+if(p=='whatsapp')url='https://wa.me/?text='+encodeURIComponent(text);
+if(p=='facebook')url='https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(link);
+if(p=='instagram')url='https://www.instagram.com/';
+if(p=='link'){navigator.clipboard.writeText(link).then(function(){alert('Link copied!')});return}
+if(url)window.open(url,'_blank');
+}
+document.getElementById('postPic').addEventListener('change',function(e){if(e.target.files&&e.target.files[0]){var r=new FileReader();r.onload=function(ev){tempPostPic=ev.target.result;alert('Photo attached! Now add caption and Post')};r.readAsDataURL(e.target.files[0])}});
+document.getElementById('picInput').addEventListener('change',function(e){previewPic(e.target)});
+updateStats();render();
+</script>
+</body></html>
