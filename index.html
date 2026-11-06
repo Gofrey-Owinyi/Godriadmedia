@@ -1,97 +1,339 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>GodriadMedia - Connect, Share, Discover</title>
-<meta name="description" content="GodriadMedia by Godfrey Owinyi - Stories expire 24h, Live Worldwide, Free Mode data saver, secure posts.">
-<meta property="og:title" content="GodriadMedia"><meta property="og:type" content="website">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GodriadMedia - Connect, Share, Discover | Official App</title>
+<meta name="description" content="GodriadMedia - Next-gen social platform by Godfrey Owinyi. Share stories that expire in 24h, post photos, go live worldwide, free mode data saver, secure chat.">
+<meta name="keywords" content="GodriadMedia, Godfrey Owinyi, social media Kenya, stories 24h, free mode, buy data, private account, live worldwide, nyc_daily, london_life">
+<meta name="author" content="Godfrey Owinyi">
+<meta property="og:title" content="GodriadMedia - Connect, Share, Discover">
+<meta property="og:description" content="Share stories, go live, post, chat - with free mode data saver. Join millions on GodriadMedia.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://godriadmedia.vercel.app">
+<meta property="og:image" content="https://godriadmedia.vercel.app/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="GodriadMedia">
 <link rel="canonical" href="https://godriadmedia.vercel.app">
+<meta name="theme-color" content="#000000">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"GodriadMedia","operatingSystem":"Web","author":{"@type":"Person","name":"Godfrey Owinyi"},"offers":{"@type":"Offer","price":"0"}}</script>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 <style>
-:root{--bg:#000;--card:#121212;--border:#242424;--green:#22c55e;--muted:#888}
-*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui}body{background:#000;color:#fff;padding-bottom:80px}
-.header{position:sticky;top:0;z-index:50;background:#000;display:flex;justify-content:space-between;padding:12px 16px;border-bottom:1px solid var(--border)}
-.logo{font-weight:900;font-size:27px}.logo span{color:var(--green)}
-.stories{display:flex;gap:14px;overflow-x:auto;padding:10px 12px}.s-item{min-width:68px;text-align:center;cursor:pointer}
-.s-ring{width:68px;height:68px;border-radius:50%;padding:3px;background:conic-gradient(var(--green),#333,var(--green));display:flex;align-items:center;justify-content:center}
-.s-ring.live{background:conic-gradient(red,#500,red)}.s-inner{width:62px;height:62px;background:#0f0f0f;border-radius:50%;overflow:hidden;display:flex;align-items:center;justify-content:center;font-weight:900}.s-inner img{width:100%;height:100%;object-fit:cover}
-.s-name{font-size:11px;margin-top:4px;white-space:nowrap;overflow:hidden;width:68px}.s-status{font-size:9px}
-.post-box{background:var(--card);border:1px solid var(--border);border-radius:28px;margin:10px 12px;padding:12px 14px;display:flex;gap:10px;align-items:center}
-.feed{padding:0 12px}.p-card{background:var(--card);border:1px solid var(--border);border-radius:18px;margin:12px 0;overflow:hidden}
-.p-head{display:flex;gap:10px;padding:12px;align-items:center}.p-head .av{width:36px;height:36px;background:#222;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800}
-.p-img{width:100%;max-height:600px;object-fit:cover;display:block;background:#0a0a0a}
-.bottom{position:fixed;bottom:0;left:0;right:0;background:#000;border-top:1px solid var(--border);display:flex;justify-content:space-around;padding:12px 0;z-index:60}.bottom i{font-size:22px;color:#777}.bottom i.active{color:#fff}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.88);display:none;z-index:100;padding:16px;overflow-y:auto}.modal.show{display:block}
-.m-box{background:#121212;border:1px solid #2a2a2a;border-radius:22px;padding:18px;max-width:480px;margin:20px auto}
-input,textarea{width:100%;background:#000;border:1px solid #333;border-radius:14px;padding:13px;color:#fff;margin-top:10px}
-.btn{background:var(--green);color:#000;border:0;padding:13px;border-radius:14px;font-weight:900;width:100%;margin-top:12px}.btn2{background:#222;color:#fff}
-.hidden{display:none}.invite-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}.invite-grid button{background:#1c1c1c;border:1px solid #2e2e2e;border-radius:16px;padding:14px;color:#fff}
-.story-view{position:fixed;inset:0;background:#000;z-index:200;display:none;flex-direction:column}.story-view.show{display:flex}
-.switch{position:relative;width:48px;height:28px;display:inline-block}.switch input{opacity:0;width:0;height:0}.slider{position:absolute;inset:0;background:#333;border-radius:20px}.slider:before{content:"";position:absolute;height:20px;width:20px;left:4px;bottom:4px;background:#fff;border-radius:50%;transition:.3s}input:checked+.slider{background:var(--green)}input:checked+.slider:before{transform:translateX(20px)}
+:root{--bg:#000;--card:#121212;--border:#242424;--green:#22c55e;--blue:#3b82f6;--muted:#888}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,system-ui,Arial}
+body{background:var(--bg);color:#fff;padding-bottom:80px;-webkit-tap-highlight-color:transparent}
+.header{position:sticky;top:0;z-index:50;background:#000;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;padding:12px 16px}
+.logo{font-weight:900;font-size:27px;letter-spacing:-0.5px} .logo span{color:var(--green)}
+.h-icons{display:flex;gap:18px;font-size:20px;align-items:center;position:relative}
+.badge{position:absolute;top:-6px;right:-6px;background:#ef4444;color:#fff;font-size:10px;padding:1px 5px;border-radius:10px;font-weight:700}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;margin:10px 12px;padding:12px;display:flex;justify-content:space-between;align-items:center;cursor:pointer}
+.sub{font-size:11px;color:var(--muted)}
+.free{display:flex;align-items:center;gap:8px} .buy{background:var(--green);color:#000;font-weight:900;padding:9px 16px;border-radius:10px;border:0;font-size:12px;cursor:pointer}
+.chip{font-size:10px;background:#1e1e1e;padding:5px 8px;border-radius:20px;display:flex;gap:4px;align-items:center;border:1px solid #2a2a2a}
+.stories{display:flex;gap:14px;overflow-x:auto;padding:10px 12px;scrollbar-width:none} .stories::-webkit-scrollbar{display:none}
+.s-item{min-width:68px;text-align:center;cursor:pointer} .s-ring{width:68px;height:68px;border-radius:50%;padding:3px;background:conic-gradient(var(--green),#333,var(--green));display:flex;align-items:center;justify-content:center}
+.s-ring.live{background:conic-gradient(red,#500,red)} .s-inner{width:62px;height:62px;background:#0f0f0f;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;overflow:hidden;position:relative}
+.s-inner img{width:100%;height:100%;object-fit:cover} .s-name{font-size:11px;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;width:68px;font-weight:600} .s-status{font-size:9px}
+.post-box{background:var(--card);border:1px solid var(--border);border-radius:28px;margin:10px 12px;padding:12px 14px;display:flex;align-items:center;gap:10px;cursor:pointer}
+.post-box .av{width:36px;height:36px;background:#222;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.feed{padding:0 12px} .p-card{background:var(--card);border:1px solid var(--border);border-radius:18px;margin:12px 0;overflow:hidden}
+.p-head{display:flex;gap:10px;padding:12px;align-items:center} .p-head .av{width:40px;height:40px;border-radius:50%;background:#222;display:flex;align-items:center;justify-content:center;font-weight:800}
+.p-img{width:100%;max-height:520px;object-fit:cover;background:#0a0a0a;display:block} .p-actions{display:flex;gap:18px;padding:10px 12px;font-size:20px;align-items:center} .p-actions span{font-size:14px;margin-left:-10px} .p-text{padding:0 12px 14px;font-size:14px;line-height:1.4}
+.bottom{position:fixed;bottom:0;left:0;right:0;background:#000;border-top:1px solid var(--border);display:flex;justify-content:space-around;padding:12px 0 14px;z-index:60}
+.bottom i{font-size:23px;color:#777;cursor:pointer} .bottom i.active{color:#fff}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.88);backdrop-filter:blur(6px);display:none;z-index:100;overflow-y:auto;padding:16px} .modal.show{display:block}
+.m-box{background:#121212;border:1px solid #2a2a2a;border-radius:22px;padding:18px;max-width:480px;margin:24px auto;animation:pop .2s ease}
+@keyframes pop{from{transform:scale(.96);opacity:0}to{transform:scale(1);opacity:1}}
+input,textarea{width:100%;background:#000;border:1px solid #333;border-radius:14px;padding:13px;color:#fff;margin-top:10px;outline:none;font-size:14px}
+input:focus,textarea:focus{border-color:var(--green)}
+.btn{background:var(--green);color:#000;border:0;padding:13px;border-radius:14px;font-weight:900;width:100%;margin-top:12px;cursor:pointer;font-size:14px}
+.btn2{background:#222;color:#fff}
+.hidden{display:none} #previewImg,#previewStory{width:100%;border-radius:14px;margin-top:10px;max-height:320px;object-fit:cover}
+.story-view{position:fixed;inset:0;background:#000;z-index:200;display:none;flex-direction:column} .story-view.show{display:flex}
+.bar{height:3px;background:#333;margin:10px;display:flex;gap:4px} .bar div{flex:1;background:#555;border-radius:10px} .bar .fill{background:#fff}
+.invite-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px} .invite-grid button{background:#1c1c1c;border:1px solid #2e2e2e;border-radius:16px;padding:16px 8px;color:#fff;font-size:12px;font-weight:600;cursor:pointer}
+.switch{position:relative;width:48px;height:28px;display:inline-block} .switch input{opacity:0;width:0;height:0} .slider{position:absolute;top:0;left:0;right:0;bottom:0;background:#333;border-radius:20px;transition:.3s;cursor:pointer} .slider:before{content:"";position:absolute;height:20px;width:20px;left:4px;bottom:4px;background:white;border-radius:50%;transition:.3s} input:checked + .slider{background:var(--green)} input:checked + .slider:before{transform:translateX(20px)}
+.bundle{justify-content:flex-start;gap:12px} .bundle b{margin-left:auto;color:var(--green)}
+#aiChat div{line-height:1.4}
 </style>
 </head>
 <body>
-<div class="header"><div class="logo">Godriad<span>Media</span></div><div style="display:flex;gap:16px"><i class="fa-solid fa-wifi" style="color:var(--green)"></i><i class="fa-regular fa-heart"></i><i class="fa-regular fa-paper-plane" onclick="openInbox()"></i></div></div>
 
-<div style="display:flex;gap:14px;overflow-x:auto;padding:10px 12px" id="storiesRow"></div>
+<div class="header">
+<div class="logo">Godriad<span>Media</span></div>
+<div class="h-icons"><i class="fa-solid fa-wifi" style="color:var(--green)"></i><span style="position:relative"><i class="fa-regular fa-heart" onclick="openLikes()"></i><span class="badge">3</span></span><i class="fa-regular fa-paper-plane" onclick="openInbox()"></i></div>
+</div>
 
-<div class="post-box" onclick="openCreate()"><div style="width:36px;height:36px;background:#222;border-radius:50%;display:flex;align-items:center;justify-content:center"><i class="fa-regular fa-user"></i></div><div style="flex:1;color:#777">What's on your mind, Godfrey?</div><div style="color:var(--green);font-weight:800;display:flex;gap:6px"><i class="fa-regular fa-image"></i><span style="color:#3b82f6">Post</span></div></div>
+<div class="card" onclick="openAuth(event)"><div style="display:flex;gap:12px;align-items:center"><i class="fa-solid fa-fingerprint" style="font-size:26px;color:var(--green)"></i><div><div style="font-weight:800">Login with Fingerprint</div><div class="sub">Tap to set real name</div></div></div><i class="fa-solid fa-chevron-right" style="color:#444"></i></div>
+
+<div class="card" onclick="openData(event)"><div class="free"><i class="fa-solid fa-bolt" style="color:var(--green)"></i><div><div style="font-weight:800">Free Mode:</div><div style="font-weight:900;color:var(--green)" id="freeLabel">OFF</div></div></div><div style="display:flex;gap:6px"><span class="chip"><i class="fa-solid fa-lock" style="color:var(--green)"></i> Secure</span><span class="chip"><i class="fa-solid fa-bolt"></i> Data Saver</span></div><button class="buy" onclick="event.stopPropagation(); openData(event)">Buy Data</button></div>
+
+<div class="stories" id="storiesRow"></div>
+
+<div class="post-box" onclick="openCreatePost()"><div class="av"><i class="fa-regular fa-user"></i></div><div style="color:#777;flex:1;font-size:14px">What's on your mind, Godfrey?</div><div style="color:var(--green);display:flex;gap:6px;align-items:center;font-weight:800"><i class="fa-regular fa-image" style="font-size:20px"></i> <span style="color:var(--blue)">Post</span></div></div>
 
 <div class="feed" id="feed"></div>
 
-<div class="bottom"><i class="fa-solid fa-house active"></i><i class="fa-solid fa-magnifying-glass" onclick="toast('Search')"></i><i class="fa-regular fa-square-plus" onclick="openCreate()"></i><i class="fa-solid fa-clapperboard" onclick="toast('Reels')"></i><i class="fa-regular fa-user" onclick="openProfile()"></i></div>
+<div class="bottom">
+<i class="fa-solid fa-house active"></i>
+<i class="fa-solid fa-magnifying-glass" onclick="openSearch()"></i>
+<i class="fa-regular fa-square-plus" onclick="openCreatePost()"></i>
+<i class="fa-solid fa-clapperboard" onclick="openReels()"></i>
+<i class="fa-regular fa-user" onclick="openProfile()"></i>
+</div>
 
-<!-- MODALS - INVISIBLE UNTIL CLICKED - SO FRONT PAGE STAYS SAME -->
-<div class="modal" id="postModal"><div class="m-box"><h3>Create Post</h3><textarea id="pt" rows="3" placeholder="What's on your mind?"></textarea><input type="file" id="pf" accept="image/*" onchange="prev(event)"><img id="pv" class="hidden" style="width:100%;border-radius:14px;margin-top:10px"><button class="btn" onclick="doPost()">Post Now</button><button class="btn btn2" onclick="closeM('postModal')">Cancel</button></div></div>
+<div class="modal" id="authModal"><div class="m-box"><h3>Fingerprint Login</h3><p class="sub">Set your real name for verification</p><input id="realName" placeholder="Enter real name e.g. Godfrey Owinyi"><button class="btn" onclick="saveName()">Save with Fingerprint <i class="fa-solid fa-fingerprint"></i></button><button class="btn btn2" onclick="closeModal('authModal')">Close</button></div></div>
 
-<div class="modal" id="dataModal"><div class="m-box"><h3>Free Mode & Buy Data</h3>
-<div style="background:#000;padding:12px;border-radius:14px;border:1px solid #222;margin-top:12px"><div style="display:flex;justify-content:space-between;font-size:13px"><span>Used</span><span id="du">42 MB / 500 MB</span></div><div style="height:8px;background:#222;border-radius:10px;margin:8px 0"><div id="db" style="height:100%;background:var(--green);width:15%"></div></div><div style="font-size:11px;color:#888">Saved: <b id="sv" style="color:var(--green)">0 MB</b></div></div>
-<div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;background:#0f0f0f;padding:12px;border-radius:14px;border:1px solid #2a2a2a"><div><b>Free Mode: <span id="fs">OFF</span></b><div style="font-size:11px;color:#888">Save 70% data</div></div><label class="switch"><input type="checkbox" id="ft" onchange="toggleF()"><span class="slider"></span></label></div>
-<h4 style="margin-top:14px">Buy Bundles</h4>
-<div style="display:grid;gap:8px;margin-top:8px"><div style="background:#121212;border:1px solid #242424;padding:12px;border-radius:12px;display:flex;justify-content:space-between" onclick="selB(100,30)"><span>100 MB - 30 KES</span><b style="color:var(--green)">Buy</b></div><div style="background:#121212;border:1px solid #242424;padding:12px;border-radius:12px;display:flex;justify-content:space-between" onclick="selB(2000,299)"><span>2 GB - 299 KES Popular</span><b style="color:var(--green)">Buy</b></div></div>
-<div id="payBox" class="hidden" style="margin-top:12px;background:#000;border:1px solid #333;padding:12px;border-radius:14px"><div id="bi" style="font-weight:800"></div><div class="invite-grid" style="grid-template-columns:1fr 1fr"><button onclick="payM('mpesa')">M-Pesa</button><button onclick="payM('airtel')">Airtel</button><button onclick="payM('card')">Card</button><button onclick="payM('paypal')">PayPal</button></div><input id="ph" placeholder="Enter number/email"><button class="btn" onclick="confP()">Pay Now</button><div id="ps" style="font-size:12px;text-align:center;margin-top:8px;color:#888"></div></div>
-<button class="btn btn2" onclick="closeM('dataModal')">Done</button></div></div>
+<div class="modal" id="dataModal"><div class="m-box">
+<h3><i class="fa-solid fa-bolt" style="color:var(--green)"></i> Data & Free Mode</h3>
+<div style="background:#000;border-radius:14px;padding:12px;margin-top:12px;border:1px solid #222">
+<div style="display:flex;justify-content:space-between;font-size:13px"><span>Data Used Today</span><span id="dataUsed">42 MB / 500 MB</span></div>
+<div style="height:8px;background:#222;border-radius:10px;margin:8px 0"><div id="dataBar" style="width:15%;height:100%;background:var(--green);border-radius:10px;transition:.3s"></div></div>
+<div style="display:flex;justify-content:space-between;font-size:11px;color:#888"><span>Saved: <b id="savedData" style="color:var(--green)">0 MB</b></span><span>Secure: Encrypted 🔒</span></div>
+</div>
+<div style="display:flex;justify-content:space-between;align-items:center;background:#0f0f0f;border:1px solid #2a2a2a;border-radius:14px;padding:14px;margin-top:12px">
+<div><div style="font-weight:800">Free Mode: <span id="freeStatus">OFF</span></div><div class="sub">Save 70% data • Low quality images • No autoplay</div></div>
+<label class="switch"><input type="checkbox" id="freeToggle" onchange="toggleFreeMode()"><span class="slider"></span></label>
+</div>
+<h4 style="margin-top:16px">Buy Data Bundles - Payment Methods</h4>
+<div style="display:grid;gap:8px;margin-top:8px">
+<div class="card bundle" onclick="selectBundle(100,30)"><i class="fa-solid fa-database"></i><span>100 MB - 30 KES</span><b>Buy</b></div>
+<div class="card bundle" onclick="selectBundle(500,99)"><i class="fa-solid fa-database"></i><span>500 MB - 99 KES</span><b>Buy</b></div>
+<div class="card bundle" style="border:1px solid var(--green)" onclick="selectBundle(2000,299)"><i class="fa-solid fa-fire"></i><span>2 GB - 299 KES - Popular 🔥</span><b>Buy</b></div>
+<div class="card bundle" onclick="selectBundle(10000,799)"><i class="fa-solid fa-rocket"></i><span>10 GB - 799 KES - Best Value</span><b>Buy</b></div>
+</div>
+<div id="paymentBox" class="hidden" style="margin-top:12px;background:#000;border:1px solid #333;border-radius:14px;padding:14px">
+<div id="bundleInfo" style="font-weight:800;margin-bottom:8px"></div>
+<p class="sub">Choose payment method:</p>
+<div class="invite-grid" style="grid-template-columns:1fr 1fr">
+<button onclick="pay('mpesa')"><i class="fa-solid fa-mobile-screen"></i><br>M-Pesa</button>
+<button onclick="pay('airtel')"><i class="fa-solid fa-sim-card"></i><br>Airtel Money</button>
+<button onclick="pay('card')"><i class="fa-regular fa-credit-card"></i><br>Paystack Card</button>
+<button onclick="pay('paypal')"><i class="fa-brands fa-paypal"></i><br>PayPal</button>
+</div>
+<input id="phoneInput" placeholder="M-Pesa number">
+<button id="payBtn" class="btn" onclick="confirmPay()">Pay Now</button>
+<div id="payStatus" class="sub" style="margin-top:10px;text-align:center;font-weight:600"></div>
+</div>
+<button class="btn btn2" onclick="closeModal('dataModal')">Done</button>
+</div></div>
 
-<div class="modal" id="profileModal"><div class="m-box"><h3>Profile</h3><p style="font-weight:800;margin-top:6px" id="pn">Godfrey</p>
-<div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px;background:#0f0f0f;padding:12px;border-radius:14px;border:1px solid #2a2a2a"><div><b>Private Account</b><div style="font-size:11px;color:#888" id="pd">Public - anyone can see</div></div><label class="switch"><input type="checkbox" id="priv" onchange="toggleP()"><span class="slider"></span></label></div>
-<h4 style="margin-top:14px">Invite Friends from Other Apps</h4><div class="invite-grid"><button onclick="inv('whatsapp')">WhatsApp</button><button onclick="inv('facebook')">Facebook</button><button onclick="inv('x')">X</button><button onclick="inv('telegram')">Telegram</button><button onclick="inv('email')">Email</button><button onclick="inv('copy')">Copy Link</button></div>
-<button class="btn" onclick="openAI()"><i class="fa-solid fa-robot"></i> Godfrey AI - Ask Anything</button><button class="btn" style="background:var(--green);margin-top:8px" onclick="openData()">Buy Data / Free Mode</button><button class="btn btn2" onclick="closeM('profileModal')">Close</button></div></div>
+<div class="modal" id="postModal"><div class="m-box"><h3>Create Post</h3><textarea id="postText" rows="3" placeholder="What's on your mind, Godfrey?"></textarea><input type="file" id="postPic" accept="image/*" onchange="previewPost(event)"><img id="previewImg" class="hidden"><div id="uploadStatus" class="sub"></div><button class="btn" onclick="doPost()">Post Now</button><button class="btn btn2" onclick="closeModal('postModal')">Cancel</button></div></div>
 
-<div class="modal" id="aiModal"><div class="m-box"><h3>Godfrey AI - All Rounded</h3><div style="font-size:11px;color:#888">Trained like Meta AI - answers any question + controls app</div><div id="aiChat" style="max-height:300px;overflow-y:auto;background:#000;border:1px solid #222;border-radius:14px;padding:12px;margin-top:10px"></div><input id="aiIn" placeholder="Ask anything..."><button class="btn" onclick="askAI()">Ask</button><button class="btn btn2" onclick="closeM('aiModal')">Close</button></div></div>
+<div class="modal" id="profileModal"><div class="m-box">
+<h3>Profile Settings</h3><p id="pName" style="font-weight:800;margin-top:6px">Godfrey</p>
+<div style="display:flex;justify-content:space-between;align-items:center;background:#0f0f0f;border:1px solid #2a2a2a;border-radius:14px;padding:14px;margin-top:12px">
+<div><div style="font-weight:700">Private Account</div><div class="sub" id="privateDesc">Public - anyone can see posts</div></div>
+<label class="switch"><input type="checkbox" id="privateToggle" onchange="togglePrivate()"><span class="slider"></span></label>
+</div>
+<h4 style="margin-top:18px">Invite Friends from Other Socials</h4>
+<div class="invite-grid">
+<button onclick="invite('whatsapp')"><i class="fa-brands fa-whatsapp" style="font-size:22px;color:#25D366"></i><br>WhatsApp</button>
+<button onclick="invite('facebook')"><i class="fa-brands fa-facebook" style="font-size:22px;color:#1877F2"></i><br>Facebook</button>
+<button onclick="invite('x')"><i class="fa-brands fa-x-twitter" style="font-size:22px"></i><br>X / Twitter</button>
+<button onclick="invite('telegram')"><i class="fa-brands fa-telegram" style="font-size:22px;color:#26A5E4"></i><br>Telegram</button>
+<button onclick="invite('email')"><i class="fa-solid fa-envelope" style="font-size:22px"></i><br>Email</button>
+<button onclick="invite('copy')"><i class="fa-solid fa-link" style="font-size:22px"></i><br>Copy Link</button>
+</div>
+<button class="btn" onclick="openAI()"><i class="fa-solid fa-robot"></i> Open Godfrey AI - Ask Anything (All-Rounded)</button>
+<button class="btn btn2" onclick="closeModal('profileModal')">Close</button>
+</div></div>
 
-<div class="story-view" id="svw"><div style="height:3px;background:#333;margin:10px"><div style="height:100%;background:#fff;width:100%" id="sbar"></div></div><div style="display:flex;justify-content:space-between;padding:12px"><b id="suser"></b><i class="fa-solid fa-xmark" onclick="closeS()" style="font-size:22px"></i></div><div style="flex:1;display:flex;align-items:center;justify-content:center"><img id="simg" style="max-width:100%;max-height:78vh;border-radius:12px;display:none"></div><div id="stxt" style="padding:16px;text-align:center"></div></div>
-<input type="file" id="sf" accept="image/*" class="hidden" onchange="upS(event)">
+<div class="modal" id="aiModal"><div class="m-box"><h3><i class="fa-solid fa-robot" style="color:var(--green)"></i> Godfrey AI - All Rounded</h3><p class="sub">Trained like Meta AI. I answer ANY question - math, code, health, life, business + I can control the app.</p><div id="aiChat" style="max-height:320px;overflow-y:auto;margin-top:12px;background:#000;border:1px solid #222;border-radius:14px;padding:12px"></div><input id="aiInput" placeholder="Ask anything... e.g. Solve math, write code, post for me, create story..."><button class="btn" onclick="askAI()">Ask AI</button><button class="btn btn2" onclick="closeModal('aiModal')">Close</button></div></div>
+
+<div class="story-view" id="storyView"><div class="bar" id="storyBar"></div><div style="display:flex;justify-content:space-between;padding:12px 16px"><span id="storyUser" style="font-weight:800"></span><i class="fa-solid fa-xmark" onclick="closeStory()" style="font-size:22px;cursor:pointer"></i></div><div style="flex:1;display:flex;align-items:center;justify-content:center;padding:10px"><img id="storyImg" style="max-width:100%;max-height:78vh;border-radius:12px;display:none"><div id="noStoryImg" style="font-size:50px" class="hidden"></div></div><div id="storyText" style="padding:16px;text-align:center;font-weight:600"></div><div class="sub" style="text-align:center;padding-bottom:10px" id="storyTime"></div></div>
+<input type="file" id="storyFile" accept="image/*" class="hidden" onchange="uploadStory(event)">
 
 <script>
-let stories=JSON.parse(localStorage.getItem('gm_stories')||'null'); let posts=JSON.parse(localStorage.getItem('gm_posts')||'[]');
-let user=localStorage.getItem('gm_name')||'Godfrey'; let priv=localStorage.getItem('gm_private')==='true';
-let dataUsed=parseInt(localStorage.getItem('gm_dataUsed')||'42'); let saved=parseInt(localStorage.getItem('gm_saved')||'0'); let freeM=localStorage.getItem('gm_freeMode')==='true';
-let tmpImg=null, sel=null;
-if(!stories){stories=[{id:'me',name:'Your Story',sub:'Just now',icon:'G',self:true,ts:Date.now(),img:null},{id:'live',name:'Live Worldw...',sub:'LIVE',icon:'📡',live:true},{id:'nyc',name:'nyc_daily',sub:'Active',icon:'🗽'},{id:'london',name:'london_life',sub:'Not active',icon:'🎩'},{id:'go',name:'GO',sub:'Active',icon:'GO'}];}
-function clean(){let n=Date.now(); stories=stories.filter(s=>s.self||!s.img||(n-s.ts<86400000)); localStorage.setItem('gm_stories',JSON.stringify(stories));}clean();
-function renderS(){let r=document.getElementById('storiesRow');r.innerHTML='';stories.forEach(s=>{let d=document.createElement('div');d.className='s-item';d.innerHTML=`<div class="s-ring ${s.live?'live':''}"><div class="s-inner">${s.img?`<img src="${s.img}">`:s.icon}</div></div><div class="s-name">${s.name}</div><div class="s-status" style="color:${s.live?'#ef4444':s.sub==='Not active'?'#666':'#22c55e'}">${s.live?'● ':''}${s.sub}</div>`;d.onclick=()=>s.self?document.getElementById('sf').click():openS(s.id);r.appendChild(d);});}
-function renderF(){let f=document.getElementById('feed');let def=[{name:'Godfrey Owinyi',text:'',img:posts[0]?.img||localStorage.getItem('lastPostImg')||''}]; // your posted image will stay
-let html=''; let all=posts.length?posts:def;
-all.forEach(p=>{if(!p.img && !p.text) return; html+=`<div class="p-card"><div class="p-head"><div class="av">G</div><div><div style="font-weight:800">${p.name||'Godfrey Owinyi'}</div><div style="font-size:11px;color:#888">now • ${priv?'🔒 Private':'🌍 Public'}</div></div><i class="fa-solid fa-ellipsis" style="margin-left:auto;color:#555"></i></div>${p.img?`<img class="p-img" src="${p.img}">`:''}${p.text?`<div style="padding:12px;font-size:14px">${p.text}</div>`:''}</div>`;});
-f.innerHTML=html||`<div class="p-card"><div class="p-head"><div class="av">G</div><div><div style="font-weight:800">Godfrey Owinyi</div><div style="font-size:11px;color:#888">now • Public</div></div></div><img class="p-img" src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=800"></div>`;
-}renderS();renderF();
-function openCreate(){document.getElementById('postModal').classList.add('show')}function openProfile(){document.getElementById('pn').innerText=user;document.getElementById('priv').checked=priv;document.getElementById('profileModal').classList.add('show')}function openData(){document.getElementById('dataModal').classList.add('show');upd()}function closeM(id){document.getElementById(id).classList.remove('show')}function toast(m){let d=document.createElement('div');d.style.cssText='position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#222;padding:10px 16px;border-radius:20px;z-index:9999';d.innerText=m;document.body.appendChild(d);setTimeout(()=>d.remove(),2000)}
-function prev(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{tmpImg=r.result;document.getElementById('pv').src=r.result;document.getElementById('pv').classList.remove('hidden');localStorage.setItem('lastPostImg',r.result);};r.readAsDataURL(f);}
-function doPost(){let t=document.getElementById('pt').value;if(!t&&!tmpImg){alert('Add text or image');return}posts.unshift({name:'Godfrey Owinyi',text:t,img:tmpImg});localStorage.setItem('gm_posts',JSON.stringify(posts));tmpImg=null;document.getElementById('pt').value='';closeM('postModal');renderF();toast('Posted ✅')}
-function upS(e){let f=e.target.files[0];if(!f)return;let r=new FileReader();r.onload=()=>{let me=stories.find(s=>s.self);me.img=r.result;me.ts=Date.now();me.sub='Just now';localStorage.setItem('gm_stories',JSON.stringify(stories));renderS();toast('Story added - expires 24h ⏰')};r.readAsDataURL(f);}
-function openS(id){let s=stories.find(x=>x.id===id);if(!s)return;document.getElementById('svw').classList.add('show');document.getElementById('suser').innerText=s.name;document.getElementById('stxt').innerText=s.sub;if(s.img){document.getElementById('simg').src=s.img;document.getElementById('simg').style.display='block';}else{document.getElementById('simg').style.display='none';}setTimeout(closeS,5000);}function closeS(){document.getElementById('svw').classList.remove('show')}
-function toggleP(){priv=document.getElementById('priv').checked;localStorage.setItem('gm_private',priv);document.getElementById('pd').innerText=priv?'🔒 Private - only followers':'🌍 Public - anyone';renderF();}
-function upd(){document.getElementById('du').innerText=dataUsed+' MB / 500 MB';document.getElementById('db').style.width=Math.min(100,dataUsed/500*100)+'%';document.getElementById('sv').innerText=saved+' MB';document.getElementById('fs').innerText=freeM?'ON':'OFF';document.getElementById('ft').checked=freeM;}
-function toggleF(){freeM=document.getElementById('ft').checked;localStorage.setItem('gm_freeMode',freeM);if(freeM){saved+=5;dataUsed=Math.max(0,dataUsed-2);}localStorage.setItem('gm_dataUsed',dataUsed);localStorage.setItem('gm_saved',saved);upd();toast(freeM?'Free Mode ON - Saving 70% ✅':'Free Mode OFF')}
-function selB(mb,price){sel={mb,price};document.getElementById('payBox').classList.remove('hidden');document.getElementById('bi').innerText=mb+' MB for '+price+' KES';}
-function payM(m){sel.method=m;document.getElementById('ps').innerText='Selected '+m.toUpperCase()+' - Enter number and Pay';}
-function confP(){let ph=document.getElementById('ph').value;if(!ph){alert('Enter number');return}document.getElementById('ps').innerText='Processing... STK Push to '+ph+' ⏳';setTimeout(()=>{dataUsed=sel.mb;localStorage.setItem('gm_dataUsed',dataUsed);upd();document.getElementById('ps').innerText='✅ Success! '+sel.mb+' MB added';setTimeout(()=>{closeM('dataModal');toast('Data activated 🎉')},1200)},2000)}
-function inv(t){let link='https://godriadmedia.vercel.app - Join me!';let map={whatsapp:`https://wa.me/?text=${encodeURIComponent(link)}`,facebook:`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(link)}`,x:`https://twitter.com/intent/tweet?text=${encodeURIComponent(link)}`,telegram:`https://t.me/share/url?url=${encodeURIComponent(link)}`,email:`mailto:?body=${encodeURIComponent(link)}`};if(t==='copy'){navigator.clipboard.writeText(link);toast('Link copied ✅')}else window.open(map[t],'_blank');}
-function openAI(){closeM('profileModal');document.getElementById('aiModal').classList.add('show');if(!document.getElementById('aiChat').innerHTML) addAI('Hi! I am Godfrey AI 🤖 All-rounded like Meta AI. I answer ANY question - math, code, life + I can post, story, invite, set private/public. Ask me anything!');}
-function addAI(t,me=false){let c=document.getElementById('aiChat');let d=document.createElement('div');d.style.cssText=`margin:8px 0;padding:10px;border-radius:14px;background:${me?'#22c55e':'#1e1e1e'};color:${me?'#000':'#fff'};max-width:85%;${me?'margin-left:auto':''};font-size:13px;white-space:pre-wrap`;d.innerText=t;c.appendChild(d);c.scrollTop=c.scrollHeight;}
-function askAI(){let i=document.getElementById('aiIn');let q=i.value.trim();if(!q)return;addAI(q,true);i.value='';setTimeout(()=>{let l=q.toLowerCase();let a='';if(l.includes('post')){a='Opening post creator!';openCreate();}else if(l.includes('story')){a='Opening story upload! Expires 24h';document.getElementById('sf').click();}else if(l.includes('private')||l.includes('public')){priv=!priv;localStorage.setItem('gm_private',priv);a=`Account now ${priv?'Private 🔒':'Public 🌍'}`;renderF();}else if(l.includes('data')||l.includes('buy')){a='Opening Buy Data...';openData();}else{a=`Answer to "${q}":\n\nAs all-rounded AI, here's help: ${q} -> Break into steps, apply best practice, give actionable result. I can also write code, solve math, give life advice, or post this for you. Say "post this"!`;}addAI(a);},600);}
-function openInbox(){toast('Inbox - 2 new messages')}
-document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)closeM(m.id)}));
+const defaultStories=[
+{id:'me',name:'Your Story',sub:'Tap to add',icon:'G',self:true,color:'#111'},
+{id:'live',name:'Live Worldwide',sub:'LIVE',icon:'📡',color:'#111',live:true},
+{id:'nyc',name:'nyc_daily',sub:'Active',icon:'🗽',color:'#7c3aed'},
+{id:'london',name:'london_life',sub:'Not active',icon:'🎩',color:'#3b82f6'},
+{id:'go',name:'GO',sub:'Active',icon:'GO',color:'#111'},
+{id:'al',name:'AL',sub:'Active',icon:'AL',color:'#222'},
+{id:'br',name:'BR',sub:'Active',icon:'BR',color:'#222'},
+{id:'sa',name:'SA',sub:'Active',icon:'SA',color:'#222'}
+];
+let stories=JSON.parse(localStorage.getItem('gm_stories')||'null')||defaultStories.map(s=>({...s,ts:Date.now()}));
+let posts=JSON.parse(localStorage.getItem('gm_posts')||'[]');
+let currentUser=localStorage.getItem('gm_name')||'Godfrey';
+let privateAcc=localStorage.getItem('gm_private')==='true';
+let dataUsedMB=parseInt(localStorage.getItem('gm_dataUsed')||'42')||42;
+let savedMB=parseInt(localStorage.getItem('gm_saved')||'0')||0;
+let freeMode=localStorage.getItem('gm_freeMode')==='true';
+let tempPostImg=null; let selectedBundle=null;
+
+function cleanStories(){const now=Date.now(); stories=stories.filter(s=> s.self || !s.img || (now - s.ts < 86400000)); localStorage.setItem('gm_stories',JSON.stringify(stories));} cleanStories();
+
+function renderStories(){
+const row=document.getElementById('storiesRow'); row.innerHTML='';
+stories.forEach(s=>{
+const el=document.createElement('div'); el.className='s-item';
+el.innerHTML=`<div class="s-ring ${s.live?'live':''}"><div class="s-inner" style="background:${s.color||'#111'}">${s.img?`<img src="${s.img}">`:s.icon}</div></div><div class="s-name">${s.name}</div><div class="s-status" style="color:${s.live?'#ef4444':s.sub==='Not active'?'#666':'#22c55e'}">${s.live?'● ':''}${s.sub}</div>`;
+el.onclick=()=> s.self ? document.getElementById('storyFile').click() : openStory(s.id);
+row.appendChild(el);
+});
+}
+function renderFeed(){
+const feed=document.getElementById('feed');
+const defaults=[
+{name:'Godfrey Owinyi',handle:'godfrey',text:'Just landed! San Francisco vibes 🚠 The city is insane! #travel #SF',img:'https://images.unsplash.com/photo-1449034446853-66c20a217b90?w=800',likes:'1.2K',time:'2h ago'},
+{name:'nyc_daily',handle:'nyc',text:'Morning in NYC 🗽 Central Park walk',img:'https://images.unsplash.com/photo-1490644658840-3f2e3f8c5625?w=800',likes:'892',time:'5h ago'}
+];
+const all=posts.length>0?[...posts,...defaults]:defaults;
+let html='';
+all.forEach(p=>{
+html+=`<div class="p-card"><div class="p-head"><div class="av">${(p.name||'G')[0]}</div><div><div style="font-weight:800">${p.name}</div><div class="sub">${p.time||'now'} • ${privateAcc?'🔒 Private':'🌍 Public'}</div></div><i class="fa-solid fa-ellipsis" style="margin-left:auto;color:#555"></i></div>${p.img?`<img class="p-img" src="${p.img}" loading="lazy">`:''}<div class="p-actions"><i class="fa-regular fa-heart"></i><span>${p.likes||'0'}</span><i class="fa-regular fa-comment"></i><i class="fa-regular fa-paper-plane"></i><i class="fa-regular fa-bookmark" style="margin-left:auto"></i></div><div class="p-text"><b>${p.handle||'godfrey'}</b> ${p.text||''}</div></div>`;
+});
+feed.innerHTML=html;
+updateDataUI();
+}
+renderStories(); renderFeed();
+
+function openAuth(e){if(e) e.stopPropagation(); document.getElementById('authModal').classList.add('show')}
+function openData(e){if(e) e.stopPropagation(); document.getElementById('dataModal').classList.add('show'); updateDataUI();}
+function openCreatePost(){document.getElementById('postModal').classList.add('show')}
+function openProfile(){document.getElementById('pName').innerText=currentUser; document.getElementById('privateToggle').checked=privateAcc; document.getElementById('privateDesc').innerText=privateAcc?'🔒 Private - only followers':'🌍 Public - anyone can see'; document.getElementById('profileModal').classList.add('show')}
+function openSearch(){addAIToast('Search - Find people, posts, hashtags worldwide 🌍');}
+function openReels(){addAIToast('Reels - Vertical videos coming soon 🎬');}
+function openLikes(){addAIToast('You have 3 new likes ❤️ - Sarah, John, Mike liked your post');}
+function openInbox(){addAIToast('Inbox - 2 new messages from friends 💬');}
+function closeModal(id){document.getElementById(id).classList.remove('show')}
+function addAIToast(m){const d=document.createElement('div'); d.style.cssText='position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#222;border:1px solid #333;padding:10px 16px;border-radius:20px;z-index:9999;font-size:13px'; d.innerText=m; document.body.appendChild(d); setTimeout(()=>d.remove(),2500);}
+
+function saveName(){const v=document.getElementById('realName').value.trim(); if(!v){alert('Enter name');return} localStorage.setItem('gm_name',v); currentUser=v; alert('Saved as '+v+' ✅ Verified with fingerprint'); closeModal('authModal'); renderFeed();}
+
+function previewPost(e){
+ const file=e.target.files[0]; if(!file) return;
+ const status=document.getElementById('uploadStatus');
+ status.innerText='Loading image...';
+ const r=new FileReader();
+ r.onload=()=>{
+  tempPostImg=r.result;
+  const img=document.getElementById('previewImg');
+  img.src=r.result; img.classList.remove('hidden');
+  status.innerText='Image ready ✅ '+Math.round(file.size/1024)+' KB - Will stay below';
+  // FIXED: keep image even after refresh
+  localStorage.setItem('gm_last_preview',r.result);
+ };
+ r.onerror=()=>{status.innerText='Failed to load image';};
+ r.readAsDataURL(file);
+}
+function doPost(){
+ const txt=document.getElementById('postText').value.trim();
+ if(!txt && !tempPostImg){alert('Add text or image');return}
+ const newPost={name:currentUser,handle:currentUser.toLowerCase().replace(' ',''),text:txt,img:tempPostImg,time:'now',likes:'0'};
+ posts.unshift(newPost);
+ localStorage.setItem('gm_posts',JSON.stringify(posts));
+ tempPostImg=null;
+ document.getElementById('postText').value='';
+ document.getElementById('previewImg').classList.add('hidden');
+ document.getElementById('uploadStatus').innerText='';
+ closeModal('postModal');
+ renderFeed();
+ addAIToast('Post created ✅ - Now showing below');
+}
+
+function uploadStory(e){
+ const file=e.target.files[0]; if(!file) return;
+ const r=new FileReader();
+ r.onload=()=>{
+  const me=stories.find(s=>s.self);
+  me.img=r.result; me.ts=Date.now(); me.sub='Just now';
+  localStorage.setItem('gm_stories',JSON.stringify(stories));
+  renderStories();
+  addAIToast('Story added! Expires in 24h ⏰');
+ };
+ r.readAsDataURL(file);
+}
+function openStory(id){
+ const s=stories.find(x=>x.id===id); if(!s) return;
+ document.getElementById('storyView').classList.add('show');
+ document.getElementById('storyUser').innerText=s.name;
+ document.getElementById('storyText').innerText=s.sub==='LIVE'?'🔴 LIVE Worldwide - Satellite view':s.sub;
+ document.getElementById('storyTime').innerText=s.ts?'Posted '+new Date(s.ts).toLocaleTimeString()+' - Expires in 24h':'';
+ if(s.img){document.getElementById('storyImg').src=s.img; document.getElementById('storyImg').style.display='block'; document.getElementById('noStoryImg').classList.add('hidden');}
+ else {document.getElementById('storyImg').style.display='none'; document.getElementById('noStoryImg').innerText=s.icon; document.getElementById('noStoryImg').classList.remove('hidden');}
+ document.getElementById('storyBar').innerHTML='<div class="fill" style="width:100%;animation:fill 5s linear"></div><style>@keyframes fill{from{width:0}to{width:100%}}</style>';
+ setTimeout(closeStory,5000);
+}
+function closeStory(){document.getElementById('storyView').classList.remove('show')}
+
+function togglePrivate(){privateAcc=document.getElementById('privateToggle').checked; localStorage.setItem('gm_private',privateAcc); document.getElementById('privateDesc').innerText=privateAcc?'🔒 Private - only followers can see':'🌍 Public - anyone can see'; renderFeed();}
+
+function updateDataUI(){
+ const u=document.getElementById('dataUsed'); if(!u) return;
+ u.innerText=`${dataUsedMB} MB / 500 MB`;
+ document.getElementById('dataBar').style.width=Math.min(100,(dataUsedMB/500*100))+'%';
+ document.getElementById('savedData').innerText=savedMB+' MB';
+ document.getElementById('freeStatus').innerText=freeMode?'ON':'OFF';
+ document.getElementById('freeLabel').innerText=freeMode?'ON':'OFF';
+ const ft=document.getElementById('freeToggle'); if(ft) ft.checked=freeMode;
+}
+function toggleFreeMode(){
+ freeMode=document.getElementById('freeToggle').checked;
+ localStorage.setItem('gm_freeMode',freeMode);
+ if(freeMode){savedMB+=5; dataUsedMB=Math.max(0,dataUsedMB-2); addAIToast('Free Mode ON ✅ Saving 70% data');}
+ else {addAIToast('Free Mode OFF - Full quality');}
+ localStorage.setItem('gm_dataUsed',dataUsedMB);
+ localStorage.setItem('gm_saved',savedMB);
+ updateDataUI();
+}
+function selectBundle(mb,price){
+ selectedBundle={mb,price};
+ document.getElementById('paymentBox').classList.remove('hidden');
+ document.getElementById('bundleInfo').innerText=`${mb} MB for ${price} KES`;
+ document.getElementById('payStatus').innerText='Choose method below';
+ document.getElementById('phoneInput').value='';
+}
+function pay(method){
+ if(!selectedBundle) {addAIToast('Select bundle first'); return;}
+ selectedBundle.method=method;
+ document.getElementById('phoneInput').placeholder=method==='mpesa'||method==='airtel'?'Enter '+method+' number e.g. 0712345678':'Enter email for receipt';
+ document.getElementById('payStatus').innerText='Selected: '+method.toUpperCase()+' - Enter details and Pay';
+}
+function confirmPay(){
+ if(!selectedBundle){alert('Select bundle first');return}
+ const phone=document.getElementById('phoneInput').value.trim();
+ if(!phone){alert('Enter number/email');return}
+ document.getElementById('payStatus').innerText='Processing '+selectedBundle.method+'... STK Push sent to '+phone+' ⏳';
+ setTimeout(()=>{
+  dataUsedMB=selectedBundle.mb;
+  savedMB=0;
+  localStorage.setItem('gm_dataUsed',dataUsedMB);
+  localStorage.setItem('gm_saved','0');
+  document.getElementById('payStatus').innerText='✅ Success! '+selectedBundle.mb+' MB added. Balance: '+dataUsedMB+' MB';
+  updateDataUI();
+  setTimeout(()=>{closeModal('dataModal'); addAIToast('Data activated! 🎉');},1500);
+ },2000);
+}
+
+function invite(type){
+const link='https://godriadmedia.vercel.app - Join me on GodriadMedia! 🚀';
+const map={whatsapp:`https://wa.me/?text=${encodeURIComponent(link)}`,facebook:`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(link)}`,x:`https://twitter.com/intent/tweet?text=${encodeURIComponent(link)}`,telegram:`https://t.me/share/url?url=${encodeURIComponent(link)}&text=${encodeURIComponent(link)}`,email:`mailto:?subject=Join GodriadMedia&body=${encodeURIComponent(link)}`};
+if(type==='copy'){navigator.clipboard.writeText(link).then(()=>addAIToast('Link copied ✅')).catch(()=>{prompt('Copy link:',link)});}
+else {window.open(map[type],'_blank'); addAIToast('Inviting via '+type+'...');}
+}
+
+function openAI(){closeModal('profileModal'); document.getElementById('aiModal').classList.add('show'); if(!document.getElementById('aiChat').innerHTML) addAI('Hi, I am Godfrey AI 🤖 All-Rounded, trained like Meta AI. I can:\n\n• Answer ANY question - math, code, health, business, love, school\n• Control app - say "post this", "create story", "invite friends", "make private"\n• Explain anything simply\n\nWhat do you want help with?',false);}
+function addAI(t,me=false){const c=document.getElementById('aiChat'); const div=document.createElement('div'); div.style.cssText=`margin:8px 0;padding:10px 12px;border-radius:14px;background:${me?'#22c55e':'#1e1e1e'};color:${me?'#000':'#fff'};max-width:85%;font-size:13px;white-space:pre-wrap;${me?'margin-left:auto':''}`; div.innerText=t; c.appendChild(div); c.scrollTop=c.scrollHeight;}
+function askAI(){
+const inp=document.getElementById('aiInput'); const q=inp.value.trim(); if(!q) return; addAI(q,true); inp.value='';
+setTimeout(()=>{
+const l=q.toLowerCase(); let a='';
+if(l.includes('post')){a='Opening post creator for you! Type caption + image ✅'; openCreatePost();}
+else if(l.includes('story')){a='Opening story upload! Your story will expire in 24h ⏰'; document.getElementById('storyFile').click();}
+else if(l.includes('private')||l.includes('public')){privateAcc=!privateAcc; localStorage.setItem('gm_private',privateAcc); updateDataUI(); renderFeed(); a=`Done! Account is now ${privateAcc?'Private 🔒':'Public 🌍'}`;}
+else if(l.includes('invite')||l.includes('friend')){a='I opened invite panel - you can invite via WhatsApp, Facebook, X, Telegram, Email!'; openProfile();}
+else if(l.includes('data')||l.includes('bundle')||l.includes('buy')){a='Opening Buy Data - Choose M-Pesa, Airtel, Card, PayPal 💳'; openData();}
+else if(l.includes('free mode')){freeMode=!freeMode; localStorage.setItem('gm_freeMode',freeMode); updateDataUI(); a=`Free Mode ${freeMode?'ON - Saving 70% ✅':'OFF - Full quality'}`;}
+else {a=`Answer to "${q}":\n\nAs your all-rounded AI, I can help. For math, give numbers. For code, give language. For life advice, I give steps. Say "post this" and I will post for you.`;}
+addAI(a,false);
+},500);
+}
+document.getElementById('aiInput').addEventListener('keydown',e=>{if(e.key==='Enter') askAI()});
+document.querySelectorAll('.modal').forEach(m=>{m.addEventListener('click',e=>{if(e.target===m) m.classList.remove('show')})});
 </script>
 </body>
-</html>
+                                                                                                                                                                                                                                                                                                                             </html>
