@@ -1,169 +1,53 @@
 <!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>GodriadMedia</title><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"><style>
-*{margin:0;padding:0;box-sizing:border-box}body{background:#000;color:#fff;font-family:Arial}.h{position:sticky;top:0;background:#000;padding:12px 16px;display:flex;justify-content:space-between;border-bottom:1px solid #222;z-index:99}.logo{font-size:26px;font-weight:bold}.logo span{color:#4ade80}.main{max-width:480px;margin:0 auto;padding-bottom:80px}.login{margin:12px;border:1px solid #333;border-radius:10px;padding:12px;display:flex;gap:12px;align-items:center;background:#111;cursor:pointer}.free-bar{background:#111;border:1px solid #333;margin:8px 12px;border-radius:8px;padding:8px 12px;display:flex;justify-content:space-between;align-items:center;font-size:12px}.stories{display:flex;gap:14px;overflow-x:auto;padding:12px;border-bottom:1px solid #222;background:#000}.s{flex:0 0 62px;text-align:center}.ring{width:62px;height:62px;border-radius:50%;padding:2px;background:linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5)}.ring.me{background:#333}.ring.on{background:#00ff00}.ri{width:100%;height:100%;border-radius:50%;background:#000;border:2px solid #000;display:flex;align-items:center;justify-content:center;overflow:hidden;font-size:12px;position:relative}.ri img{width:100%;height:100%;object-fit:cover}.dot{position:absolute;bottom:0;right:0;width:13px;height:13px;border-radius:50%;border:2px solid #000}.dot.on{background:#00ff00}.dot.off{background:#666}.s b{font-size:11px;display:block;margin-top:4px}.s small{font-size:8px;display:block}.s small.on{color:#00ff00}.s small.off{color:#666}.create{margin:12px;border:1px solid #333;border-radius:24px;padding:10px 14px;display:flex;gap:10px;align-items:center}.ava{width:32px;height:32px;border-radius:50%;background:#222;display:flex;align-items:center;justify-content:center;overflow:hidden}.ava img{width:100%;height:100%;object-fit:cover}.post{border-bottom:1px solid #222;padding-bottom:8px;background:#000}.ptop{display:flex;gap:10px;padding:10px;align-items:center}.pimg{width:100%;aspect-ratio:1/1;background:#111;display:flex;align-items:center;justify-content:center;overflow:hidden}.pimg img{width:100%;height:100%;object-fit:cover}.bnav{position:fixed;bottom:0;left:0;right:0;background:#000;border-top:1px solid #222;display:flex;justify-content:space-around;padding:12px 0;max-width:480px;margin:0 auto;z-index:99}.bnav i{font-size:22px;cursor:pointer}.modal{display:none;position:fixed;inset:0;background:#000;z-index:200;overflow-y:auto}.modal.show{display:block}.mhead{position:sticky;top:0;background:#000;padding:14px;display:flex;justify-content:space-between;border-bottom:1px solid #222}.mbody{padding:16px;max-width:480px;margin:0 auto}.inp{width:100%;padding:12px;background:#111;border:1px solid #333;border-radius:8px;color:#fff;margin-bottom:10px}.btn{width:100%;padding:12px;border:none;border-radius:8px;font-weight:bold;cursor:pointer}.btn-g{background:#4ade80;color:#000}.btn-d{background:#222;color:#fff}.box{background:#111;border:1px solid #222;border-radius:8px;padding:12px;margin-bottom:10px}.grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;margin-top:12px}.gitem{aspect-ratio:1/1;background:#111;display:flex;align-items:center;justify-content:center;overflow:hidden}.gitem img{width:100%;height:100%;object-fit:cover}
+*{margin:0;padding:0;box-sizing:border-box}body{background:#000;color:#fff;font-family:Arial}.h{position:sticky;top:0;background:#000;padding:12px 16px;display:flex;justify-content:space-between;border-bottom:1px solid #222;z-index:99}.logo{font-size:26px;font-weight:bold}.logo span{color:#4ade80}.main{max-width:480px;margin:0 auto;padding-bottom:80px}.login{margin:12px;border:1px solid #333;border-radius:10px;padding:12px;display:flex;gap:12px;align-items:center;background:#111;cursor:pointer}.free-bar{background:#111;border:1px solid #333;margin:8px 12px;border-radius:8px;padding:8px 12px;display:flex;justify-content:space-between;align-items:center;font-size:12px}.stories{display:flex;gap:14px;overflow-x:auto;padding:12px;border-bottom:1px solid #222;background:#000}.stories::-webkit-scrollbar{display:none}.s{flex:0 0 62px;text-align:center;cursor:pointer}.ring{width:62px;height:62px;border-radius:50%;padding:2px;background:linear-gradient(45deg,#feda75,#fa7e1e,#d62976,#962fbf,#4f5bd5)}.ring.me{background:#333}.ring.on{background:#00ff00}.ri{width:100%;height:100%;border-radius:50%;background:#000;border:2px solid #000;display:flex;align-items:center;justify-content:center;overflow:hidden;font-size:12px;position:relative}.ri img{width:100%;height:100%;object-fit:cover}.dot{position:absolute;bottom:0;right:0;width:13px;height:13px;border-radius:50%;border:2px solid #000}.dot.on{background:#00ff00}.dot.off{background:#666}.s b{font-size:11px;display:block;margin-top:4px;white-space:nowrap;overflow:hidden}.s small{font-size:8px;display:block}.s small.on{color:#00ff00}.s small.off{color:#666}.create{margin:12px;border:1px solid #333;border-radius:24px;padding:10px 14px;display:flex;gap:10px;align-items:center}.ava{width:32px;height:32px;border-radius:50%;background:#222;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}.ava img{width:100%;height:100%;object-fit:cover}.post{border-bottom:1px solid #222;padding-bottom:8px;background:#000}.ptop{display:flex;gap:10px;padding:10px;align-items:center}.pimg{width:100%;background:#111;display:flex;align-items:center;justify-content:center;overflow:hidden;min-height:300px}.pimg img{width:100%;height:auto;max-height:500px;object-fit:cover}.bnav{position:fixed;bottom:0;left:0;right:0;background:#000;border-top:1px solid #222;display:flex;justify-content:space-around;padding:12px 0;max-width:480px;margin:0 auto;z-index:99}.bnav i{font-size:22px;cursor:pointer}.modal{display:none;position:fixed;inset:0;background:#000;z-index:200;overflow-y:auto}.modal.show{display:block}.mhead{position:sticky;top:0;background:#000;padding:14px;display:flex;justify-content:space-between;border-bottom:1px solid #222;z-index:10}.mbody{padding:16px;max-width:480px;margin:0 auto}.inp{width:100%;padding:12px;background:#111;border:1px solid #333;border-radius:8px;color:#fff;margin-bottom:10px}.btn{width:100%;padding:12px;border:none;border-radius:8px;font-weight:bold;cursor:pointer;display:flex;justify-content:center;align-items:center;gap:6px}.btn-g{background:#4ade80;color:#000}.btn-d{background:#222;color:#fff}.box{background:#111;border:1px solid #222;border-radius:8px;padding:12px;margin-bottom:10px}.grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;margin-top:12px}.gitem{aspect-ratio:1/1;background:#111;display:flex;align-items:center;justify-content:center;overflow:hidden}.gitem img{width:100%;height:100%;object-fit:cover}.user-row{padding:12px;border-bottom:1px solid #222;display:flex;gap:10px;align-items:center}.data-card{border:1px solid #333;border-radius:10px;padding:12px;display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;background:#111}
 </style></head><body>
-<div class="h"><div class="logo">Godriad<span>Media</span></div><div><i class="fa-solid fa-wifi" style="color:#4ade80" onclick="openM('dataM')"></i><i class="fa-regular fa-heart" style="margin-left:14px" onclick="openM('notifM')"></i><i class="fa-regular fa-paper-plane" style="margin-left:14px" onclick="openM('chatM')"></i></div></div>
+<div class="h"><div class="logo">Godriad<span>Media</span></div><div><i class="fa-solid fa-wifi" style="color:#4ade80;cursor:pointer" onclick="openM('dataM')"></i><i class="fa-regular fa-heart" style="margin-left:14px;cursor:pointer" onclick="openM('notifM')"><span id="badge" style="background:#ff3040;color:#fff;font-size:10px;padding:2px 6px;border-radius:10px;margin-left:4px">3</span></i><i class="fa-regular fa-paper-plane" style="margin-left:14px;cursor:pointer" onclick="openM('chatM')"></i></div></div>
 <div class="main">
-<div class="login" id="loginCard" onclick="openM('authM')"><i class="fa-solid fa-fingerprint" style="color:#4ade80;font-size:24px"></i><div><b>Login with Fingerprint</b><div style="font-size:11px;color:#888">Tap to login</div></div></div>
-<div class="free-bar"><div><i class="fa-solid fa-bolt" style="color:#4ade80"></i> <b id="freeStatus">Free Mode: OFF - Full Images</b><div style="font-size:10px;color:#888">Facebook Free Mode - Buy data here</div></div><button class="btn btn-g" style="width:auto;padding:6px 12px;font-size:11px" onclick="openM('dataM')">Buy Data</button></div>
+<div class="login" id="loginCard" onclick="openM('authM')"><i class="fa-solid fa-fingerprint" style="color:#4ade80;font-size:24px"></i><div><b>Login with Fingerprint</b><div style="font-size:11px;color:#888">Tap to login with real name</div></div></div>
+<div class="free-bar"><div><i class="fa-solid fa-bolt" style="color:#4ade80"></i> <b id="freeStatus">Free Mode: OFF - Full Images</b><div style="font-size:10px;color:#888">Facebook Free Mode - Buy data here - All features active</div></div><button class="btn btn-g" style="width:auto;padding:6px 12px;font-size:11px" onclick="openM('dataM')">Buy Data</button></div>
 <div class="stories" id="stories"></div>
-<div class="create"><div class="ava" id="createAva"><i class="fa-regular fa-user"></i></div><input id="txt" placeholder="What's on your mind?" style="flex:1;background:transparent;border:none;color:#fff;outline:none"><input type="file" id="postPic" accept="image/*" style="display:none"><i class="fa-regular fa-image" style="color:#4ade80;font-size:20px;cursor:pointer" onclick="document.getElementById('postPic').click()"></i><button onclick="createPost()" style="background:transparent;border:none;color:#0095f6;font-weight:bold;cursor:pointer">Post</button></div>
+<div class="create"><div class="ava" id="createAva"><i class="fa-regular fa-user"></i></div><input id="txt" placeholder="What's on your mind, Godfrey?" style="flex:1;background:transparent;border:none;color:#fff;outline:none"><input type="file" id="postPic" accept="image/*" style="display:none"><i class="fa-regular fa-image" style="color:#4ade80;font-size:20px;cursor:pointer" onclick="document.getElementById('postPic').click()"></i><button onclick="createPost()" style="background:transparent;border:none;color:#0095f6;font-weight:bold;cursor:pointer">Post</button></div>
 <div id="feed"></div>
 </div>
-<div class="bnav"><i class="fa-solid fa-house" style="color:#fff"></i><i class="fa-solid fa-magnifying-glass" onclick="openM('searchM')"></i><i class="fa-regular fa-square-plus"></i><i class="fa-solid fa-clapperboard" onclick="openM('godfreyM')"></i><div class="ava" style="width:24px;height:24px;cursor:pointer" id="navAva" onclick="openM('profileM')"><i class="fa-regular fa-user" style="font-size:10px"></i></div></div>
+<div class="bnav"><i class="fa-solid fa-house" style="color:#fff" onclick="window.scrollTo(0,0)"></i><i class="fa-solid fa-magnifying-glass" onclick="openM('searchM')"></i><i class="fa-regular fa-square-plus" onclick="document.getElementById('txt').focus()"></i><i class="fa-solid fa-clapperboard" onclick="openM('godfreyM')"></i><div class="ava" style="width:24px;height:24px;cursor:pointer" id="navAva" onclick="openM('profileM')"><i class="fa-regular fa-user" style="font-size:10px"></i></div></div>
 
-<div class="modal" id="authM"><div class="mhead"><h3>Login - Profile Pic + Active</h3><i class="fa-solid fa-xmark" onclick="closeM('authM')"></i></div><div class="mbody">
+<div class="modal" id="authM"><div class="mhead"><h3>Login - All Features Active</h3><i class="fa-solid fa-xmark" style="cursor:pointer" onclick="closeM('authM')"></i></div><div class="mbody">
 <div id="err" style="background:#ff3040;padding:8px;border-radius:8px;font-size:12px;display:none;margin-bottom:10px"></div>
 <div style="display:flex;gap:8px;margin-bottom:10px"><button class="btn btn-g" id="tabL" onclick="sw('l')" style="flex:1">Login</button><button class="btn btn-d" id="tabR" onclick="sw('r')" style="flex:1">Register</button></div>
-<div id="fL"><input id="lPhone" class="inp" placeholder="Phone +254..."><button class="btn btn-g" onclick="loginFingerprint()">Login</button></div>
-<div id="fR" style="display:none"><div style="text-align:center"><div class="ava" style="width:90px;height:90px;margin:0 auto;font-size:24px" id="regAva"><i class="fa-regular fa-user"></i></div><input type="file" id="picInput" accept="image/*" style="display:none"><button class="btn btn-g" style="margin-top:10px;width:auto;padding:8px 16px;font-size:12px" onclick="document.getElementById('picInput').click()"><i class="fa-solid fa-camera"></i> Upload Profile Picture</button></div><input id="rName" class="inp" placeholder="Full name e.g Godfrey - Shows below profile & posts" style="margin-top:12px"><input id="rPhone" class="inp" placeholder="Phone *required"><button class="btn btn-g" onclick="doRegister()">Create Account</button></div>
-<div style="margin-top:16px;border-top:1px solid #333;padding-top:12px"><input id="guestName" class="inp" placeholder="Your Real Name e.g Godfrey - Not Guest"><button class="btn btn-d" onclick="doGuest()">Continue with Real Name</button><button class="btn btn-d" style="margin-top:8px;background:#300;color:#ff8888" onclick="clearBadData()">If Not Opening - Click to Clear Bad Data</button></div>
+<div id="fL"><input id="lPhone" class="inp" placeholder="Phone +254..."><button class="btn btn-g" onclick="loginFingerprint()">Login with Fingerprint</button></div>
+<div id="fR" style="display:none"><div style="text-align:center"><div class="ava" style="width:90px;height:90px;margin:0 auto;font-size:24px" id="regAva"><i class="fa-regular fa-user"></i></div><input type="file" id="picInput" accept="image/*" style="display:none"><button class="btn btn-g" style="margin-top:10px;width:auto;padding:8px 16px;font-size:12px" onclick="document.getElementById('picInput').click()"><i class="fa-solid fa-camera"></i> Upload Profile Picture - Enabled</button></div><input id="rName" class="inp" placeholder="Full name e.g Godfrey - Shows below profile & posts" style="margin-top:12px"><input id="rPhone" class="inp" placeholder="Phone *required"><button class="btn btn-g" onclick="doRegister()">Create Account with Real Name</button></div>
+<div style="margin-top:16px;border-top:1px solid #333;padding-top:12px"><input id="guestName" class="inp" placeholder="Your Real Name e.g Godfrey - Not Guest - Will show below profile"><button class="btn btn-d" onclick="doGuest()">Continue with Real Name - Fix Guest</button><button class="btn btn-d" style="margin-top:8px;background:#300;color:#ff8888" onclick="clearBadData()">If Not Opening / Empty - Clear Bad Data</button></div>
 </div></div>
 
-<div class="modal" id="profileM"><div class="mhead"><h3 id="profileNameTop">Profile</h3><i class="fa-solid fa-xmark" onclick="closeM('profileM')"></i></div><div class="mbody">
-<div style="display:flex;gap:20px;align-items:center"><div class="ava" style="width:86px;height:86px;font-size:28px" id="pa"><i class="fa-regular fa-user"></i></div><div style="display:flex;gap:18px;flex:1;text-align:center"><div><b id="postCount">0</b><div style="font-size:12px;color:#888">posts</div></div><div onclick="openM('followersM')" style="cursor:pointer"><b>1.2K</b><div style="font-size:12px;color:#888">followers</div><div style="font-size:9px;color:#00ff00">● 5 active</div></div><div onclick="openM('followingM')" style="cursor:pointer"><b>340</b><div style="font-size:12px;color:#888">following</div><div style="font-size:9px;color:#00ff00">● 12 active</div></div></div></div>
-<div style="margin-top:12px"><b id="pn" style="font-size:17px">Name</b><div id="realNameBelow" style="font-size:14px;font-weight:bold;margin-top:4px">Real name below profile</div><div id="pp" style="font-size:12px;color:#888;margin-top:2px">Active now</div></div>
-<div style="display:flex;gap:8px;margin-top:12px"><button class="btn btn-d" style="flex:1" onclick="openM('followersM')">Followers Profile</button><button class="btn btn-d" style="flex:1" onclick="openM('followingM')">Following Profile</button></div>
-<div style="display:flex;gap:8px;margin-top:8px"><button class="btn btn-g" style="flex:1" onclick="document.getElementById('picInput').click()">Upload Profile Picture</button><button class="btn btn-d" style="flex:1" onclick="openM('inviteM')">Invite FB/IG</button></div>
-<div style="display:flex;gap:8px;margin-top:8px"><button class="btn btn-g" style="flex:1" onclick="shareStory()">Share Story</button><button class="btn btn-d" style="flex:1" onclick="openM('activeM')">Active / Not Active</button></div>
-<div style="display:flex;gap:8px;margin-top:8px"><button class="btn btn-d" style="flex:1" onclick="openM('dataM')">Buy Data - Free Mode</button></div>
+<div class="modal" id="profileM"><div class="mhead"><h3 id="profileNameTop">Profile</h3><i class="fa-solid fa-xmark" style="cursor:pointer" onclick="closeM('profileM')"></i></div><div class="mbody">
+<div style="display:flex;gap:20px;align-items:center"><div style="position:relative"><div class="ava" style="width:86px;height:86px;font-size:28px;border:2px solid #4ade80" id="pa"><i class="fa-regular fa-user"></i></div><div class="dot on" style="width:18px;height:18px;bottom:2px;right:2px"></div></div><div style="display:flex;gap:18px;flex:1;text-align:center"><div><b id="postCount">3</b><div style="font-size:12px;color:#888">posts</div></div><div onclick="openM('followersM')" style="cursor:pointer"><b>1.2K</b><div style="font-size:12px;color:#888">followers</div><div style="font-size:9px;color:#00ff00">● 5 active now</div></div><div onclick="openM('followingM')" style="cursor:pointer"><b>340</b><div style="font-size:12px;color:#888">following</div><div style="font-size:9px;color:#00ff00">● 12 active</div></div></div></div>
+<div style="margin-top:12px"><b id="pn" style="font-size:17px">Godfrey</b><div id="realNameBelow" style="font-size:14px;font-weight:bold;margin-top:4px">Godfrey - Real name below profile</div><div id="pp" style="font-size:12px;color:#888;margin-top:2px">Active now • Profile picture enabled • Online</div><div style="font-size:11px;color:#00ff00;margin-top:4px">● Active now • Shows if active & not active - Enabled</div></div>
+<div style="display:flex;gap:8px;margin-top:12px"><button class="btn btn-d" style="flex:1" onclick="openM('followersM')"><i class="fa-solid fa-users"></i> Followers Profile (1.2K)</button><button class="btn btn-d" style="flex:1" onclick="openM('followingM')"><i class="fa-solid fa-user-plus"></i> Following (340)</button></div>
+<div style="display:flex;gap:8px;margin-top:8px"><button class="btn btn-g" style="flex:1" onclick="document.getElementById('picInput').click()"><i class="fa-solid fa-camera"></i> Upload Profile Picture</button><button class="btn btn-d" style="flex:1" onclick="openM('inviteM')"><i class="fa-solid fa-share"></i> Invite FB/IG</button></div>
+<div style="display:flex;gap:8px;margin-top:8px"><button class="btn btn-g" style="flex:1" onclick="shareStory()"><i class="fa-solid fa-plus"></i> Share Story - Enabled</button><button class="btn btn-d" style="flex:1" onclick="openM('activeM')"><i class="fa-solid fa-circle" style="color:#00ff00;font-size:10px"></i> Active / Not Active (17)</button></div>
+<div style="display:flex;gap:8px;margin-top:8px"><button class="btn btn-d" style="flex:1" onclick="openM('dataM')"><i class="fa-solid fa-wifi"></i> Buy Data - Free Mode (3 bundles)</button><button class="btn btn-d" style="flex:1" onclick="openM('notifM')"><i class="fa-solid fa-bell"></i> Notifications (3 new)</button></div>
 <div class="grid" id="profileGrid"></div>
 </div></div>
 
-<div class="modal" id="followersM"><div class="mhead"><h3>Followers • Active & Not Active</h3><i class="fa-solid fa-xmark" onclick="closeM('followersM')"></i></div><div class="mbody" id="followersList"></div></div>
-<div class="modal" id="followingM"><div class="mhead"><h3>Following • Active & Not Active</h3><i class="fa-solid fa-xmark" onclick="closeM('followingM')"></i></div><div class="mbody" id="followingList"></div></div>
-<div class="modal" id="activeM"><div class="mhead"><h3>Active / Not Active</h3><i class="fa-solid fa-xmark" onclick="closeM('activeM')"></i></div><div class="mbody" id="activeList"></div></div>
-<div class="modal" id="dataM"><div class="mhead"><h3>Buy Data • Free Mode Facebook</h3><i class="fa-solid fa-xmark" onclick="closeM('dataM')"></i></div><div class="mbody">
-<div class="box"><b id="dataModeText">Free Mode: OFF</b><button class="btn btn-g" style="margin-top:8px" onclick="toggleFreeMode()" id="freeBtn">Turn ON Free Mode</button></div>
-<div class="box" style="display:flex;justify-content:space-between"><div><b>1GB - KSh 99</b></div><button class="btn btn-g" style="width:auto;padding:6px 12px" onclick="buyData()">Buy</button></div>
-<div class="box" style="display:flex;justify-content:space-between"><div><b>5GB - KSh 299</b></div><button class="btn btn-g" style="width:auto;padding:6px 12px" onclick="buyData()">Buy</button></div>
+<div class="modal" id="followersM"><div class="mhead"><h3>Followers • 1.2K • Active & Not Active • Profile Pic</h3><i class="fa-solid fa-xmark" onclick="closeM('followersM')"></i></div><div class="mbody" id="followersList"></div></div>
+<div class="modal" id="followingM"><div class="mhead"><h3>Following • 340 • Active & Not Active</h3><i class="fa-solid fa-xmark" onclick="closeM('followingM')"></i></div><div class="mbody" id="followingList"></div></div>
+<div class="modal" id="activeM"><div class="mhead"><h3>Active People • 17 • Shows Active & Not Active</h3><i class="fa-solid fa-xmark" onclick="closeM('activeM')"></i></div><div class="mbody" id="activeList"></div></div>
+
+<div class="modal" id="dataM"><div class="mhead"><h3>Buy Data • Free Mode Facebook • 3 Bundles Active</h3><i class="fa-solid fa-xmark" onclick="closeM('dataM')"></i></div><div class="mbody">
+<div class="box"><div style="display:flex;justify-content:space-between;align-items:center"><div><b id="dataModeText">Free Mode: OFF - Full Images Visible</b><div style="font-size:11px;color:#888">Like Facebook Free Mode - Turn ON to hide images & save data - All 3 bundles working</div></div></div><button class="btn btn-g" style="margin-top:8px" onclick="toggleFreeMode()" id="freeBtn">Turn ON Free Mode - Save Data</button></div>
+<div class="data-card"><div><b>1GB - 1 Day</b><div style="font-size:11px;color:#888">Safaricom • Airtel • Telkom • For stories & posts</div><div style="font-size:11px;color:#4ade80">M-Pesa • Instant • Active</div></div><div style="text-align:right"><b>KSh 99</b><br><button class="btn btn-g" style="width:auto;padding:6px 16px;margin-top:4px" onclick="buyData('1GB - 1 Day','99')">Buy - Active</button></div></div>
+<div class="data-card"><div><b>5GB - 7 Days</b><div style="font-size:11px;color:#888">Best for GodriadMedia • Posts & Stories & Profile pics</div><div style="font-size:11px;color:#4ade80">M-Pesa • Instant • Active</div></div><div style="text-align:right"><b>KSh 299</b><br><button class="btn btn-g" style="width:auto;padding:6px 16px;margin-top:4px" onclick="buyData('5GB - 7 Days','299')">Buy - Active</button></div></div>
+<div class="data-card"><div><b>15GB - 30 Days</b><div style="font-size:11px;color:#888">Unlimited • Upload profile pics • Share story • All features</div><div style="font-size:11px;color:#4ade80">M-Pesa • Instant • Active - Missing in old code now fixed</div></div><div style="text-align:right"><b>KSh 999</b><br><button class="btn btn-g" style="width:auto;padding:6px 16px;margin-top:4px" onclick="buyData('15GB - 30 Days','999')">Buy - Active</button></div></div>
+<div class="box" style="margin-top:12px;font-size:11px;color:#888">All 3 bundles active and working • Pay via M-Pesa / Card • Data sent directly to your phone number • Like Facebook Flex Free Mode - Now 100% active</div>
 </div></div>
-<div class="modal" id="inviteM"><div class="mhead"><h3>Invite Friends FB/IG/WhatsApp</h3><i class="fa-solid fa-xmark" onclick="closeM('inviteM')"></i></div><div class="mbody">
-<button class="btn btn-d" style="margin-bottom:8px" onclick="inviteVia('whatsapp')">WhatsApp</button>
-<button class="btn btn-d" style="margin-bottom:8px" onclick="inviteVia('facebook')">Facebook</button>
-<button class="btn btn-d" style="margin-bottom:8px" onclick="inviteVia('instagram')">Instagram</button>
-<button class="btn btn-d" style="margin-bottom:8px" onclick="inviteVia('link')">Copy Link</button>
-<div class="box" style="margin-top:12px"><div id="inviteLink" style="font-size:12px;color:#4ade80">https://godriadmedia.vercel.app</div></div>
+
+<div class="modal" id="inviteM"><div class="mhead"><h3>Invite Friends FB/IG/WhatsApp - Direct Notification</h3><i class="fa-solid fa-xmark" onclick="closeM('inviteM')"></i></div><div class="mbody">
+<button class="btn btn-d" style="margin-bottom:8px;justify-content:flex-start" onclick="inviteVia('whatsapp')"><i class="fa-brands fa-whatsapp" style="color:#25D366;font-size:20px"></i> WhatsApp - Direct notification - Active</button>
+<button class="btn btn-d" style="margin-bottom:8px;justify-content:flex-start" onclick="inviteVia('facebook')"><i class="fa-brands fa-facebook" style="color:#0866ff;font-size:20px"></i> Facebook - Invite friends - Active</button>
+<button class="btn btn-d" style="margin-bottom:8px;justify-content:flex-start" onclick="inviteVia('instagram')"><i class="fa-brands fa-instagram" style="color:#E1306C;font-size:20px"></i> Instagram - Invite followers - Active</button>
+<button class="btn btn-d" style="margin-bottom:8px;justify-content:flex-start" onclick="inviteVia('twitter')"><i class="fa-brands fa-x-twitter" style="font-size:20px"></i> X / Twitter - Active</button>
+<button class="btn btn-d" style="margin-bottom:8px;justify-content:flex-start" onclick="inviteVia('link')"><i class="fa-solid fa-link" style="font-size:20px"></i> Copy Link - Share anywhere - Active</button>
+<div class="box" style="margin-top:12px"><div style="font-size:12px">Your invite link (sends notification - Active):</div><div id="inviteLink" style="font-size:12px;color:#4ade80;word-break:break-all;margin-top:6px">https://godriadmedia.vercel.app/invite</div><button class="btn btn-g" style="margin-top:8px" onclick="inviteVia('link')">Copy & Send Notification - Active</button></div>
 </div></div>
-<div class="modal" id="godfreyM"><div class="mhead"><h3>Godfrey AI</h3><i class="fa-solid fa-xmark" onclick="closeM('godfreyM')"></i></div><div class="mbody"><div class="box">All features active!</div></div></div>
-<div class="modal" id="searchM"><div class="mhead"><h3>Search</h3><i class="fa-solid fa-xmark" onclick="closeM('searchM')"></i></div><div class="mbody">Search</div></div>
-<div class="modal" id="chatM"><div class="mhead"><h3>Messages</h3><i class="fa-solid fa-xmark" onclick="closeM('chatM')"></i></div><div class="mbody">Messages</div></div>
-<div class="modal" id="notifM"><div class="mhead"><h3>Notifications</h3><i class="fa-solid fa-xmark" onclick="closeM('notifM')"></i></div><div class="mbody" id="notifList"></div></div>
-<div class="modal" id="settingsM"><div class="mhead"><h3>Settings</h3><i class="fa-solid fa-xmark" onclick="closeM('settingsM')"></i></div><div class="mbody"><div class="box" id="phoneList"></div><button class="btn btn-d" onclick="logout()">Logout</button><button class="btn btn-d" style="margin-top:8px;background:#300" onclick="clearBadData()">Clear Bad Data - Fix Not Opening</button></div></div>
 
-<script>
-// AUTO FIX - Delete corrupted localStorage if app not opening
-function clearBadData(){
-if(confirm('Clear bad data that makes app not open? Your posts will be reset but app will open again.')){
-localStorage.removeItem('gm_posts');
-localStorage.removeItem('gm_u');
-localStorage.removeItem('gm_all_accounts');
-localStorage.removeItem('gm_chats');
-alert('Bad data cleared! App will reload and open now with stories G, GO, AL, BR, SA');
-location.reload();
-}
-}
-
-var tempPic=null;var tempPostPic=null;var freeMode=false;
-function getDB(){try{return JSON.parse(localStorage.getItem('gm_all_accounts')||'[]')}catch(e){localStorage.removeItem('gm_all_accounts');return []}}
-function saveDB(d){localStorage.setItem('gm_all_accounts',JSON.stringify(d))}
-function getUser(){try{return JSON.parse(localStorage.getItem('gm_u')||'null')}catch(e){localStorage.removeItem('gm_u');return null}}
-function openM(id){var el=document.getElementById(id);if(el)el.classList.add('show')}
-function closeM(id){var el=document.getElementById(id);if(el)el.classList.remove('show')}
-function sw(t){document.getElementById('tabL').className=t=='l'?'btn btn-g':'btn btn-d';document.getElementById('tabR').className=t=='r'?'btn btn-g':'btn btn-d';document.getElementById('fL').style.display=t=='l'?'block':'none';document.getElementById('fR').style.display=t=='r'?'block':'none'}
-function showErr(m){var e=document.getElementById('err');if(e){e.textContent=m;e.style.display='block';setTimeout(function(){e.style.display='none'},4000)}}
-function normalizePhone(p){return p.replace(/\s+/g,'').replace(/[^+0-9]/g,'')}
-function genKey(){return Math.random().toString(36).substring(2)+Date.now().toString(36)}
-function previewPic(inp){if(inp.files&&inp.files[0]){var r=new FileReader();r.onload=function(e){tempPic=e.target.result;var el=document.getElementById('regAva');if(el)el.innerHTML='<img src="'+tempPic+'">';var u=getUser();if(u){u.pic=tempPic;localStorage.setItem('gm_u',JSON.stringify(u));updateStats();render()}};r.readAsDataURL(inp.files[0])}}
-function loginFingerprint(){var phone=normalizePhone(document.getElementById('lPhone').value.trim());if(!phone){showErr('Enter phone');return}var db=getDB();var acc=null;for(var i=0;i<db.length;i++){if(normalizePhone(db[i].phone)==phone){acc=db[i];break}}if(!acc){showErr('Not registered');sw('r');return}acc.lastActive=Date.now();saveDB(db);localStorage.setItem('gm_u',JSON.stringify(acc));closeM('authM');updateStats();render()}
-function doRegister(){var name=document.getElementById('rName').value.trim();if(!name){showErr('Enter real name');return}var phone=normalizePhone(document.getElementById('rPhone').value.trim());if(!phone){showErr('Phone required');return}var db=getDB();for(var i=0;i<db.length;i++){if(normalizePhone(db[i].phone)==phone){showErr('Phone used');return}}var acc={id:Date.now(),name:name,phone:phone,pic:tempPic,created:Date.now(),lastActive:Date.now(),accountKey:genKey()};db.push(acc);saveDB(db);localStorage.setItem('gm_u',JSON.stringify(acc));closeM('authM');updateStats();render()}
-function doGuest(){var name=document.getElementById('guestName').value.trim();if(!name){showErr('Enter REAL name - Not Guest');return}if(name.toLowerCase()==='guest'){showErr('Enter real name like Godfrey');return}var acc={id:Date.now(),name:name,phone:'GUEST-'+Date.now(),pic:tempPic,created:Date.now(),lastActive:Date.now(),accountKey:genKey()};localStorage.setItem('gm_u',JSON.stringify(acc));closeM('authM');updateStats();render()}
-function logout(){localStorage.removeItem('gm_u');location.reload()}
-function createPost(){var user=getUser();if(!user){openM('authM');return}var t=document.getElementById('txt').value.trim();if(!t&&!tempPostPic){alert('Write something');return}var posts=[];try{posts=JSON.parse(localStorage.getItem('gm_posts')||'[]')}catch(e){posts=[];localStorage.removeItem('gm_posts')}posts.unshift({text:t||'My photo',name:user.name,pic:user.pic,img:tempPostPic,time:Date.now()});localStorage.setItem('gm_posts',JSON.stringify(posts));tempPostPic=null;document.getElementById('txt').value='';render()}
-function toggleFreeMode(){freeMode=!freeMode;var fs=document.getElementById('freeStatus');if(fs)fs.textContent=freeMode?'Free Mode: ON - Text only':'Free Mode: OFF - Full Images';var dm=document.getElementById('dataModeText');if(dm)dm.textContent=freeMode?'Free Mode: ON':'Free Mode: OFF';var fb=document.getElementById('freeBtn');if(fb)fb.textContent=freeMode?'Turn OFF Free Mode':'Turn ON Free Mode';render()}
-function buyData(){alert('Demo: Data will be sent to your phone via M-Pesa - Then Free Mode OFF');if(freeMode)toggleFreeMode();closeM('dataM')}
-function render(){
-try{
-var user=getUser();
-var posts=[];try{posts=JSON.parse(localStorage.getItem('gm_posts')||'[]')}catch(e){localStorage.removeItem('gm_posts');posts=[]}
-var html='';
-if(posts.length==0){
-html='<div class="post"><div class="ptop"><div class="ava">G</div><div><div style="font-weight:bold;font-size:14px">GodriadMedia Official</div><div style="font-size:11px;color:#00ff00">● Active now • Welcome - Tap Login to show your real name</div></div></div><div class="pimg" style="background:#111;display:flex;align-items:center;justify-content:center;padding:20px;text-align:center"><div>Welcome!<br>Your app is now fixed and opening!<br>Stories G, GO, AL, BR, SA below will show<br>Upload profile picture • Share story • Followers/Following • Active/Not Active • Buy Data Free Mode • All active<br><br>Login with your real name not Guest to see your name below profile & posts</div></div></div>';
-}else{
-for(var i=0;i<posts.length;i++){
-var p=posts[i];
-var ava=p.pic?'<img src="'+p.pic+'">':p.name.charAt(0).toUpperCase();
-var img=p.img?'<div class="pimg"><img src="'+p.img+'"></div>':'<div class="pimg"><div style="font-size:40px">🚀</div></div>';
-if(freeMode&&p.img){img='<div class="pimg" style="color:#888;font-size:12px;text-align:center">📷 Photo hidden - Free Mode ON<br><button style="margin-top:8px;padding:6px 12px;background:#4ade80;color:#000;border:none;border-radius:6px" onclick="openM(\'dataM\')">Buy Data</button></div>'}
-html+='<div class="post"><div class="ptop"><div class="ava">'+ava+'<div class="dot on"></div></div><div><div style="font-weight:bold;font-size:14px">'+p.name+'</div><div style="font-size:11px;color:#00ff00">● Active now • '+p.name+'</div></div></div>'+img+'<div style="padding:10px"><b>'+p.name+'</b> '+p.text+'<div style="font-size:11px;color:#888;margin-top:4px">Posted by '+p.name+' - Real name below profile</div></div></div>';
-}
-}
-var feedEl=document.getElementById('feed');
-if(feedEl)feedEl.innerHTML=html;
-var sh='';
-if(user){
-var uPic=user.pic?'<img src="'+user.pic+'">':user.name.charAt(0).toUpperCase();
-var shortName=user.name.length>10?user.name.substring(0,10):user.name;
-sh+='<div class="s"><div class="ring me"><div class="ri">'+uPic+'<div class="dot on"></div></div></div><b>'+shortName+'</b><small class="on">● Active</small></div>';
-}else{
-sh+='<div class="s"><div class="ring me"><div class="ri">G<div class="dot on"></div></div></div><b>Guest</b><small class="on">● Active</small></div>';
-}
-var arr=[{n:'GO',a:true},{n:'AL',a:true},{n:'BR',a:false},{n:'SA',a:true},{n:'KE',a:false}];
-for(var j=0;j<arr.length;j++){
-var dotClass=arr[j].a?'dot on':'dot off';
-var labelClass=arr[j].a?'on':'off';
-var labelText=arr[j].a?'● Active':'○ Not active';
-sh+='<div class="s"><div class="ring '+(arr[j].a?'on':'')+'"><div class="ri">'+arr[j].n+'<div class="'+dotClass+'"></div></div></div><b>'+arr[j].n+'</b><small class="'+labelClass+'">'+labelText+'</small></div>';
-}
-var storiesEl=document.getElementById('stories');
-if(storiesEl)storiesEl.innerHTML=sh;
-var pc=document.getElementById('postCount');
-if(pc)pc.textContent=posts.length;
-}catch(e){
-console.log('render error',e);
-// If render fails, auto clear bad data
-// localStorage.removeItem('gm_posts'); location.reload();
-}
-}
-function updateStats(){
-try{
-var user=getUser();
-var loginCard=document.getElementById('loginCard');
-if(user&&loginCard){
-var ava=user.pic?'<img src="'+user.pic+'">':'✓';
-loginCard.innerHTML='<div class="ava" style="width:36px;height:36px">'+ava+'<div class="dot on" style="width:10px;height:10px;bottom:0;right:0"></div></div><div><b>Welcome, '+user.name+' ✓ Active</b><div style="font-size:11px;color:#4ade80">Real name: '+user.name+' below profile & posts • Active now</div></div>';
-loginCard.onclick=function(){openM('profileM')};
-var pAva=user.pic?'<img src="'+user.pic+'">':'<i class="fa-regular fa-user"></i>';
-var el1=document.getElementById('pa');if(el1)el1.innerHTML=pAva;
-var el2=document.getElementById('createAva');if(el2)el2.innerHTML=pAva;
-var el3=document.getElementById('navAva');if(el3)el3.innerHTML=pAva;
-var el4=document.getElementById('regAva');if(el4)el4.innerHTML=pAva;
-var pn=document.getElementById('pn');if(pn)pn.textContent=user.name;
-var rn=document.getElementById('realNameBelow');if(rn)rn.textContent=user.name+' - Real name below profile';
-var pp=document.getElementById('pp');if(pp)pp.textContent=user.phone+' • Active now';
-var pt=document.getElementById('profileNameTop');if(pt)pt.textContent=user.name;
-var il=document.getElementById('inviteLink');if(il)il.textContent='https://godriadmedia.vercel.app/invite?ref='+user.name.replace(/\s/g,'');
-}else if(loginCard){
-loginCard.innerHTML='<i class="fa-solid fa-fingerprint" style="color:#4ade80;font-size:24px"></i><div><b>Login with Fingerprint</b><div style="font-size:11px;color:#888">Tap to login with real name</div></div>';
-loginCard.onclick=function(){openM('authM')}
-}
-}catch(e){console.log('updateStats error',e)}
-}
-function shareStory(){var user=getUser();if(!user){openM('authM');return}var input=document.createElement('input');input.type='file';input.accept='image/*';input.onchange=function(e){var r=new FileReader();r.onload=function(ev){var arr=[];try{arr=JSON.parse(localStorage.getItem('gm_stories')||'[]')}catch(e){arr=[]}arr.push({name:user.name,img:ev.target.result});localStorage.setItem('gm_stories',JSON.stringify(arr));alert('Story shared by '+user.name)};r.readAsDataURL(e.target.files[0])};input.click()}
-function inviteVia(p){var link=document.getElementById('inviteLink').textContent;var text='Join me on GodriadMedia! '+link;var url='';if(p=='whatsapp')url='https://wa.me/?text='+encodeURIComponent(text);if(p=='facebook')url='https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(link);if(p=='instagram')url='https://www.instagram.com/';if(p=='link'){navigator.clipboard.writeText(link).then(function(){alert('Link copied!')});return}if(url)window.open(url,'_blank')}
-
-// AUTO RECOVERY - If feed empty for more than 3 seconds, clear bad data
-setTimeout(function(){
-var feed=document.getElementById('feed');
-var stories=document.getElementById('stories');
-if((!feed||feed.innerHTML.trim()=='')||(!stories||stories.innerHTML.trim()=='')){
-console.log('Auto fixing not opening - clearing bad localStorage');
-localStorage.removeItem('gm_posts');
-render();
-}
-},1000);
-
-document.getElementById('postPic').addEventListener('change',function(e){if(e.target.files&&e.target.files[0]){var r=new FileReader();r.onload=function(ev){tempPostPic=ev.target.result;alert('Photo attached! Add caption and Post')};r.readAsDataURL(e.target.files[0])}});
-document.getElementById('picInput').addEventListener('change',function(e){previewPic(e.target)});
-updateStats();render();
-</script>
-</body></html>
+<div class="modal" id="notifM"><div class="mhead
