@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://godriadmedia.vercel.app/sitemap.xml
