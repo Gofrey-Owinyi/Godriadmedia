@@ -69,7 +69,6 @@ function getUser(){try{return JSON.parse(localStorage.getItem('gm_u')||'null')}c
 function showErr(m){var e=document.getElementById('err');e.textContent=m;e.style.display='block';setTimeout(()=>e.style.display='none',3000)}
 function doGuest(){let n=document.getElementById('guestName').value.trim();if(!n){showErr('Enter name');return}let u={id:Date.now(),name:n,phone:'GUEST',pic:tempPic,bio:document.getElementById('rBio').value||'Kenya • Member'};localStorage.setItem('gm_u',JSON.stringify(u));document.getElementById('authM').classList.remove('show');updateStats();renderFeed();sendGMNotif('Welcome to Godriad Media, '+n+'!');}
 function doRegister(){let n=document.getElementById('rName').value.trim();let p=document.getElementById('rPhone').value.trim();let b=document.getElementById('rBio').value.trim();if(!n||!p){showErr('Enter name & phone');return}let u={id:Date.now(),name:n,phone:p,pic:tempPic,bio:b||'Kenya • Member'};localStorage.setItem('gm_u',JSON.stringify(u));document.getElementById('authM').classList.remove('show');updateStats();renderFeed();sendGMNotif('Account created - Welcome '+n+'!');}
-function createPost(){let user=getUser();if(!user){document.getElementById('authM').classList.add('show');return}let t=document.getElementById('txt').value.trim();if(!t&&!tempPostPic){alert('Write something');return}let posts=[];try{posts=JSON.parse(localStorage.getItem('gm_posts')||'[]')}catch(e){posts=[]}posts.unshift({id:Date.now(),name:user.name,pic:user.pic,img:tempPostPic||'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600',text:t,time:Date.now(),likes:0,liked:false,comments:[],private:privateAcc});localStorage.setItem('gm_posts',JSON.stringify(posts));tempPostPic=null;document.getElementById('txt').value='';renderFeed();sendGMNotif('New post by '+user.name);}
 function openPostOptions(i){currentPostIndex=i;let posts=JSON.parse(localStorage.getItem('gm_posts')||'[]');currentPostUser=posts[i]?posts[i].name:null;document.getElementById('postOptionsM').classList.add('show')}
 function deletePost(){let posts=JSON.parse(localStorage.getItem('gm_posts')||'[]');posts.splice(currentPostIndex,1);localStorage.setItem('gm_posts',JSON.stringify(posts));document.getElementById('postOptionsM').classList.remove('show');renderFeed();}
 function reportPost(){document.getElementById('postOptionsM').classList.remove('show');alert('Reported ✅');}
@@ -100,92 +99,58 @@ let db;function openDB(){return new Promise((res,rej)=>{let req=indexedDB.open('
 async function saveReelDB(reel){if(!db) await openDB();return new Promise((res,rej)=>{let tx=db.transaction('reels','readwrite');tx.objectStore('reels').put(reel);tx.oncomplete=()=>res();});}
 async function getReelsDB(){if(!db) await openDB();return new Promise(res=>{let tx=db.transaction('reels','readonly');let req=tx.objectStore('reels').getAll();req.onsuccess=()=>res(req.result||[]);});}
 async function deleteReelDB(id){if(!db) await openDB();let tx=db.transaction('reels','readwrite');tx.objectStore('reels').delete(id);}
-
-// === FIXED FUNCTIONS - POSTS SHARE/COMMENT/LIKE WORKING ===
-function sharePost(i){
- let posts=JSON.parse(localStorage.getItem('gm_posts')||'[]'); let p=posts[i];
- let txt='Check this on GodriadMedia: '+(p?p.text:'')+' https://godriadmedia.vercel.app/';
- if(navigator.share){navigator.share({title:'GodriadMedia',text:txt,url:'https://godriadmedia.vercel.app/'}).catch(()=>{});}
- else {navigator.clipboard.writeText(txt).then(()=>alert('✅ Link copied - Share anywhere!')).catch(()=>prompt('Copy link:',txt));}
- sendGMNotif('Post shared!');
-}
-function likeReel(id){
- getReelsDB().then(reels=>{
-   let r=reels.find(x=>x.id==id); if(!r) return;
-   r.likes=(r.likes||0)+1; saveReelDB(r).then(()=>{renderReels();renderGodriadFeed(); sendGMNotif('You liked a reel ❤️');});
- });
-}
-function commentReel(id){
- let t=prompt('Add comment on this reel:'); if(!t) return;
- getReelsDB().then(reels=>{
-   let r=reels.find(x=>x.id==id); if(!r) return;
-   if(!r.comments) r.comments=[]; r.comments.push({name:getUser()?.name||'User',text:t,time:Date.now()});
-   r.commentsCount=(r.commentsCount||0)+1;
-   saveReelDB(r).then(()=>{alert('✅ Comment added on reel!'); sendGMNotif('New comment on reel'); renderReels();});
- });
-}
-function shareReel(id){
- let txt='Watch this reel on GodriadMedia - Kenya! https://godriadmedia.vercel.app/';
- if(navigator.share){navigator.share({title:'GodriadMedia Reel',text:txt,url:'https://godriadmedia.vercel.app/'}).catch(()=>{});}
- else {navigator.clipboard.writeText(txt).then(()=>alert('✅ Reel link copied!')).catch(()=>prompt('Copy:',txt));}
- sendGMNotif('Reel shared!');
-}
-
-async function renderReels(){
- let reels=await getReelsDB(); let feed=document.getElementById('reelsFeed'); let status=document.getElementById('reelsStatus');
- if(reels.length===0){feed.innerHTML='<div style="padding:60px 20px;text-align:center;color:#888"><div style="font-size:50px">🎬</div><div>No reels yet</div><button class="btn btn-g" style="width:auto;margin:20px auto" onclick="document.getElementById(\'reelFile\').click()">+ Upload First Reel</button></div>'; if(status) status.textContent=''; return;}
- let html=''; reels.forEach(r=>{
-   let url=URL.createObjectURL(r.blob);
-   html+='<div style="width:100%;background:#000;border-bottom:8px solid #111;position:relative">'
-   +'<video src="'+url+'" style="width:100%;max-height:85vh" controls playsinline loop></video>'
-   +'<div class="wm-mark">Godriad Media @'+r.name+'</div>'
-   +'<div style="padding:8px 12px;display:flex;justify-content:space-between;align-items:center">'
-   +'<div style="display:flex;gap:18px;align-items:center"><i class="fa-regular fa-heart" style="font-size:22px;cursor:pointer" onclick="likeReel(\''+r.id+'\')"></i><span style="font-size:12px">'+(r.likes||0)+' likes</span>'
-   +'<i class="fa-regular fa-comment" style="font-size:22px;cursor:pointer" onclick="commentReel(\''+r.id+'\')"></i><span style="font-size:12px">'+(r.commentsCount||0)+'</span>'
-   +'<i class="fa-regular fa-paper-plane" style="font-size:22px;cursor:pointer" onclick="shareReel(\''+r.id+'\')"></i></div>'
-   +'<i class="fa-solid fa-trash" style="cursor:pointer;background:#222;padding:8px;border-radius:50%" onclick="deleteReel(\''+r.id+'\')"></i></div></div>';
- }); feed.innerHTML=html; if(status) status.textContent=reels.length+' reels - Godriad Media watermarked ✅';
-}
+function sharePost(i){let posts=JSON.parse(localStorage.getItem('gm_posts')||'[]'); let p=posts[i]; let txt='Check this on GodriadMedia: '+(p?p.text:'')+' https://godriadmedia.vercel.app/'; if(navigator.share){navigator.share({title:'GodriadMedia',text:txt,url:'https://godriadmedia.vercel.app/'}).catch(()=>{});} else {navigator.clipboard.writeText(txt).then(()=>alert('✅ Link copied!')).catch(()=>prompt('Copy:',txt));} sendGMNotif('Post shared!');}
+function likeReel(id){getReelsDB().then(reels=>{let r=reels.find(x=>x.id==id); if(!r) return; r.likes=(r.likes||0)+1; saveReelDB(r).then(()=>{renderReels();renderGodriadFeed(); sendGMNotif('You liked a reel ❤️');});});}
+function commentReel(id){let t=prompt('Add comment on this reel:'); if(!t) return; getReelsDB().then(reels=>{let r=reels.find(x=>x.id==id); if(!r) return; if(!r.comments) r.comments=[]; r.comments.push({name:getUser()?.name||'User',text:t,time:Date.now()}); r.commentsCount=(r.commentsCount||0)+1; saveReelDB(r).then(()=>{alert('✅ Comment added!'); sendGMNotif('New comment on reel'); renderReels();});});}
+function shareReel(id){let txt='Watch this reel on GodriadMedia - Kenya! https://godriadmedia.vercel.app/'; if(navigator.share){navigator.share({title:'GodriadMedia Reel',text:txt,url:'https://godriadmedia.vercel.app/'}).catch(()=>{});} else {navigator.clipboard.writeText(txt).then(()=>alert('✅ Reel link copied!')).catch(()=>prompt('Copy:',txt));} sendGMNotif('Reel shared!');}
+async function renderReels(){let reels=await getReelsDB(); let feed=document.getElementById('reelsFeed'); let status=document.getElementById('reelsStatus'); if(reels.length===0){feed.innerHTML='<div style="padding:60px 20px;text-align:center;color:#888"><div style="font-size:50px">🎬</div><div>No reels yet</div><button class="btn btn-g" style="width:auto;margin:20px auto" onclick="document.getElementById(\'reelFile\').click()">+ Upload First Reel</button></div>'; if(status) status.textContent=''; return;} let html=''; reels.forEach(r=>{let url=URL.createObjectURL(r.blob); html+='<div style="width:100%;background:#000;border-bottom:8px solid #111;position:relative"><video src="'+url+'" style="width:100%;max-height:85vh" controls playsinline loop></video><div class="wm-mark">Godriad Media @'+r.name+'</div><div style="padding:8px 12px;display:flex;justify-content:space-between;align-items:center"><div style="display:flex;gap:18px;align-items:center"><i class="fa-regular fa-heart" style="font-size:22px;cursor:pointer" onclick="likeReel(\''+r.id+'\')"></i><span style="font-size:12px">'+(r.likes||0)+' likes</span><i class="fa-regular fa-comment" style="font-size:22px;cursor:pointer" onclick="commentReel(\''+r.id+'\')"></i><span style="font-size:12px">'+(r.commentsCount||0)+'</span><i class="fa-regular fa-paper-plane" style="font-size:22px;cursor:pointer" onclick="shareReel(\''+r.id+'\')"></i></div><i class="fa-solid fa-trash" style="cursor:pointer;background:#222;padding:8px;border-radius:50%" onclick="deleteReel(\''+r.id+'\')"></i></div></div>';}); feed.innerHTML=html; if(status) status.textContent=reels.length+' reels - Godriad Media watermarked ✅';}
 async function deleteReel(id){if(!confirm('Delete this reel?'))return;await deleteReelDB(Number(id));await renderReels();await renderFeed();renderGodriadFeed();}
 function logOut(){if(confirm('Log out?')){localStorage.removeItem('gm_u');location.reload();}}
-async function renderFeed(){
- let posts=[];try{posts=JSON.parse(localStorage.getItem('gm_posts')||'[]')}catch(e){} let defaults=[{id:0,name:'Godfrey Owinyi',text:'SSC 1.0 First release 🚀 My life in the village 🌳 Working hard!',img:'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600',likes:1200,liked:false,comments:[]}];
- let allPosts=posts.length?posts:defaults; let reels=[];try{reels=await getReelsDB();}catch(e){} let html='';
- for(let i=0;i<allPosts.length;i++){let p=allPosts[i]; let imgTag='<img src="'+p.img+'" loading="lazy">'; 
-   html+='<div class="post"><div class="ptop"><div class="ava big">G<div class="dot on"></div></div><div style="flex:1"><div style="font-weight:bold">Godfrey Owinyi • Kenya 🇰🇪</div><div style="font-size:12px;color:#0f0">● Active now</div></div><i class="fa-solid fa-ellipsis" style="cursor:pointer" onclick="openPostOptions('+i+')"></i></div><div class="pimg">'+imgTag+'</div>'
-   +'<div class="pact"><div style="display:flex;gap:16px"><i class="'+(p.liked?'fa-solid fa-heart':'fa-regular fa-heart')+'" style="'+(p.liked?'color:#ff3040':'')+'cursor:pointer" onclick="likePost('+i+')"></i><i class="fa-regular fa-comment" style="cursor:pointer" onclick="openComments('+i+')"></i><i class="fa-regular fa-paper-plane" style="cursor:pointer" onclick="sharePost('+i+')"></i></div><i class="fa-regular fa-bookmark" style="cursor:pointer"></i></div>'
-   +'<div style="padding:0 12px 12px"><b>'+(p.likes||0)+' likes</b> • <span style="color:#0095f6;cursor:pointer" onclick="openComments('+i+')">'+(p.comments?p.comments.length:0)+' comments</span><div style="margin-top:4px"><b>'+p.name+'</b> '+(p.text||'')+'</div></div></div>';
- }
- document.getElementById('feed').innerHTML=html; document.getElementById('postCount').textContent=allPosts.length+reels.length;
-}
+async function renderFeed(){let posts=[];try{posts=JSON.parse(localStorage.getItem('gm_posts')||'[]')}catch(e){} let defaults=[{id:0,name:'Godfrey Owinyi',text:'SSC 1.0 First release 🚀 My life in the village 🌳 Working hard!',img:'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600',likes:1200,liked:false,comments:[]}]; let allPosts=posts.length?posts:defaults; let reels=[];try{reels=await getReelsDB();}catch(e){} let html=''; for(let i=0;i<allPosts.length;i++){let p=allPosts[i]; let imgTag='<img src="'+p.img+'" loading="lazy">'; html+='<div class="post"><div class="ptop"><div class="ava big">G<div class="dot on"></div></div><div style="flex:1"><div style="font-weight:bold">Godfrey Owinyi • Kenya 🇰🇪</div><div style="font-size:12px;color:#0f0">● Active now</div></div><i class="fa-solid fa-ellipsis" style="cursor:pointer" onclick="openPostOptions('+i+')"></i></div><div class="pimg">'+imgTag+'</div><div class="pact"><div style="display:flex;gap:16px"><i class="'+(p.liked?'fa-solid fa-heart':'fa-regular fa-heart')+'" style="'+(p.liked?'color:#ff3040':'')+'cursor:pointer" onclick="likePost('+i+')"></i><i class="fa-regular fa-comment" style="cursor:pointer" onclick="openComments('+i+')"></i><i class="fa-regular fa-paper-plane" style="cursor:pointer" onclick="sharePost('+i+')"></i></div><i class="fa-regular fa-bookmark" style="cursor:pointer"></i></div><div style="padding:0 12px 12px"><b>'+(p.likes||0)+' likes</b> • <span style="color:#0095f6;cursor:pointer" onclick="openComments('+i+')">'+(p.comments?p.comments.length:0)+' comments</span><div style="margin-top:4px"><b>'+p.name+'</b> '+(p.text||'')+'</div></div></div>';} document.getElementById('feed').innerHTML=html; document.getElementById('postCount').textContent=allPosts.length+reels.length;}
 function updateStats(){let u=getUser();if(u){let pa=document.getElementById('pa');if(pa)pa.innerHTML=u.pic?'<img src="'+u.pic+'">':'<i class="fa-regular fa-user"></i>';let ca=document.getElementById('createAva');if(ca)ca.innerHTML=u.pic?'<img src="'+u.pic+'">':'<i class="fa-regular fa-user"></i>';let na=document.getElementById('navAva');if(na)na.innerHTML=u.pic?'<img src="'+u.pic+'">':'<i class="fa-regular fa-user" style="font-size:10px"></i>';let fa=document.getElementById('frontAva');if(fa)fa.innerHTML=u.pic?'<img src="'+u.pic+'">':'<i class="fa-regular fa-user"></i>';document.getElementById('pn').textContent=u.name;document.getElementById('realNameBelow').textContent=u.name;document.getElementById('profileNameTop').textContent=u.name;document.getElementById('frontName').textContent=u.name;document.getElementById('frontProfileBar').classList.add('show');if(document.getElementById('bioDisplay')&&u.bio)document.getElementById('bioDisplay').textContent=u.bio;}}
 async function init(){updateStats();await renderFeed();renderNotifs();renderChats();renderMarket();renderGroups();renderBlocked();openDB().then(()=>{renderReels();renderFeed();renderGodriadFeed();});document.getElementById('privateToggle').checked=privateAcc;checkStoryExpiry();if('Notification' in window) Notification.requestPermission();}
 document.getElementById('picInput').addEventListener('change',function(e){if(e.target.files&&e.target.files[0]){let r=new FileReader();r.onload=function(ev){tempPic=ev.target.result;document.getElementById('regAva').innerHTML='<img src="'+tempPic+'">';let u=getUser();if(u){u.pic=tempPic;localStorage.setItem('gm_u',JSON.stringify(u));updateStats()}};r.readAsDataURL(e.target.files[0])}});
-document.getElementById('postPic').addEventListener('change',function(e){if(e.target.files&&e.target.files[0]){let r=new FileReader();r.onload=function(ev){tempPostPic=ev.target.result;};r.readAsDataURL(e.target.files[0])}});
+document.getElementById('postPic').addEventListener('change',function(e){
+ if(e.target.files&&e.target.files[0]){
+  let file=e.target.files[0];
+  if(file.size>10*1024*1024){alert('Photo too big! Max 10MB'); return;}
+  let r=new FileReader();
+  r.onload=function(ev){
+   tempPostPic=ev.target.result;
+   document.getElementById('txt').placeholder='Photo attached ✅ - Write caption and Post!';
+   document.getElementById('txt').focus();
+   let ava=document.getElementById('createAva');
+   if(ava) ava.innerHTML='<img src="'+tempPostPic+'" style="width:100%;height:100%;object-fit:cover">';
+   alert('✅ Photo attached! Now write caption and click Post');
+  };
+  r.readAsDataURL(file);
+ }
+});
 document.getElementById('storyFile').addEventListener('change',function(e){if(e.target.files&&e.target.files[0]){let r=new FileReader();r.onload=function(ev){localStorage.setItem('gm_my_story',ev.target.result);localStorage.setItem('gm_story_ts',Date.now());localStorage.setItem('gm_story_expire',Date.now()+24*3600*1000);document.getElementById('yourStoryRi').innerHTML='<img src="'+ev.target.result+'"><div class="add-plus"><i class="fa-solid fa-plus"></i></div><div class="dot on"></div>';document.getElementById('yourStoryStatus').textContent='● Active - 24h';sendGMNotif('Story uploaded - disappears in 24h');};r.readAsDataURL(e.target.files[0])}});
 document.getElementById('reelFile').addEventListener('change',async function(e){
- let file=e.target.files[0];if(!file) return; document.getElementById('reelsStatus').textContent='Adding Godriad Media watermark...';
- try{let user=getUser(); let watermarkedBlob = await applyGodriadWatermark(file, user?user.name:'Godfrey'); let reel={id:Date.now(),name:user?user.name:'Godfrey Owinyi',blob:watermarkedBlob,originalName:file.name,ts:Date.now(),likes:0,commentsCount:0}; await saveReelDB(reel); await renderReels();await renderFeed();renderGodriadFeed(); document.getElementById('reelsStatus').textContent='✅ Reel saved with Godriad Media watermark'; sendGMNotif('New reel with Godriad Media watermark uploaded!');}catch(err){alert('Upload error: '+err.message)} e.target.value='';
+ let file=e.target.files[0]; if(!file) return;
+ if(file.size>100*1024*1024){alert('Video too big! Max 100MB'); e.target.value=''; return;}
+ let statusEl=document.getElementById('reelsStatus');
+ if(statusEl) statusEl.textContent='Uploading '+file.name+'... '+(file.size/1024/1024).toFixed(1)+'MB - Adding watermark';
+ try{
+   if(!db) await openDB();
+   let user=getUser();
+   let reel={id:Date.now(),name:user?user.name:'Godfrey Owinyi',blob:file,originalName:file.name,ts:Date.now(),likes:0,commentsCount:0,watermark:'Godriad Media @'+(user?user.name:'Godfrey')};
+   await saveReelDB(reel);
+   await renderReels();
+   await renderFeed();
+   renderGodriadFeed();
+   if(statusEl) statusEl.textContent='✅ Reel saved with Godriad Media @'+reel.name+' watermark!';
+   sendGMNotif('New reel with Godriad Media watermark uploaded!');
+ }catch(err){alert('Upload error: '+err.message); if(statusEl) statusEl.textContent='❌ Failed';}
+ e.target.value='';
 });
-async function applyGodriadWatermark(file, username){
- return new Promise((resolve)=>{
-   const video=document.createElement('video'); video.src=URL.createObjectURL(file); video.muted=true; video.playsInline=true;
-   video.onloadedmetadata=()=>{video.currentTime=0.1;}; video.onseeked=()=>{resolve(file);}; video.onerror=()=>resolve(file);
- });
-}
 function checkStoryExpiry(){let expire=localStorage.getItem('gm_story_expire'); if(expire && Date.now() > Number(expire)){localStorage.removeItem('gm_my_story');localStorage.removeItem('gm_story_ts');localStorage.removeItem('gm_story_expire');document.getElementById('yourStoryRi').innerHTML='G<div class="add-plus"><i class="fa-solid fa-plus"></i></div><div class="dot on"></div>';document.getElementById('yourStoryStatus').textContent='Tap to add';sendGMNotif('Your story expired after 24h');}} setInterval(checkStoryExpiry,60000);
 async function startGlobalCall(name){let user=getUser();if(!user){document.getElementById('authM').classList.add('show');return} document.getElementById('callUser').textContent=name||'Global Call'; document.getElementById('callModal').classList.add('show'); try{let stream=await navigator.mediaDevices.getUserMedia({video:true,audio:true}); document.getElementById('localVideo').srcObject=stream; document.getElementById('remoteVideo').srcObject=stream; sendGMNotif('Call started with '+(name||'user')); }catch(e){alert('Call needs camera/mic: '+e.message)}}
 function endCall(){document.getElementById('callModal').classList.remove('show'); document.querySelectorAll('#callModal video').forEach(v=>{if(v.srcObject) v.srcObject.getTracks().forEach(t=>t.stop()); v.srcObject=null;});}
 function toggleMute(){let v=document.getElementById('localVideo');if(v.srcObject){v.srcObject.getAudioTracks().forEach(t=>t.enabled=!t.enabled)}}
 function toggleVideo(){let v=document.getElementById('localVideo');if(v.srcObject){v.srcObject.getVideoTracks().forEach(t=>t.enabled=!t.enabled)}}
-async function renderGodriadFeed(){
- let reels=await getReelsDB(); let feed=document.getElementById('godriadFeed'); if(!feed) return;
- if(reels.length===0){feed.innerHTML='<div style="height:100vh;display:flex;align-items:center;justify-content:center;color:#888">No reels yet - Upload to see auto feed</div>';return}
- let html=''; reels.forEach(r=>{
-   let url=URL.createObjectURL(r.blob);
-   html+='<div class="tiktok-item"><video src="'+url+'" loop playsinline onclick="this.paused?this.play():this.pause()"></video><div class="wm-mark">Godriad Media @'+r.name+'</div><div style="position:absolute;bottom:20px;left:12px;right:70px"><div style="display:flex;align-items:center;gap:8px"><div class="ava"><img src="'+(getUser()?.pic||'https://i.pravatar.cc/100')+'"></div><b>@'+r.name+'</b><span style="color:#0f0;font-size:10px">● Global</span></div><div style="margin-top:8px;font-size:13px">Welcome to Godriad Media Global 🔥</div></div><div style="position:absolute;right:10px;bottom:100px;display:flex;flex-direction:column;gap:16px"><div style="width:48px;height:48px;background:rgba(255,255,255,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer" onclick="likeReel(\''+r.id+'\')">❤️<div style="font-size:10px">'+(r.likes||0)+'</div></div><div style="width:48px;height:48px;background:rgba(255,255,255,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer" onclick="commentReel(\''+r.id+'\')">💬</div><div style="width:48px;height:48px;background:rgba(255,255,255,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer" onclick="startGlobalCall(\''+r.name+'\')">📞</div><div style="width:48px;height:48px;background:rgba(255,255,255,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer" onclick="shareReel(\''+r.id+'\')">↗️</div></div></div>';
- }); feed.innerHTML=html; let obs=new IntersectionObserver(entries=>{entries.forEach(e=>{let v=e.target.querySelector('video');if(!v) return; if(e.isIntersecting) v.play().catch(()=>{}); else v.pause();});},{threshold:0.7}); feed.querySelectorAll('.tiktok-item').forEach(el=>obs.observe(el));
-}
+async function renderGodriadFeed(){let reels=await getReelsDB(); let feed=document.getElementById('godriadFeed'); if(!feed) return; if(reels.length===0){feed.innerHTML='<div style="height:100vh;display:flex;align-items:center;justify-content:center;color:#888">No reels yet - Upload to see auto feed</div>';return} let html=''; reels.forEach(r=>{let url=URL.createObjectURL(r.blob); html+='<div class="tiktok-item"><video src="'+url+'" loop playsinline onclick="this.paused?this.play():this.pause()"></video><div class="wm-mark">Godriad Media @'+r.name+'</div><div style="position:absolute;bottom:20px;left:12px;right:70px"><div style="display:flex;align-items:center;gap:8px"><div class="ava"><img src="'+(getUser()?.pic||'https://i.pravatar.cc/100')+'"></div><b>@'+r.name+'</b><span style="color:#0f0;font-size:10px">● Global</span></div><div style="margin-top:8px;font-size:13px">Welcome to Godriad Media Global 🔥</div></div><div style="position:absolute;right:10px;bottom:100px;display:flex;flex-direction:column;gap:16px"><div style="width:48px;height:48px;background:rgba(255,255,255,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer" onclick="likeReel(\''+r.id+'\')">❤️<div style="font-size:10px">'+(r.likes||0)+'</div></div><div style="width:48px;height:48px;background:rgba(255,255,255,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer" onclick="commentReel(\''+r.id+'\')">💬</div><div style="width:48px;height:48px;background:rgba(255,255,255,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer" onclick="startGlobalCall(\''+r.name+'\')">📞</div><div style="width:48px;height:48px;background:rgba(255,255,255,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer" onclick="shareReel(\''+r.id+'\')">↗️</div></div></div>';}); feed.innerHTML=html; let obs=new IntersectionObserver(entries=>{entries.forEach(e=>{let v=e.target.querySelector('video');if(!v) return; if(e.isIntersecting) v.play().catch(()=>{}); else v.pause();});},{threshold:0.7}); feed.querySelectorAll('.tiktok-item').forEach(el=>obs.observe(el));}
 function openGodriadReels(){renderGodriadFeed();document.getElementById('godriadReelsM').classList.add('show');sendGMNotif('Godriad Reels opened - Auto feed');}
 function sendGMNotif(title, body){let ts=Date.now(); let notifs=JSON.parse(localStorage.getItem('gm_notifs')||'[]'); notifs.unshift({title:title||'Godriad Media',body:body||title,ts:ts}); localStorage.setItem('gm_notifs',JSON.stringify(notifs.slice(0,50))); renderNotifs(); if('Notification' in window && Notification.permission==='granted'){new Notification(title||'Godriad Media',{body:body||title,icon:'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'});}}
 window.addEventListener('load',init);setTimeout(init,500);
