@@ -21,7 +21,7 @@
 #frontProfileBar.show{display:flex}
 .wm-mark{position:absolute;bottom:12px;right:10px;background:rgba(0,0,0,0.8);border:1px solid rgba(255,255,255,0.3);padding:6px 12px;border-radius:6px;font-size:11px;font-weight:800;z-index:5;color:#fff}
 .wm-mark::before{content:"▶ ";color:#4ade80}
-.tiktok-feed{height:100vh;overflow-y:scroll;scroll-snap-type:y mandatory;background:#000}
+.tiktok-feed{height:calc(100vh - 70px);overflow-y:scroll;scroll-snap-type:y mandatory;background:#000}
 .tiktok-item{height:100vh;scroll-snap-align:start;position:relative;display:flex;align-items:center;justify-content:center;background:#000;overflow:hidden}
 .tiktok-item video{width:100%;height:100%;object-fit:cover}
 .call-modal{position:fixed;inset:0;background:#000;z-index:2000;display:none;flex-direction:column}
@@ -95,14 +95,13 @@ function doSearch(q){let posts=JSON.parse(localStorage.getItem('gm_posts')||'[]'
 let db;function openDB(){return new Promise((res,rej)=>{let req=indexedDB.open('GodriadDB_Owner_'+OWNER_NAME.replace(' ',''),4);req.onupgradeneeded=e=>{let d=e.target.result;if(!d.objectStoreNames.contains('reels')) d.createObjectStore('reels',{keyPath:'id'});};req.onsuccess=e=>{db=e.target.result;res(db)};req.onerror=e=>rej(e);});}
 async function saveReelDB(reel){if(!db) await openDB();return new Promise((res,rej)=>{let tx=db.transaction('reels','readwrite');tx.objectStore('reels').put(reel);tx.oncomplete=()=>res();tx.onerror=()=>rej('save failed');});}
 async function getReelsDB(){if(!db) await openDB();return new Promise((res,rej)=>{let tx=db.transaction('reels','readonly');let req=tx.objectStore('reels').getAll();req.onsuccess=()=>res(req.result||[]);req.onerror=()=>res([]);});}
-// === FIXED DELETE - NOW RETURNS PROMISE ===
 async function deleteReelDB(id){
  if(!db) await openDB();
  return new Promise((res,rej)=>{
    let tx=db.transaction('reels','readwrite');
    let store=tx.objectStore('reels');
    let delReq=store.delete(Number(id));
-   delReq.onsuccess=()=>{console.log('Deleted reel '+id+' by Owner '+OWNER_NAME);};
+   delReq.onsuccess=()=>{};
    tx.oncomplete=()=>res(true);
    tx.onerror=(e)=>rej(e);
  });
@@ -146,7 +145,6 @@ async function renderReels(){
  });
  feed.innerHTML=html; if(status) status.textContent=reels.length+' reels - Owner: '+OWNER_NAME+' - Godriad Media watermarked ✅';
 }
-// FIXED DELETE - NOW WORKS 100%
 async function deleteReel(id){
  if(!confirm('Delete this reel? Owner: '+OWNER_NAME+' - This cannot be undone!')) return;
  let statusEl=document.getElementById('reelsStatus');
@@ -234,7 +232,7 @@ document.getElementById('reelFile').addEventListener('change',async function(e){
  let file=e.target.files[0]; if(!file) return;
  if(file.size>100*1024*1024){alert('Video too big! Max 100MB - Owner '+OWNER_NAME); e.target.value=''; return;}
  let statusEl=document.getElementById('reelsStatus');
- if(statusEl) statusEl.textContent='Uploading reel by Owner '+OWNER_NAME+'... '+(file.size/1024/1024).toFixed(1)+'MB - Adding watermark Owner '+OWNER_NAME;
+ if(statusEl) statusEl.textContent='Uploading reel by Owner '+OWNER_NAME+'... '+(file.size/1024/1024).toFixed(1)+'MB';
  try{
    if(!db) await openDB();
    let user=getUser();
@@ -253,7 +251,31 @@ async function startGlobalCall(name){let user=getUser();if(!user){document.getEl
 function endCall(){document.getElementById('callModal').classList.remove('show'); document.querySelectorAll('#callModal video').forEach(v=>{if(v.srcObject) v.srcObject.getTracks().forEach(t=>t.stop()); v.srcObject=null;});}
 function toggleMute(){let v=document.getElementById('localVideo');if(v.srcObject){v.srcObject.getAudioTracks().forEach(t=>t.enabled=!t.enabled)}}
 function toggleVideo(){let v=document.getElementById('localVideo');if(v.srcObject){v.srcObject.getVideoTracks().forEach(t=>t.enabled=!t.enabled)}}
-async function renderGodriadFeed(){let reels=await getReelsDB(); let feed=document.getElementById('godriadFeed'); if(!feed) return; if(reels.length===0){feed.innerHTML='<div style="height:100vh;display:flex;align-items:center;justify-content:center;color:#888">No reels yet - Owner '+OWNER_NAME+' - Upload first reel</div>';return} let likedList=JSON.parse(localStorage.getItem('gm_liked_reels')||'[]'); let html=''; reels.forEach(r=>{let url=URL.createObjectURL(r.blob); let isLiked=likedList.includes(String(r.id)); html+='<div class="tiktok-item"><video src="'+url+'" loop playsinline onclick="this.paused?this.play():this.pause()"></video><div class="wm-mark">Godriad Media @'+(r.name||OWNER_NAME)+' | Owner: '+OWNER_NAME+'</div><div style="position:absolute;bottom:20px;left:12px;right:70px"><div style="display:flex;align-items:center;gap:8px"><div class="ava">GO</div><b>@'+(r.name||OWNER_NAME)+'</b><span style="color:#0f0;font-size:10px">● Owner '+OWNER_NAME+'</span></div><div style="margin-top:8px;font-size:13px">GodriadMedia by Owner '+OWNER_NAME+' 🔥 Kenya</div></div><div style="position:absolute;right:10px;bottom:100px;display:flex;flex-direction:column;gap:16px"><div style="width:48px;height:48px;background:rgba(255,255,255,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;'+(isLiked?'color:#ff3040':'')+'" onclick="likeReel(\''+r.id+'\')">❤️<div style="font-size:10px">'+(r.likes||0)+'</div></div><div style="width:48px;height:48px;background:rgba(255,255,255,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer" onclick="commentReel(\''+r.id+'\')">💬</div><div style="width:48px;height:48px;background:rgba(255,255,255,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer" onclick="startGlobalCall(\''+r.name+'\')">📞</div><div style="width:48px;height:48px;background:rgba(255,255,255,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer" onclick="shareReel(\''+r.id+'\')">↗️</div><div style="width:48px;height:48px;background:#ff3040;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer" onclick="deleteReel(\''+r.id+'\')">🗑️</div></div></div>';}); feed.innerHTML=html; let obs=new IntersectionObserver(entries=>{entries.forEach(e=>{let v=e.target.querySelector('video');if(!v) return; if(e.isIntersecting) v.play().catch(()=>{}); else v.pause();});},{threshold:0.7}); feed.querySelectorAll('.tiktok-item').forEach(el=>obs.observe(el));}
+async function renderGodriadFeed(){
+ let reels=await getReelsDB(); 
+ let feed=document.getElementById('godriadFeed'); 
+ if(!feed) return; 
+ if(reels.length===0){
+  feed.innerHTML='<div style="height:calc(100vh - 70px);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#888;gap:16px;padding:20px;text-align:center">'
+  +'<div style="font-size:60px">🎬</div>'
+  +'<div style="font-size:16px;color:#fff;font-weight:bold">No reels yet - Owner Godfrey Owinyi</div>'
+  +'<div style="font-size:13px">Upload your first reel to see Auto Feed</div>'
+  +'<button class="btn btn-g" style="width:auto;padding:12px 24px;margin-top:10px;font-weight:bold" onclick="document.getElementById(\'godriadReelsM\').classList.remove(\'show\'); document.getElementById(\'reelsM\').classList.add(\'show\'); document.getElementById(\'reelFile\').click()">+ Upload First Reel - Owner Godfrey Owinyi</button>'
+  +'<div style="font-size:11px;color:#4ade80;margin-top:8px">Owner: Godfrey Owinyi - Godriad Media watermark will be added</div>'
+  +'</div>'; 
+  return;
+ }
+ let likedList=JSON.parse(localStorage.getItem('gm_liked_reels')||'[]'); 
+ let html=''; 
+ reels.forEach(r=>{
+   let url=URL.createObjectURL(r.blob); 
+   let isLiked=likedList.includes(String(r.id)); 
+   html+='<div class="tiktok-item"><video src="'+url+'" loop playsinline onclick="this.paused?this.play():this.pause()"></video><div class="wm-mark">Godriad Media @'+(r.name||OWNER_NAME)+' | Owner: '+OWNER_NAME+'</div><div style="position:absolute;bottom:20px;left:12px;right:70px"><div style="display:flex;align-items:center;gap:8px"><div class="ava">GO</div><b>@'+(r.name||OWNER_NAME)+'</b><span style="color:#0f0;font-size:10px">● Owner '+OWNER_NAME+'</span></div><div style="margin-top:8px;font-size:13px">GodriadMedia by Owner '+OWNER_NAME+' 🔥 Kenya</div></div><div style="position:absolute;right:10px;bottom:100px;display:flex;flex-direction:column;gap:16px"><div style="width:48px;height:48px;background:rgba(255,255,255,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;'+(isLiked?'color:#ff3040':'')+'" onclick="likeReel(\''+r.id+'\')">❤️<div style="font-size:10px">'+(r.likes||0)+'</div></div><div style="width:48px;height:48px;background:rgba(255,255,255,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer" onclick="commentReel(\''+r.id+'\')">💬</div><div style="width:48px;height:48px;background:rgba(255,255,255,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer" onclick="startGlobalCall(\''+r.name+'\')">📞</div><div style="width:48px;height:48px;background:rgba(255,255,255,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer" onclick="shareReel(\''+r.id+'\')">↗️</div><div style="width:48px;height:48px;background:#ff3040;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer" onclick="deleteReel(\''+r.id+'\')">🗑️</div></div></div>';
+ }); 
+ feed.innerHTML=html; 
+ let obs=new IntersectionObserver(entries=>{entries.forEach(e=>{let v=e.target.querySelector('video');if(!v) return; if(e.isIntersecting) v.play().catch(()=>{}); else v.pause();});},{threshold:0.7}); 
+ feed.querySelectorAll('.tiktok-item').forEach(el=>obs.observe(el));
+}
 function openGodriadReels(){renderGodriadFeed();document.getElementById('godriadReelsM').classList.add('show');sendGMNotif('Godriad Reels by Owner '+OWNER_NAME+' opened');}
 function sendGMNotif(title, body){let ts=Date.now(); let notifs=JSON.parse(localStorage.getItem('gm_notifs')||'[]'); notifs.unshift({title:title||'Godriad Media by Owner '+OWNER_NAME,body:body||title,ts:ts,owner:OWNER_NAME}); localStorage.setItem('gm_notifs',JSON.stringify(notifs.slice(0,50))); renderNotifs(); if('Notification' in window && Notification.permission==='granted'){new Notification((title||'Godriad Media')+' - Owner '+OWNER_NAME,{body:body||title,icon:'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'});}}
 window.addEventListener('load',init);setTimeout(init,500);
