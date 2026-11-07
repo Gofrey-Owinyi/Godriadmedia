@@ -107,47 +107,68 @@ async function renderFeed(){let posts=[];try{posts=JSON.parse(localStorage.getIt
 function updateStats(){let u=getUser();let hasUser=u&&u.name;let displayName=hasUser?u.name:OWNER_NAME;let pa=document.getElementById('pa');if(pa)pa.innerHTML=u.pic?'<img src="'+u.pic+'">':'GO';let ca=document.getElementById('createAva');if(ca)ca.innerHTML=u.pic?'<img src="'+u.pic+'">':'GO';let na=document.getElementById('navAva');if(na)na.innerHTML=u.pic?'<img src="'+u.pic+'">':'GO';let fa=document.getElementById('frontAva');if(fa)fa.innerHTML=u.pic?'<img src="'+u.pic+'">':'GO';document.getElementById('pn').textContent=displayName+' - Owner & Founder • Global';document.getElementById('realNameBelow').textContent=displayName+' - Founder - Owner: '+OWNER_NAME+' • Global Verified';document.getElementById('profileNameTop').textContent=displayName+' - Owner: '+OWNER_NAME+' • Global';document.getElementById('frontName').textContent=displayName+' - Owner • Global';if(document.getElementById('bioDisplay'))document.getElementById('bioDisplay').textContent='Owner: '+OWNER_NAME+' • Founder GodriadMedia • Global Platform • Entrepreneur • Live & GoTV Owner • Global';let frontBar=document.getElementById('frontProfileBar');let loginBox=document.getElementById('loginBox');if(hasUser&&u.name!==OWNER_NAME||localStorage.getItem('gm_u')){if(frontBar)frontBar.classList.add('show');if(loginBox)loginBox.style.display='none';}else{if(frontBar&&!localStorage.getItem('gm_u'))frontBar.classList.remove('show');}}  
 async function init(){updateStats();await renderFeed();renderNotifs();openDB().then(()=>{renderReels();renderFeed();renderGodriadFeed();});checkStoryExpiry();if('Notification' in window&&Notification.permission!=='granted'){Notification.requestPermission().then(p=>{if(p==='granted')sendGMNotif('Notifications Enabled! 🔔 Global','Owner: '+OWNER_NAME+' • Global Platform • You will receive notifications');});}sendGMNotif('GodriadMedia Global Loaded! 🌍','Owner: '+OWNER_NAME+' • Global Platform • All features active');}  
 document.getElementById('picInput').addEventListener('change',function(e){if(e.target.files&&e.target.files[0]){let r=new FileReader();r.onload=function(ev){tempPic=ev.target.result;document.getElementById('regAva').innerHTML='<img src="'+tempPic+'">';let u=getUser();if(u){u.pic=tempPic;localStorage.setItem('gm_u',JSON.stringify(u));updateStats()}sendGMNotif('Owner picture updated • Global','Owner: '+OWNER_NAME);};r.readAsDataURL(e.target.files[0])}});  
+
 document.getElementById('postPic').addEventListener('change',function(e){  
- let files=e.target.files;if(!files||files.length===0)return;  
- if(files.length>10){alert('Max 10 photos - Owner '+OWNER_NAME+' • Global');return;}  
- tempPostPics=[];let preview=document.getElementById('multiPreview');preview.innerHTML='';preview.style.display='flex';  
- let loaded=0;  
- for(let i=0;i<files.length;i++){  
-   let file=files[i];  
-   if(file.size>10*1024*1024) continue;  
-   let reader=new FileReader();  
-   reader.onload=function(ev){  
+ let files = e.target.files; if(!files||files.length===0) return;  
+ tempPostPics = []; let preview = document.getElementById('multiPreview'); 
+ preview.innerHTML = ''; preview.style.display = 'flex';  
+ 
+ for(let i=0; i<files.length; i++){  
+   let file = files[i];  
+   if(file.size > 10 * 1024 * 1024) continue;  
+   let reader = new FileReader();  
+   reader.onload = function(ev){  
      tempPostPics.push(ev.target.result);  
-     let thumb=document.createElement('div');  
-     thumb.style.cssText='position:relative;flex:0 0 60px;height:60px;border-radius:8px;overflow:hidden;border:2px solid #4ade80';  
-     thumb.innerHTML='<img src="'+ev.target.result+'" style="width:100%;height:100%;object-fit:cover"><span style="position:absolute;top:2px;right:2px;background:rgba(0,0,0,0.7);color:#fff;font-size:10px;padding:2px 4px;border-radius:4px">'+tempPostPics.length+'</span>';  
+     let thumb = document.createElement('div');  
+     thumb.style.cssText = 'position:relative;flex:0 0 60px;height:60px;border-radius:8px;overflow:hidden;border:2px solid #4ade80';  
+     thumb.innerHTML = '<img src="'+ev.target.result+'" style="width:100%;height:100%;object-fit:cover"><span style="position:absolute;top:2px;right:2px;background:rgba(0,0,0,0.7);color:#fff;font-size:10px;padding:2px 4px;border-radius:4px">'+tempPostPics.length+'</span>';  
      preview.appendChild(thumb);  
-     loaded++;  
-     if(loaded===files.length){  
-       localStorage.setItem('gm_temp_post_pics',JSON.stringify(tempPostPics));  
-       document.getElementById('txt').placeholder=tempPostPics.length+' photos attached ✅ Global • Owner '+OWNER_NAME+' - Now Post!';  
-       document.getElementById('txt').focus();  
-     }  
+     
+     document.getElementById('txt').placeholder = tempPostPics.length + ' photos attached ✅ Global • Owner ' + OWNER_NAME + ' - Now Post!';  
    };  
    reader.readAsDataURL(file);  
  }  
- sendGMNotif(files.length+' photos selected • Global','Owner: '+OWNER_NAME+' • Ready to post globally');  
+ sendGMNotif('Photos selected • Global','Owner: '+OWNER_NAME+' • Ready to post globally');  
 });  
+
 function createPost(){  
- let user=getUser();if(!user){document.getElementById('authM').classList.add('show');return;}  
- let t=document.getElementById('txt').value.trim();  
- let savedPics=JSON.parse(localStorage.getItem('gm_temp_post_pics')||'[]');  
- let finalPics=tempPostPics.length?tempPostPics:(savedPics.length?savedPics:[]);  
- if(!t&&finalPics.length===0){alert('Write something or add photos - Owner '+OWNER_NAME+' • Global');return;}  
- let posts=[];try{posts=JSON.parse(localStorage.getItem('gm_posts')||'[]')}catch(e){posts=[]}  
- posts.unshift({id:Date.now(),name:user.name||OWNER_NAME,pic:user.pic,imgs:finalPics.length?finalPics:['https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600'],text:t||'My '+finalPics.length+' photos by Owner '+OWNER_NAME+' Global 📸🌍 #GodriadMedia #Global',time:Date.now(),likes:0,liked:false,comments:[],owner:OWNER_NAME,global:true});  
- localStorage.setItem('gm_posts',JSON.stringify(posts));  
- tempPostPics=[];localStorage.removeItem('gm_temp_post_pics');  
- document.getElementById('txt').value='';document.getElementById('multiPreview').innerHTML='';document.getElementById('multiPreview').style.display='none';  
+ let user = getUser(); if(!user){ document.getElementById('authM').classList.add('show'); return; }  
+ let t = document.getElementById('txt').value.trim();  
+ let finalPics = tempPostPics; 
+ if(!t && finalPics.length === 0){ alert('Write something or add photos - Owner '+OWNER_NAME+' • Global'); return; }  
+ 
+ let posts = []; try{ posts = JSON.parse(localStorage.getItem('gm_posts')||'[]'); }catch(e){ posts=[]; }  
+ posts.unshift({
+   id: Date.now(),
+   name: user.name || OWNER_NAME,
+   pic: user.pic,
+   imgs: finalPics.length ? finalPics : ['https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600'],
+   text: t || 'My photos by Owner ' + OWNER_NAME + ' Global 📸🌍 #GodriadMedia #Global',
+   time: Date.now(),
+   likes: 0,
+   liked: false,
+   comments: [],
+   owner: OWNER_NAME,
+   global: true
+ });  
+ 
+ try {
+   localStorage.setItem('gm_posts', JSON.stringify(posts));  
+ } catch(err) {
+   alert('Storage limit reached! Try uploading slightly fewer or smaller photos at once.');
+   return;
+ }
+ 
+ tempPostPics = [];  
+ localStorage.removeItem('gm_temp_post_pics');  
+ document.getElementById('txt').value = '';  
+ document.getElementById('multiPreview').innerHTML = '';  
+ document.getElementById('multiPreview').style.display = 'none';  
  renderFeed();  
- sendGMNotif(finalPics.length+' photos posted globally! 🌍','Owner: '+OWNER_NAME+' • Global Platform • Visible worldwide');  
- if('Notification' in window&&Notification.permission==='granted'){new Notification('GodriadMedia • New Global Post! 🌍',{body:'Owner '+OWNER_NAME+' posted '+finalPics.length+' photos globally!',icon:'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'});}  
+ sendGMNotif('Photos posted globally! 🌍','Owner: '+OWNER_NAME+' • Global Platform • Visible worldwide');  
+ if('Notification' in window&&Notification.permission==='granted'){new Notification('GodriadMedia • New Global Post! 🌍',{body:'Owner '+OWNER_NAME+' posted photos globally!',icon:'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'});}  
 }  
+
 document.getElementById('storyFile').addEventListener('change',function(e){if(e.target.files&&e.target.files[0]){let r=new FileReader();r.onload=function(ev){localStorage.setItem('gm_my_story',ev.target.result);localStorage.setItem('gm_story_ts',Date.now());localStorage.setItem('gm_story_expire',Date.now()+24*3600*1000);document.getElementById('yourStoryRi').innerHTML='<img src="'+ev.target.result+'"><div class="add-plus"><i class="fa-solid fa-plus"></i></div><div class="dot on"></div>';document.getElementById('yourStoryStatus').textContent='● Active • Global • Owner '+OWNER_NAME+' • 24h';sendGMNotif('Story uploaded • Global • 24h • Owner '+OWNER_NAME+' 🌍','Disappears in 24h • Global • Owner: '+OWNER_NAME);if('Notification' in window&&Notification.permission==='granted'){new Notification('GodriadMedia • New Story Global! 🌍',{body:'Owner '+OWNER_NAME+' posted new story • Disappears in 24h',icon:'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'});}};r.readAsDataURL(e.target.files[0])}});  
 document.getElementById('reelFile').addEventListener('change',async function(e){  
  let file=e.target.files[0];if(!file)return;  
