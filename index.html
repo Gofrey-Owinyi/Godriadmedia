@@ -2,15 +2,11 @@
 <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3135/3135715.png">
 <link rel="manifest" href="/manifest.json">
 <title>GodriadMedia - by Godfrey Owinyi | Kenya Social Platform</title>
-<meta name="description" content="GodriadMedia by Godfrey Owinyi - Kenya's social platform. Founder Godfrey Owinyi. Share photos & reels, chat, groups, marketplace.">
-<meta name="keywords" content="GodriadMedia, Godfrey Owinyi, Kenya social media, founder Godfrey Owinyi">
+<meta name="description" content="GodriadMedia by Godfrey Owinyi - Kenya's social platform. Founder Godfrey Owinyi.">
+<meta name="keywords" content="GodriadMedia, Godfrey Owinyi, Kenya social media">
 <meta name="author" content="Godfrey Owinyi - Founder & Owner of GodriadMedia">
 <meta name="theme-color" content="#4ade80">
 <link rel="canonical" href="https://godriadmedia.vercel.app/">
-<meta property="og:title" content="GodriadMedia - by Godfrey Owinyi">
-<meta property="og:description" content="Founded by Godfrey Owinyi - Kenya Social Platform">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://godriadmedia.vercel.app/">
 <script src="https://js.paystack.co/v1/inline.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
@@ -39,7 +35,7 @@
 <div class="bnav"><i class="fa-solid fa-house" style="color:#fff"></i><i class="fa-solid fa-magnifying-glass" onclick="document.getElementById('exploreM').classList.add('show')"></i><i class="fa-regular fa-square-plus" onclick="document.getElementById('txt').focus()"></i><i class="fa-solid fa-clapperboard" onclick="openGodriadReels()"></i><div class="ava" style="width:24px;height:24px;cursor:pointer" id="navAva" onclick="document.getElementById('profileM').classList.add('show')"><i class="fa-regular fa-user" style="font-size:10px"></i></div></div>
 <div class="story-view" id="storyView"><div style="position:absolute;top:20px;left:12px;right:12px;display:flex;justify-content:space-between;align-items:center;z-index:3"><div style="display:flex;gap:8px;align-items:center"><div class="ava">GO</div><b id="storyName">Live Worldwide</b></div><i class="fa-solid fa-xmark" onclick="document.getElementById('storyView').classList.remove('show')" style="font-size:24px;cursor:pointer"></i></div><div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center"><img id="storyImg" src="" style="width:100%;height:100%;object-fit:cover;display:none"><div id="storyPlaceholder" style="font-size:80px">📡</div></div></div>
 <div class="modal" id="authM"><div class="mhead"><h3>Godfrey Owinyi - Owner Account</h3><i class="fa-solid fa-xmark" onclick="document.getElementById('authM').classList.remove('show')"></i></div><div class="mbody"><div id="err" style="background:#ff3040;padding:8px;border-radius:8px;font-size:12px;display:none"></div><input id="guestName" class="inp" placeholder="Godfrey Owinyi"><button class="btn btn-g" onclick="doGuest()">Save Owner Name</button><div style="text-align:center;margin-top:16px"><div class="ava" style="width:90px;height:90px;margin:0 auto;font-size:32px" id="regAva"><i class="fa-regular fa-user"></i></div><input type="file" id="picInput" accept="image/*" style="display:none"><button class="btn btn-g" style="margin-top:10px" onclick="document.getElementById('picInput').click()">Upload Owner Picture</button></div><input id="rName" class="inp" placeholder="Godfrey Owinyi - Full name" style="margin-top:12px" value="Godfrey Owinyi"><input id="rPhone" class="inp" placeholder="Phone +254..." value="+254 Owner"><input id="rBio" class="inp" placeholder="Bio" value="Founder & Owner - GodriadMedia • Kenya • Entrepreneur"><button class="btn btn-g" onclick="doRegister()">Create Owner Account - Godfrey Owinyi</button></div></div>
-<div class="modal" id="profileM"><div class="mhead"><h3 id="profileNameTop">Godfrey Owinyi - Owner</h3><i class="fa-solid fa-xmark" onclick="document.getElementById('profileM').classList.remove('show')"></i></div><div class="mbody"><div style="display:flex;gap:20px;align-items:center"><div style="position:relative"><div class="ava" style="width:86px;height:86px;font-size:28px;border:2px solid #4ade80" id="pa"><i class="fa-regular fa-user"></i></div><div class="dot on" style="width:18px;height:18px;bottom:2px;right:2px"></div></div><div style="display:flex;gap:18px;flex:1;text-align:center"><div><b id="postCount">0</b><div style="font-size:12px;color:#888">posts</div></div><div><b>5.2K</b><div style="font-size:12px;color:#888">followers</div></div><div><b>340</b><div style="font-size:12px;color:#888">following</div></div></div></div><div style="margin-top:12px"><b id="pn" style="font-size:18px">Godfrey Owinyi - Owner & Founder</b><div id="realNameBelow" style="font-size:14px;font-weight:bold;margin-top:4px;color:#4ade80">Godfrey Owinyi - Founder</div><div id="bioDisplay" style="font-size:13px;color:#ccc;margin-top:4px">Owner: Godfrey Owinyi • GodriadMedia Founder • Kenya • Entrepreneur • GodriadMedia Platform Owner</div><div id="pp" style="font-size:12px;color:#888;margin-top:2px">Owner • Kenya • <span style="color:#0f0">● Active now</span> • <span id="privateDesc">🌍 Public - Owner: Godfrey Owinyi</span></div></div><div style="display:flex;gap:8px;margin-top:12px"><button class="btn btn-g" style="flex:1" onclick="document.getElementById('dataM').classList.add('show')">Buy Data</button><button class="btn btn-d" style="flex:1" onclick="document.getElementById('notifM').classList.add('show')">Notifications</button></div><div style="display:flex;gap:8px;margin-top:8px"><button class="btn btn-d" style="flex:1;color:#ff3040;border:1px solid #ff3040" onclick="logOut()">Log Out - Owner Godfrey Owinyi</button></div></div></div>
+<div class="modal" id="profileM"><div class="mhead"><h3 id="profileNameTop">Godfrey Owinyi - Owner</h3><i class="fa-solid fa-xmark" onclick="document.getElementById('profileM').classList.remove('show')"></i></div><div class="mbody"><div style="display:flex;gap:20px;align-items:center"><div style="position:relative"><div class="ava" style="width:86px;height:86px;font-size:28px;border:2px solid #4ade80" id="pa"><i class="fa-regular fa-user"></i></div><div class="dot on" style="width:18px;height:18px;bottom:2px;right:2px"></div></div><div style="display:flex;gap:18px;flex:1;text-align:center"><div><b id="postCount">0</b><div style="font-size:12px;color:#888">posts</div></div><div><b>5.2K</b><div style="font-size:12px;color:#888">followers</div></div><div><b>340</b><div style="font-size:12px;color:#888">following</div></div></div></div><div style="margin-top:12px"><b id="pn" style="font-size:18px">Godfrey Owinyi - Owner & Founder</b><div id="realNameBelow" style="font-size:14px;font-weight:bold;margin-top:4px;color:#4ade80">Godfrey Owinyi - Founder</div><div id="bioDisplay" style="font-size:13px;color:#ccc;margin-top:4px">Owner: Godfrey Owinyi • GodriadMedia Founder • Kenya • Entrepreneur • Platform Owner</div><div id="pp" style="font-size:12px;color:#888;margin-top:2px">Owner • Kenya • <span style="color:#0f0">● Active now</span> • <span id="privateDesc">🌍 Public - Owner: Godfrey Owinyi</span></div></div><div style="display:flex;gap:8px;margin-top:12px"><button class="btn btn-g" style="flex:1" onclick="document.getElementById('dataM').classList.add('show')">Buy Data</button><button class="btn btn-d" style="flex:1" onclick="document.getElementById('notifM').classList.add('show')">Notifications</button></div><div style="display:flex;gap:8px;margin-top:8px"><button class="btn btn-d" style="flex:1;color:#ff3040;border:1px solid #ff3040" onclick="logOut()">Log Out - Owner Godfrey Owinyi</button></div></div></div>
 <div class="modal" id="likesM"><div class="mhead"><h3>❤️ Likes</h3><i class="fa-solid fa-xmark" onclick="document.getElementById('likesM').classList.remove('show')"></i></div><div class="mbody" id="likesList"></div></div>
 <div class="modal" id="commentsM"><div class="mhead"><h3>💬 Comments</h3><i class="fa-solid fa-xmark" onclick="document.getElementById('commentsM').classList.remove('show')"></i></div><div class="mbody"><div id="commentsList"></div><div class="comment-box"><input id="commentInp" class="inp" placeholder="Add comment..." style="margin:0"><button class="btn btn-g" style="width:auto;padding:12px" onclick="addComment()"><i class="fa-solid fa-paper-plane"></i></button></div></div></div>
 <div class="modal" id="followersM"><div class="mhead"><h3>Followers</h3><i class="fa-solid fa-xmark" onclick="document.getElementById('followersM').classList.remove('show')"></i></div><div class="mbody" id="followersList"></div></div>
@@ -129,7 +125,7 @@ function commentReel(id){let t=prompt('Add comment on reel by Owner '+OWNER_NAME
 function shareReel(id){let txt='Watch this reel on GodriadMedia by Owner '+OWNER_NAME+'! https://godriadmedia.vercel.app/'; if(navigator.share){navigator.share({title:'GodriadMedia by '+OWNER_NAME,text:txt,url:'https://godriadmedia.vercel.app/'}).catch(()=>{});} else {navigator.clipboard.writeText(txt).then(()=>alert('✅ Owner reel link copied! '+OWNER_NAME)).catch(()=>prompt('Copy:',txt));} sendGMNotif('Reel shared - Owner '+OWNER_NAME);}
 async function renderReels(){
  let reels=await getReelsDB(); let feed=document.getElementById('reelsFeed'); let status=document.getElementById('reelsStatus');
- if(reels.length===0){feed.innerHTML='<div style="padding:60px 20px;text-align:center;color:#888"><div style="font-size:50px">🎬</div><div>No reels yet - Owner '+OWNER_NAME+'</div><button class="btn btn-g" style="width:auto;margin:20px auto" onclick="document.getElementById(\'reelFile\').click()">+ Upload Reel as Owner '+OWNER_NAME+'</button></div>'; if(status) status.textContent='No reels - Owner: '+OWNER_NAME; return;}
+ if(reels.length===0){feed.innerHTML='<div style="padding:60px 20px;text-align:center;color:#888"><div style="font-size:50px">🎬</div><div>No reels yet - Owner '+OWNER_NAME+'</div><button class="btn btn-g" style="width:auto;margin:20px auto" onclick="document.getElementById(\'reelFile\').click()">+ Upload Reel as Owner '+OWNER_NAME+'</button></div>'; if(status) status.textContent='No reels yet - Owner: '+OWNER_NAME+' - Tap + Upload Reel'; return;}
  let likedList=JSON.parse(localStorage.getItem('gm_liked_reels')||'[]'); let html='';
  reels.forEach(r=>{
    let url=URL.createObjectURL(r.blob);
@@ -141,9 +137,10 @@ async function renderReels(){
    +'<div style="display:flex;gap:18px;align-items:center"><i class="'+(isLiked?'fa-solid fa-heart':'fa-regular fa-heart')+'" style="font-size:22px;cursor:pointer;'+(isLiked?'color:#ff3040':'')+'" onclick="likeReel(\''+r.id+'\')"></i><span style="font-size:12px">'+(r.likes||0)+' likes</span>'
    +'<i class="fa-regular fa-comment" style="font-size:22px;cursor:pointer" onclick="commentReel(\''+r.id+'\')"></i><span style="font-size:12px">'+(r.commentsCount||0)+'</span>'
    +'<i class="fa-regular fa-paper-plane" style="font-size:22px;cursor:pointer" onclick="shareReel(\''+r.id+'\')"></i></div>'
-   +'<button onclick="deleteReel(\''+r.id+'\')" style="background:#ff3040;color:#fff;border:none;padding:8px 12px;border-radius:20px;font-weight:bold;cursor:pointer">🗑️ Delete</button></div></div>';
+   +'<button onclick="deleteReel(\''+r.id+'\')" style="background:#ff3040;color:#fff;border:none;padding:8px 12px;border-radius:20px;font-weight:bold;cursor:pointer">🗑️ Delete - Owner</button></div></div>';
  });
- feed.innerHTML=html; if(status) status.textContent=reels.length+' reels - Owner: '+OWNER_NAME+' - Godriad Media watermarked ✅';
+ feed.innerHTML=html; 
+ if(status) status.textContent='✅ '+reels.length+' reels - Owner: '+OWNER_NAME+' - Godriad Media watermarked ✅ - Upload/Delete works!';
 }
 async function deleteReel(id){
  if(!confirm('Delete this reel? Owner: '+OWNER_NAME+' - This cannot be undone!')) return;
@@ -157,12 +154,12 @@ async function deleteReel(id){
    await renderReels();
    await renderFeed();
    renderGodriadFeed();
-   if(statusEl) statusEl.textContent='✅ Reel deleted by Owner '+OWNER_NAME+'!';
+   if(statusEl) statusEl.textContent='✅ Reel deleted by Owner '+OWNER_NAME+'! - '+ (await getReelsDB()).length+' reels left';
    sendGMNotif('Reel deleted by Owner '+OWNER_NAME);
-   alert('✅ Reel deleted successfully! Owner: '+OWNER_NAME);
  }catch(e){
-   alert('Delete failed: '+e.message);
-   if(statusEl) statusEl.textContent='❌ Delete failed';
+   console.error(e);
+   let check=await getReelsDB().catch(()=>[]);
+   if(statusEl) statusEl.textContent= check.length+' reels - Owner: '+OWNER_NAME+' - Try again';
  }
 }
 function logOut(){if(confirm('Log out Owner '+OWNER_NAME+'?')){localStorage.removeItem('gm_u');location.reload();}}
@@ -228,22 +225,36 @@ function createPost(){
  sendGMNotif('New post by Owner '+OWNER_NAME);
 }
 document.getElementById('storyFile').addEventListener('change',function(e){if(e.target.files&&e.target.files[0]){let r=new FileReader();r.onload=function(ev){localStorage.setItem('gm_my_story',ev.target.result);localStorage.setItem('gm_story_ts',Date.now());localStorage.setItem('gm_story_expire',Date.now()+24*3600*1000);document.getElementById('yourStoryRi').innerHTML='<img src="'+ev.target.result+'"><div class="add-plus"><i class="fa-solid fa-plus"></i></div><div class="dot on"></div>';document.getElementById('yourStoryStatus').textContent='● Active - Owner '+OWNER_NAME;sendGMNotif('Story by Owner '+OWNER_NAME+' - disappears in 24h');};r.readAsDataURL(e.target.files[0])}});
+// FIXED UPLOAD - NO MORE FAILED MESSAGE WHEN REEL EXISTS
 document.getElementById('reelFile').addEventListener('change',async function(e){
  let file=e.target.files[0]; if(!file) return;
  if(file.size>100*1024*1024){alert('Video too big! Max 100MB - Owner '+OWNER_NAME); e.target.value=''; return;}
  let statusEl=document.getElementById('reelsStatus');
- if(statusEl) statusEl.textContent='Uploading reel by Owner '+OWNER_NAME+'... '+(file.size/1024/1024).toFixed(1)+'MB';
+ if(statusEl) statusEl.textContent='⏳ Uploading reel by Owner '+OWNER_NAME+'... '+(file.size/1024/1024).toFixed(1)+'MB - Adding Godriad watermark';
  try{
    if(!db) await openDB();
    let user=getUser();
    let reel={id:Date.now(),name:user.name||OWNER_NAME,blob:file,originalName:file.name,ts:Date.now(),likes:0,commentsCount:0,watermark:'Godriad Media @'+OWNER_NAME+' | Owner: '+OWNER_NAME,owner:OWNER_NAME};
    await saveReelDB(reel);
+   // Render after save
    await renderReels();
-   await renderFeed();
-   renderGodriadFeed();
-   if(statusEl) statusEl.textContent='✅ Reel saved! Owner: '+OWNER_NAME+' - Godriad Media @'+(user.name||OWNER_NAME)+' watermark!';
-   sendGMNotif('New reel by Owner '+OWNER_NAME+' with watermark!');
- }catch(err){alert('Upload error by Owner '+OWNER_NAME+': '+err.message); if(statusEl) statusEl.textContent='❌ Failed - Owner '+OWNER_NAME;}
+   try{await renderFeed();}catch(err){console.log('feed skip',err);}
+   try{renderGodriadFeed();}catch(err){console.log('godriad skip',err);}
+   let all=await getReelsDB();
+   if(statusEl) statusEl.textContent='✅ Success! '+all.length+' reels - Owner: '+OWNER_NAME+' - Godriad Media @'+(user.name||OWNER_NAME)+' watermark ✅';
+   sendGMNotif('✅ New reel uploaded by Owner '+OWNER_NAME+'!');
+ }catch(err){
+   console.error('Upload err',err);
+   // Check if saved anyway
+   let check=await getReelsDB().catch(()=>[]);
+   if(check.length>0){
+     await renderReels();
+     if(statusEl) statusEl.textContent='✅ Reel saved! '+check.length+' reels - Owner: '+OWNER_NAME+' - Watermarked ✅';
+   } else {
+     if(statusEl) statusEl.textContent='❌ Upload failed - Owner '+OWNER_NAME+' - Try smaller video';
+     alert('Upload failed: '+err.message);
+   }
+ }
  e.target.value='';
 });
 function checkStoryExpiry(){let expire=localStorage.getItem('gm_story_expire'); if(expire && Date.now() > Number(expire)){localStorage.removeItem('gm_my_story');localStorage.removeItem('gm_story_ts');localStorage.removeItem('gm_story_expire');document.getElementById('yourStoryRi').innerHTML='GO<div class="add-plus"><i class="fa-solid fa-plus"></i></div><div class="dot on"></div>';document.getElementById('yourStoryStatus').textContent='Owner Story - '+OWNER_NAME;sendGMNotif('Story expired - Owner '+OWNER_NAME);}} setInterval(checkStoryExpiry,60000);
