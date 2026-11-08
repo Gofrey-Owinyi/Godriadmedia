@@ -25,7 +25,6 @@
 .multi-dots span.active{background:#fff}
 .live-pill{position:absolute;top:12px;left:12px;background:#ff3040;color:#fff;padding:4px 8px;border-radius:4px;font-size:10px;font-weight:bold;z-index:10}
 .follow-btn{padding:6px 14px;border-radius:20px;font-weight:bold;font-size:12px;border:none;cursor:pointer}.follow-btn.following{background:#222;color:#fff;border:1px solid #333}.follow-btn.notfollowing{background:#4ade80;color:#000}
-/* FIX v3: input lives INSIDE the label, on-screen, transparent. Never display:none, never -9999px, never pointer-events:none. */
 .file-overlay{position:absolute!important;inset:0!important;opacity:0!important;width:100%!important;height:100%!important;cursor:pointer}
 .upload-label{position:relative!important;display:inline-flex!important;align-items:center;justify-content:center;cursor:pointer;overflow:hidden}
 </style></head><body>
@@ -44,7 +43,7 @@
 <div class="story-view" id="storyView"><div style="position:absolute;top:20px;left:12px;right:12px;display:flex;justify-content:space-between;align-items:center;z-index:3"><div style="display:flex;gap:8px;align-items:center"><div class="ava">ME</div><b id="storyName">Story</b></div><i class="fa-solid fa-xmark" onclick="document.getElementById('storyView').classList.remove('show')" style="font-size:24px;cursor:pointer"></i></div><div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center"><img id="storyImg" src="" style="width:100%;height:100%;object-fit:cover;display:none"><div id="storyPlaceholder" style="font-size:80px">📡</div></div></div>
 <div class="modal" id="authM"><div class="mhead"><h3>Create Account - Global - Private option</h3><i class="fa-solid fa-xmark" onclick="document.getElementById('authM').classList.remove('show')"></i></div><div class="mbody"><div class="ava" style="width:90px;height:90px;margin:0 auto;font-size:32px;border:2px solid #4ade80" id="regAva"><i class="fa-regular fa-user"></i></div><label class="btn btn-g upload-label" style="margin-top:10px"><input type="file" id="picInput" accept="image/*" class="file-overlay">Upload Picture • Global</label><input id="rName" class="inp" placeholder="Full name" style="margin-top:12px"><input id="rPhone" class="inp" placeholder="Phone Global +254..."><input id="rBio" class="inp" placeholder="Bio Global"><div class="box" style="display:flex;gap:10px;align-items:center"><input type="checkbox" id="privateCheck"><label for="privateCheck"><b>🔒 Private Account</b><div style="font-size:11px;color:#888">If private, people must send follow request</div></label></div><button class="btn btn-g" onclick="doRegister()">Create Account - Global</button><div style="margin-top:12px"><input id="loginName" class="inp" placeholder="Enter name to login"><button class="btn btn-d" onclick="doLogin()">Login</button></div></div></div>
 <div class="modal" id="profileM"><div class="mhead"><h3 id="profileNameTop">Profile • Global</h3><i class="fa-solid fa-xmark" onclick="document.getElementById('profileM').classList.remove('show')"></i></div><div class="mbody"><div style="display:flex;gap:20px;align-items:center"><div class="ava" style="width:86px;height:86px;font-size:28px;border:2px solid #4ade80" id="pa"><i class="fa-regular fa-user"></i></div><div style="display:flex;gap:18px;flex:1;text-align:center"><div><b id="postCount">0</b><div style="font-size:12px;color:#888">posts • Unlimited</div></div><div onclick="openFollowers()" style="cursor:pointer"><b id="followerCount">0</b><div style="font-size:12px;color:#888">followers</div></div><div onclick="openFollowing()" style="cursor:pointer"><b id="followingCount">0</b><div style="font-size:12px;color:#888">following</div></div></div></div><div style="margin-top:12px"><b id="pn">User</b><div id="realNameBelow" style="color:#4ade80"></div><div id="bioDisplay" style="font-size:13px;color:#ccc;margin-top:4px"></div><div id="pp" style="font-size:12px;color:#888;margin-top:2px"><span id="privateDesc">🌍 Public</span> • <span style="color:#0f0" id="activeNow">● Active now</span></div></div><div style="display:flex;gap:8px;margin-top:12px"><button class="btn btn-g" style="flex:1" id="privateBtn" onclick="togglePrivate()">🔓 Make Private</button><button class="btn btn-g" style="flex:1;background:#222;color:#fff;border:1px solid #333" onclick="document.getElementById('inviteM').classList.add('show')">📨 Invite • Share</button></div><div style="display:flex;gap:8px;margin-top:8px"><button class="btn btn-g" style="flex:1" onclick="openFollowers()">Followers</button><button class="btn btn-g" style="flex:1;background:#222;color:#fff;border:1px solid #333" onclick="openFollowing()">Following</button></div><div style="display:flex;gap:8px;margin-top:8px"><button class="btn btn-g" style="flex:1;background:#111;border:1px solid #333" onclick="openRequests()">📩 Follow Requests (<span id="reqCount">0</span>)</button><button class="btn btn-d" style="flex:1;color:#ff3040;border:1px solid #ff3040" onclick="logOut()">Log Out</button></div><div style="margin-top:12px"><b>Active People Now • Global</b><div id="activeList"></div></div></div></div>
-<div class="modal" id="inviteM"><div class="mhead"><h3>📨 Invite & Share • Global</h3><i class="fa-solid fa-xmark" onclick="document.getElementById('inviteM').classList.remove('show')"></i></div><div class="mbody"><div class="box" style="border:2px solid #4ade80"><b>Your Global Invite Link</b><div id="inviteLink" style="background:#000;padding:10px;border-radius:8px;margin-top:8px;font-size:12px;word-break:break-all;border:1px solid #333">https://godriadmedia.vercel.app/?invite=</div><button class="btn btn-g" style="margin-top:8px" onclick="copyInvite()">📋 Copy Link</button><button class="btn btn-g" style="margin-top:8px;background:#fff;color:#000" onclick="shareInvite()">📤 Share App Link to Any App • Global</button></div><div class="box"><b>Send Invitation Request • Chat Across Apps</b><input id="inviteName" class="inp" placeholder="Friend name to invite" style="margin-top:8px"><input id="invitePhone" class="inp" placeholder="Phone or Email for invite request"><button class="btn btn-g" onclick="sendInviteRequest()">📨 Send Invitation Request • Global</button></div><div id="inviteList"></div></div></div>
+<div class="modal" id="inviteM"><div class="mhead"><h3>📨 Invite & Share • Global</h3><i class="fa-solid fa-xmark" onclick="document.getElementById('inviteM').classList.remove('show')"></i></div><div class="mbody"><div class="box" style="border:2px solid #4ade80"><b>Your Global Invite Link</b><div id="inviteLink" style="background:#000;padding:10px;border-radius:8px;margin-top:8px;font-size:12px;word-break:break-all;border:1px solid #333">https://godriadmedia.vercel.app/?invite=</div><button class="btn btn-g" style="margin-top:8px" onclick="copyInvite()">📋 Copy Link</button><button class="btn btn-g" style="margin-top:8px;background:#fff;color:#000" onclick="shareInvite()">📤 Share App Link to Any App • Global</button></div><div class="box"><b>Send Invitation Request • Chat Across Apps</b><input id="inviteName" class="inp" placeholder="Friend name to invite" style="margin-top:8px"><input id="invitePhone" class="inp" placeholder="Phone or Email for invite request"><button class="btn btn-g" style="margin-top:8px" onclick="sendInviteRequest()">📨 Send Invitation Request • Global</button></div><div id="inviteList"></div></div></div>
 <div class="modal" id="followersM"><div class="mhead"><h3>👥 Followers • Global</h3><i class="fa-solid fa-xmark" onclick="document.getElementById('followersM').classList.remove('show')"></i></div><div class="mbody" id="followersList"></div></div>
 <div class="modal" id="followingM"><div class="mhead"><h3>👥 Following • Global</h3><i class="fa-solid fa-xmark" onclick="document.getElementById('followingM').classList.remove('show')"></i></div><div class="mbody" id="followingList"></div></div>
 <div class="modal" id="requestsM"><div class="mhead"><h3>📩 Follow Requests • Private Accounts</h3><i class="fa-solid fa-xmark" onclick="document.getElementById('requestsM').classList.remove('show')"></i></div><div class="mbody" id="requestsList"></div></div>
@@ -79,7 +78,8 @@ function getChats(){try{return JSON.parse(localStorage.getItem('gm_chats')||'[]'
 function isFollowing(n){return getFollowing().includes(n)}
 function showPostStatus(msg,color){var el=document.getElementById('postStatus');if(!el)return;el.style.display='block';el.style.color=color||'#4ade80';el.textContent=msg;}
 function getFallbackPosts(){try{return JSON.parse(localStorage.getItem('gm_posts_fallback')||'[]')}catch(e){return []}}
-function saveFallbackPost(p){var a=getFallbackPosts();a.unshift(p);try{localStorage.setItem('gm_posts_fallback',JSON.stringify(a.slice(0,20)))}catch(e){}}
+/* FIX v4: fallback stores NO photo data - photos live only in IndexedDB. This can never hit the 5MB localStorage quota, so it can never silently disappear. */
+function saveFallbackPost(p){try{var light={id:p.id,name:p.name,pic:'',imgs:[],img:'',text:p.text||'',time:p.time||Date.now(),likes:0,liked:false,comments:[],isPrivate:!!p.isPrivate};var a=getFallbackPosts().filter(x=>x.id!==p.id);a.unshift(light);localStorage.setItem('gm_posts_fallback',JSON.stringify(a.slice(0,20)));}catch(e){console.error('fallback save failed',e);}}
 function safeNotify(title,body){
  try{
    if(!('Notification' in window)) return;
@@ -203,6 +203,7 @@ function logOut(){if(confirm('Log out?')){localStorage.removeItem('gm_u');locati
 async function renderFeed(){
  try{
   let posts=[];try{posts=await getPostsDB();}catch(e){posts=[]}
+  /* FIX v4: fallback posts are lightweight (no photos). If the real post with the same id exists in IndexedDB, the fallback is ignored, so the real photo shows. If only the fallback exists, it still shows the text. */
   posts=posts.concat(getFallbackPosts().filter(f=>!posts.some(p=>p.id===f.id)));
   let blocked=getBlocked();posts=posts.filter(p=>!blocked.includes(p.name));
   let allPosts=posts.length?posts.sort((a,b)=>b.id-a.id):[];
@@ -260,17 +261,18 @@ async function createPost(){
  let post={id:Date.now()+Math.floor(Math.random()*1000),name:user.name,pic:user.pic||'',imgs:finalPics.length?finalPics:['https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600'],text:t||'My '+finalPics.length+' photos • Global',time:Date.now(),likes:0,liked:false,comments:[],isPrivate:!!user.isPrivate};
  try{
    showPostStatus('⏳ Posting...');
-   // Optimistic: show instantly, don't wait for DB
-   saveFallbackPost(post);
+   /* FIX v4: SAVE FIRST, then render. Old code rendered BEFORE the IndexedDB save and relied on a localStorage fallback that silently failed on quota. */
+   let dbOk=false;
+   try{await savePostDB(post);dbOk=true;}catch(dbErr){console.error('IndexedDB save failed, using fallback',dbErr);}
+   if(!dbOk){saveFallbackPost(post);}
    tempPostPics=[];
    document.getElementById('txt').value='';
-   document.getElementById('postPic').value='';
+   try{document.getElementById('postPic').value='';}catch(e){}
    document.getElementById('multiPreview').innerHTML='';
    document.getElementById('multiPreview').style.display='none';
    document.getElementById('txt').placeholder="What's on your mind? Many photos allowed! Global 🌍";
    await renderFeed();
    showPostStatus('✅ Posted! Your post is now at the top');
-   try{await savePostDB(post);}catch(dbErr){console.error('IndexedDB save failed, fallback kept',dbErr);}
    updateActive();
    renderActiveUsers();
    sendGMNotif(user.name+' posted '+(finalPics.length||1)+' photos • Global 🌍','Auto • Unlimited');
@@ -338,7 +340,6 @@ async function init(){
     console.log("Initialization error:", e);
   }
 }
-// FIX: kill the old service worker that keeps serving the old broken file
 if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then(rs=>rs.forEach(r=>r.unregister())).catch(()=>{});}
 if('caches' in window){caches.keys().then(ks=>ks.forEach(k=>caches.delete(k))).catch(()=>{});}
 window.addEventListener('load',init);
