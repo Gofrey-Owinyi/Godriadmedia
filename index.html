@@ -118,7 +118,7 @@ let db;
 function openDB(){
   return new Promise((res,rej)=>{
     if(db) return res(db);
-    let req=indexedDB.open('GodriadDB_Owner_GodfreyOwinyi',8);
+    let req=indexedDB.open('GodriadDB_Owner_GodfreyOwinyi',9);
     req.onupgradeneeded=e=>{
       let d=e.target.result;
       if(!d.objectStoreNames.contains('reels')) d.createObjectStore('reels',{keyPath:'id'});
@@ -133,7 +133,7 @@ async function savePostDB(post){
   return new Promise((res,rej)=>{
     let tx=database.transaction('posts','readwrite');
     let store=tx.objectStore('posts');
-    store.put(post);
+    let req=store.put(post);
     tx.oncomplete=()=>res(true);
     tx.onerror=e=>rej(tx.error || e.target.error);
   });
@@ -234,18 +234,30 @@ function doSearch(q){openDB().then(db=>{let tx=db.transaction('posts','readonly'
 function compressImage(base64, maxW=1024, quality=0.6){return new Promise(res=>{let img=new Image();img.onload=()=>{let c=document.createElement('canvas');let w=img.width,h=img.height;if(w>maxW){h=h*maxW/w;w=maxW;}c.width=w;c.height=h;c.getContext('2d').drawImage(img,0,0,w,h);res(c.toDataURL('image/jpeg',quality));};img.src=base64;});}
 document.getElementById('postPic').addEventListener('change',async function(e){let files=e.target.files;if(!files||files.length===0)return;if(files.length>50){alert('Max 50 per post');return;}tempPostPics=[];let preview=document.getElementById('multiPreview');preview.innerHTML='';preview.style.display='flex';document.getElementById('txt').placeholder='⏳ Compressing '+files.length+' photos...';for(let i=0;i<files.length;i++){let file=files[i];let base=await new Promise(r=>{let fr=new FileReader();fr.onload=e=>r(e.target.result);fr.readAsDataURL(file);});let compressed=await compressImage(base,1024,0.6);tempPostPics.push(compressed);let thumb=document.createElement('div');thumb.style.cssText='position:relative;flex:0 0 60px;height:60px;border-radius:8px;overflow:hidden;border:2px solid #4ade80';thumb.innerHTML='<img src="'+compressed+'" style="width:100%;height:100%;object-fit:cover"><span style="position:absolute;top:2px;right:2px;background:rgba(0,0,0,0.7);color:#fff;font-size:10px;padding:2px 4px;border-radius:4px">'+tempPostPics.length+'</span>';preview.appendChild(thumb);document.getElementById('txt').placeholder=tempPostPics.length+'/'+files.length+' photos ready ✅ - Now Post!';}});
 async function createPost(){
- let user=getUser();if(!user){document.getElementById('authM').classList.add('show');return;}
+ let user=getUser();
+ if(!user || !user.name){
+   document.getElementById('authM').classList.add('show');
+   alert('Please login or create an account first to post!');
+   return;
+ }
  let t=document.getElementById('txt').value.trim();
  let finalPics=tempPostPics;
  if(!t&&finalPics.length===0){alert('Write something or add photos');return;}
- let post={id:Date.now()+Math.floor(Math.random()*1000),name:user.name,pic:user.pic,imgs:finalPics.length?finalPics:['https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600'],text:t||'My '+finalPics.length+' photos • Global',time:Date.now(),likes:0,liked:false,comments:[],isPrivate:!!user.isPrivate};
+ let post={id:Date.now()+Math.floor(Math.random()*1000),name:user.name,pic:user.pic||'',imgs:finalPics.length?finalPics:['https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600'],text:t||'My '+finalPics.length+' photos • Global',time:Date.now(),likes:0,liked:false,comments:[],isPrivate:!!user.isPrivate};
  try{
    console.log('Saving post',post);
    await savePostDB(post);
-   tempPostPics=[];document.getElementById('txt').value='';document.getElementById('multiPreview').innerHTML='';document.getElementById('multiPreview').style.display='none';
-   await renderFeed();updateActive();renderActiveUsers();
+   tempPostPics=[];
+   document.getElementById('txt').value='';
+   document.getElementById('multiPreview').innerHTML='';
+   document.getElementById('multiPreview').style.display='none';
+   document.getElementById('txt.placeholder', "What's on your mind? Many photos allowed! Global 🌍");
+   await renderFeed();
+   updateActive();
+   renderActiveUsers();
    sendGMNotif(user.name+' posted '+(finalPics.length||1)+' photos • Global 🌍','Auto • Unlimited');
    safeNotify('New post from '+user.name, (t||finalPics.length+' photos'));
+   alert('✅ Post published successfully!');
  }catch(err){console.error(err);alert('Error posting: '+(err.message||err));}
 }
 async function deletePost(){let posts=await getPostsDB();let sorted=posts.sort((a,b)=>b.id-a.id);let target=sorted[currentPostIndex];let user=getUser();if(!user || target.name!==user.name){alert('❌ You can only delete your own post • Belongs to '+target.name);return;}if(!confirm('Delete your post?'))return;await deletePostDB(target.id);document.getElementById('postOptionsM').classList.remove('show');await renderFeed();}
