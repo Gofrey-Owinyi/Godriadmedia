@@ -125,21 +125,70 @@ function openDB(){
       if(!d.objectStoreNames.contains('posts')) d.createObjectStore('posts',{keyPath:'id'});
     };
     req.onsuccess=e=>{db=e.target.result;res(db)};
-    req.onerror=e=>rej(e);
+    req.onerror=e=>rej(e.target.error);
   });
 }
-async function savePostDB(post){if(!db)await openDB();return new Promise((res,rej)=>{let tx=db.transaction('posts','readwrite');tx.objectStore('posts').put(post);tx.oncomplete=()=>res();tx.onerror=()=>rej(tx.error);});}
-async function getPostsDB(){if(!db)await openDB();return new Promise((res,rej)=>{let tx=db.transaction('posts','readonly');let req=tx.objectStore('posts').getAll();req.onsuccess=()=>res(req.result||[]);req.onerror=()=>res([]);});}
-async function deletePostDB(id){if(!db)await openDB();return new Promise((res,rej)=>{let tx=db.transaction('posts','readwrite');tx.objectStore('posts').delete(id);tx.oncomplete=()=>res(true);tx.onerror=e=>rej(e);});}
-async function saveReelDB(reel){if(!db)await openDB();return new Promise((res,rej)=>{let tx=db.transaction('reels','readwrite');tx.objectStore('reels').put(reel);tx.oncomplete=()=>res();tx.onerror=()=>rej('save failed');});}
-async function getReelsDB(){if(!db)await openDB();return new Promise((res,rej)=>{let tx=db.transaction('reels','readonly');let req=tx.objectStore('reels').getAll();req.onsuccess=()=>res(req.result||[]);req.onerror=()=>res([]);});}
-async function deleteReelDB(id){if(!db)await openDB();return new Promise((res,rej)=>{let tx=db.transaction('reels','readwrite');tx.objectStore('reels').delete(Number(id));tx.oncomplete=()=>res(true);tx.onerror=e=>rej(e);});}
+async function savePostDB(post){
+  let database = await openDB();
+  return new Promise((res,rej)=>{
+    let tx=database.transaction('posts','readwrite');
+    let store=tx.objectStore('posts');
+    store.put(post);
+    tx.oncomplete=()=>res(true);
+    tx.onerror=e=>rej(tx.error || e.target.error);
+  });
+}
+async function getPostsDB(){
+  let database = await openDB();
+  return new Promise((res,rej)=>{
+    let tx=database.transaction('posts','readonly');
+    let req=tx.objectStore('posts').getAll();
+    req.onsuccess=()=>res(req.result||[]);
+    req.onerror=()=>res([]);
+  });
+}
+async function deletePostDB(id){
+  let database = await openDB();
+  return new Promise((res,rej)=>{
+    let tx=database.transaction('posts','readwrite');
+    tx.objectStore('posts').delete(id);
+    tx.oncomplete=()=>res(true);
+    tx.onerror=e=>rej(e);
+  });
+}
+async function saveReelDB(reel){
+  let database = await openDB();
+  return new Promise((res,rej)=>{
+    let tx=database.transaction('reels','readwrite');
+    tx.objectStore('reels').put(reel);
+    tx.oncomplete=()=>res();
+    tx.onerror=()=>rej('save failed');
+  });
+}
+async function getReelsDB(){
+  let database = await openDB();
+  return new Promise((res,rej)=>{
+    let tx=database.transaction('reels','readonly');
+    let req=tx.objectStore('reels').getAll();
+    req.onsuccess=()=>res(req.result||[]);
+    req.onerror=()=>res([]);
+  });
+}
+async function deleteReelDB(id){
+  let database = await openDB();
+  return new Promise((res,rej)=>{
+    let tx=database.transaction('reels','readwrite');
+    tx.objectStore('reels').delete(Number(id));
+    tx.oncomplete=()=>res(true);
+    tx.onerror=e=>rej(e);
+  });
+}
 function sharePost(i){getPostsDB().then(posts=>{let sorted=posts.sort((a,b)=>b.id-a.id);let p=sorted[i];let txt='Check this on GodriadMedia Global 🌍: '+(p?p.text:'')+' https://godriadmedia.vercel.app/';if(navigator.share){navigator.share({title:'GodriadMedia',text:txt,url:'https://godriadmedia.vercel.app/'}).catch(()=>{});}else{navigator.clipboard.writeText(txt).then(()=>alert('✅ Link copied!')).catch(()=>prompt('Copy link:',txt));}});}
 function likeReel(id){let likedList=JSON.parse(localStorage.getItem('gm_liked_reels')||'[]');let alreadyLiked=likedList.includes(String(id));getReelsDB().then(reels=>{let r=reels.find(x=>String(x.id)==String(id));if(!r)return;if(alreadyLiked){r.likes=Math.max(0,(r.likes||1)-1);likedList=likedList.filter(x=>String(x)!==String(id));localStorage.setItem('gm_liked_reels',JSON.stringify(likedList));saveReelDB(r).then(()=>{renderReels();renderGodriadFeed();});}else{r.likes=(r.likes||0)+1;likedList.push(String(id));localStorage.setItem('gm_liked_reels',JSON.stringify(likedList));saveReelDB(r).then(()=>{renderReels();renderGodriadFeed();});}});}
 function commentReel(id){let t=prompt('Add comment on reel • Global:');if(!t)return;getReelsDB().then(reels=>{let r=reels.find(x=>x.id==id);if(!r)return;if(!r.comments)r.comments=[];r.comments.push({name:getUser()?.name||'User',text:t,time:Date.now()});r.commentsCount=(r.commentsCount||0)+1;saveReelDB(r).then(()=>{alert('✅ Comment added!');renderReels();});});}
 function shareReel(id){let txt='Watch this reel on GodriadMedia Global 🌍 https://godriadmedia.vercel.app/ - Godriad Media @Godfrey Owinyi';if(navigator.share){navigator.share({title:'GodriadMedia',text:txt,url:'https://godriadmedia.vercel.app/'}).catch(()=>{});}else{navigator.clipboard.writeText(txt).then(()=>alert('✅ Reel link copied!')).catch(()=>prompt('Copy link:',txt));}}
 async function renderReels(){let reels=await getReelsDB();let feed=document.getElementById('reelsFeed');let status=document.getElementById('reelsStatus');let blocked=getBlocked();reels=reels.filter(r=>!blocked.includes(r.name));if(reels.length===0){feed.innerHTML='<div style="padding:60px 20px;text-align:center;color:#888"><div style="font-size:50px">🎬</div><div>No reels yet</div><button class="btn btn-g" style="width:auto;margin:20px auto" onclick="document.getElementById(\'reelFile\').click()">+ Upload Reel</button></div>';if(status)status.textContent='No reels';return;}let likedList=JSON.parse(localStorage.getItem('gm_liked_reels')||'[]');let user=getUser();let html='';reels.forEach(r=>{let url=URL.createObjectURL(r.blob);let isLiked=likedList.includes(String(r.id));let isOwn=user && r.name===user.name;html+='<div style="width:100%;background:#000;border-bottom:8px solid #111;position:relative"><div class="live-pill">● LIVE • Godriad Media @Godfrey Owinyi</div><div class="wm-cover"></div><video src="'+url+'" style="width:100%;max-height:85vh" controls playsinline loop></video><div class="wm-mark"><span>▶ Godriad Media @Godfrey Owinyi • Owner: Godfrey Owinyi • Global 🌍</span></div><div style="padding:8px 12px;display:flex;justify-content:space-between;align-items:center"><div style="display:flex;gap:18px;align-items:center"><i class="'+(isLiked?'fa-solid fa-heart':'fa-regular fa-heart')+'" style="font-size:22px;cursor:pointer;'+(isLiked?'color:#ff3040':'')+'" onclick="likeReel(\''+r.id+'\')"></i><span style="font-size:12px">'+(r.likes||0)+'</span><i class="fa-regular fa-comment" style="font-size:22px;cursor:pointer" onclick="commentReel(\''+r.id+'\')"></i><i class="fa-regular fa-paper-plane" style="font-size:22px;cursor:pointer" onclick="shareReel(\''+r.id+'\')"></i></div>'+(isOwn?'<button onclick="deleteReel(\''+r.id+'\')" style="background:#ff3040;color:#fff;border:none;padding:8px 12px;border-radius:20px;font-weight:bold">🗑️ Delete My Reel</button>':'<span style="font-size:10px;color:#888">Only owner can delete</span>')+'</div></div>';});feed.innerHTML=html;if(status)status.textContent='✅ '+reels.length+' reels • Godriad Media @Godfrey Owinyi ONLY on reels';}
-async function deleteReel(id){let reels=await getReelsDB();let r=reels.find(x=>String(x.id)===String(id));let user=getUser();if(!user || r.name!==user.name){alert('❌ You can only delete your own reel • This reel belongs to '+r.name);return;}if(!confirm('Delete your reel?'))return;try{await deleteReelDB(Number(id));let likedList=JSON.parse(localStorage.getItem('gm_liked_reels')||'[]');likedList=likedList.filter(x=>String(x)!==String(id));localStorage.setItem('gm_liked_reels',JSON.stringify(likedList));await renderReels();await renderFeed();renderGodriadFeed();}catch(e){alert('Delete failed: '+e.message);}}
+async function deleteReel(id){let reels=await getReelsDB();let r=reels.find(x=>String(x.id)===String(id));let user=getUser();if(!user || r.name!==user.name){alert('❌ You can only delete your own reel • This reel belongs to '+r.name);return;}let likedList=JSON.parse(localStorage.getItem('gm_liked_reels')||'[]');likedList=likedList.filter(x=>String(x)!==String(id));localStorage.setItem('gm_liked_reels',JSON.stringify(likedList));await deleteReelDB(Number(id));await renderReels();renderGodriadFeed();}
 function logOut(){if(confirm('Log out?')){localStorage.removeItem('gm_u');location.reload();}}
 
 async function renderFeed(){
