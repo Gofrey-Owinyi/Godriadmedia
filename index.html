@@ -208,8 +208,8 @@ async function renderFeed(){
     let imgHtml='';
     if(imgs.length>1){
       imgHtml='<div class="pimg"><div class="multi-img">';imgs.forEach(im=>{imgHtml+='<img src="'+im+'" loading="lazy">';});imgHtml+='</div><div style="position:absolute;top:10px;right:10px;background:rgba(0,0,0,0.7);padding:4px 8px;border-radius:12px;font-size:11px">📸 '+imgs.length+' photos</div></div>';
-    }else{
-      let singleImg=imgs[0]||'https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600';
+    }else if(imgs.length===1){
+      let singleImg=imgs[0];
       imgHtml='<div class="pimg"><img src="'+singleImg+'" loading="lazy"></div>';
     }
     let user=getUser();let isOwn=user && p.name===user.name;
@@ -231,72 +231,74 @@ function deleteComment(i){openDB().then(db=>{let store=db.transaction('posts','r
 function likePost(i){openDB().then(db=>{let store=db.transaction('posts','readwrite').objectStore('posts');store.getAll().onsuccess=e=>{let posts=e.target.result.sort((a,b)=>b.id-a.id);let target=posts[i];if(!target)return;target.liked=!target.liked;target.likes=(target.likes||0)+(target.liked?1:-1);store.put(target).onsuccess=()=>{renderFeed();};};});}
 function renderNotifs(){let list=document.getElementById('notifList');let n=JSON.parse(localStorage.getItem('gm_notifs')||'[]');let html='';if(n.length===0)html='<div style="padding:20px;text-align:center;color:#888">No notifications • Auto will appear here</div>';else n.slice(0,30).forEach(x=>{html+='<div class="user-row"><div class="ava">🔔</div><div style="flex:1"><b>'+x.title+'</b><div style="font-size:11px;color:#888">'+x.body+' • '+new Date(x.ts).toLocaleTimeString()+'</div></div></div>'});list.innerHTML=html;}
 function doSearch(q){openDB().then(db=>{let tx=db.transaction('posts','readonly');tx.objectStore('posts').getAll().onsuccess=e=>{let posts=e.target.result;let res=document.getElementById('searchResults');if(!q){res.innerHTML='';return}let filtered=posts.filter(p=>(p.text||'').toLowerCase().includes(q.toLowerCase())||p.name.toLowerCase().includes(q.toLowerCase()));let html='<div class="box">'+filtered.length+' posts found • Query: '+q+'</div>';filtered.slice(0,5).forEach(p=>{html+='<div class="user-row"><div class="ava">'+p.name[0]+'</div><div style="flex:1"><b>'+p.name+'</b><div style="font-size:11px">'+p.text.substring(0,60)+'</div></div></div>';});res.innerHTML=html;};});}
-function compressImage(base64, maxW=1024, quality=0.6){return new Promise(res=>{let img=new Image();img.onload=()=>{let c=document.createElement('canvas');let w=img.width,h=img.height;if(w>maxW){h=h*maxW/w;w=maxW;}c.width=w;c.height=h;c.getContext('2d').drawImage(img,0,0,w,h);res(c.toDataURL('image/jpeg',quality));};img.src=base64;});}
-
-document.getElementById('postPic').addEventListener('change', async function(e){
-  let files = e.target.files;
-  if(!files || files.length === 0) return;
-  if(files.length > 50){ alert('Max 50 per post'); return; }
-  tempPostPics = [];
-  let preview = document.getElementById('multiPreview');
-  preview.innerHTML = '';
-  preview.style.display = 'flex';
-  document.getElementById('txt').placeholder = '⏳ Compressing ' + files.length + ' photos...';
-  for(let i=0; i<files.length; i++){
-    let file = files[i];
-    let base = await new Promise(r => {
-      let fr = new FileReader();
-      fr.onload = ev => r(ev.target.result);
-      fr.readAsDataURL(file);
-    });
-    let compressed = await compressImage(base, 1024, 0.6);
+function compressImage(base64, maxW=1024, quality=0.6){
+  return new Promise(res=>{
+    let img=new Image();
+    img.onload=()=>{
+      let c=document.createElement('canvas');
+      let w=img.width,h=img.height;
+      if(w>maxW){h=h*maxW/w;w=maxW;}
+      c.width=w;c.height=h;
+      c.getContext('2d').drawImage(img,0,0,w,h);
+      res(c.toDataURL('image/jpeg',quality));
+    };
+    img.onerror=()=>res(base64);
+    img.src=base64;
+  });
+}
+document.getElementById('postPic').addEventListener('change',async function(e){
+  let files=e.target.files;
+  if(!files||files.length===0)return;
+  if(files.length>50){alert('Max 50 per post');return;}
+  tempPostPics=[];
+  let preview=document.getElementById('multiPreview');
+  preview.innerHTML='';
+  preview.style.display='flex';
+  document.getElementById('txt').placeholder='⏳ Compressing '+files.length+' photos...';
+  for(let i=0;i<files.length;i++){
+    let file=files[i];
+    let base=await new Promise(r=>{let fr=new FileReader();fr.onload=ev=>r(ev.target.result);fr.readAsDataURL(file);});
+    let compressed=await compressImage(base,1024,0.6);
     tempPostPics.push(compressed);
-    let thumb = document.createElement('div');
-    thumb.style.cssText = 'position:relative;flex:0 0 60px;height:60px;border-radius:8px;overflow:hidden;border:2px solid #4ade80';
-    thumb.innerHTML = '<img src="' + compressed + '" style="width:100%;height:100%;object-fit:cover"><span style="position:absolute;top:2px;right:2px;background:rgba(0,0,0,0.7);color:#fff;font-size:10px;padding:2px 4px;border-radius:4px">' + tempPostPics.length + '</span>';
+    let thumb=document.createElement('div');
+    thumb.style.cssText='position:relative;flex:0 0 60px;height:60px;border-radius:8px;overflow:hidden;border:2px solid #4ade80';
+    thumb.innerHTML='<img src="'+compressed+'" style="width:100%;height:100%;object-fit:cover"><span style="position:absolute;top:2px;right:2px;background:rgba(0,0,0,0.7);color:#fff;font-size:10px;padding:2px 4px;border-radius:4px">'+tempPostPics.length+'</span>';
     preview.appendChild(thumb);
-    document.getElementById('txt').placeholder = tempPostPics.length + '/' + files.length + ' photos ready ✅ - Now Post!';
+    document.getElementById('txt').placeholder=tempPostPics.length+'/'+files.length+' photos ready ✅ - Now Post!';
   }
 });
-
 async function createPost(){
-  let user = getUser();
-  if(!user){ document.getElementById('authM').classList.add('show'); return; }
-  let t = document.getElementById('txt').value.trim();
-  let finalPics = [...tempPostPics];
-  if(!t && finalPics.length === 0){ alert('Write something or add photos'); return; }
-  let post = {
-    id: Date.now() + Math.floor(Math.random()*1000),
-    name: user.name,
-    pic: user.pic,
-    imgs: finalPics.length ? finalPics : ['https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600'],
-    text: t || ('My ' + finalPics.length + ' photos • Global'),
-    time: Date.now(),
-    likes: 0,
-    liked: false,
-    comments: [],
-    isPrivate: !!user.isPrivate
-  };
-  try {
-    console.log('Saving post', post);
-    await savePostDB(post);
-    tempPostPics = [];
-    document.getElementById('txt').value = '';
-    let preview = document.getElementById('multiPreview');
-    preview.innerHTML = '';
-    preview.style.display = 'none';
-    document.getElementById('txt').placeholder = "What's on your mind? Many photos allowed! Global 🌍";
-    await renderFeed();
-    updateActive();
-    renderActiveUsers();
-    sendGMNotif(user.name + ' posted ' + (finalPics.length || 1) + ' photos • Global 🌍', 'Auto • Unlimited');
-    safeNotify('New post from ' + user.name, (t || finalPics.length + ' photos'));
-  } catch(err) {
-    console.error(err);
-    alert('Error posting: ' + (err.message || err));
-  }
+ let user=getUser();if(!user){document.getElementById('authM').classList.add('show');return;}
+ let t=document.getElementById('txt').value.trim();
+ let finalPics=tempPostPics;
+ if(!t&&finalPics.length===0){alert('Write something or add photos');return;}
+ let post={
+   id:Date.now()+Math.floor(Math.random()*1000),
+   name:user.name,
+   pic:user.pic,
+   imgs:finalPics.length>0?finalPics:[],
+   text:t||'My photos • Global',
+   time:Date.now(),
+   likes:0,
+   liked:false,
+   comments:[],
+   isPrivate:!!user.isPrivate
+ };
+ try{
+   console.log('Saving post',post);
+   await savePostDB(post);
+   tempPostPics=[];
+   document.getElementById('txt').value='';
+   document.getElementById('multiPreview').innerHTML='';
+   document.getElementById('multiPreview').style.display='none';
+   document.getElementById('txt').placeholder="What's on your mind? Many photos allowed! Global 🌍";
+   await renderFeed();
+   updateActive();
+   renderActiveUsers();
+   sendGMNotif(user.name+' posted '+(finalPics.length||1)+' photos • Global 🌍','Auto • Unlimited');
+   safeNotify('New post from '+user.name, (t||finalPics.length+' photos'));
+ }catch(err){console.error(err);alert('Error posting: '+(err.message||err));}
 }
-
 async function deletePost(){let posts=await getPostsDB();let sorted=posts.sort((a,b)=>b.id-a.id);let target=sorted[currentPostIndex];let user=getUser();if(!user || target.name!==user.name){alert('❌ You can only delete your own post • Belongs to '+target.name);return;}if(!confirm('Delete your post?'))return;await deletePostDB(target.id);document.getElementById('postOptionsM').classList.remove('show');await renderFeed();}
 document.getElementById('picInput').addEventListener('change',function(e){if(e.target.files&&e.target.files[0]){let r=new FileReader();r.onload=function(ev){tempPic=ev.target.result;document.getElementById('regAva').innerHTML='<img src="'+tempPic+'">';};r.readAsDataURL(e.target.files[0])}});
 document.getElementById('storyFile').addEventListener('change',function(e){if(e.target.files&&e.target.files[0]){let r=new FileReader();r.onload=function(ev){localStorage.setItem('gm_my_story',ev.target.result);localStorage.setItem('gm_story_expire',Date.now()+24*3600*1000);let el=document.getElementById('yourStoryRi');if(el)el.innerHTML='<img src="'+ev.target.result+'"><div class="add-plus"><i class="fa-solid fa-plus"></i></div><div class="dot on"></div>';};r.readAsDataURL(e.target.files[0])}});
