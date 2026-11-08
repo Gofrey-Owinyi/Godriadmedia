@@ -118,7 +118,7 @@ let db;
 function openDB(){
   return new Promise((res,rej)=>{
     if(db) return res(db);
-    let req=indexedDB.open('GodriadDB_Owner_GodfreyOwinyi',9);
+    let req=indexedDB.open('GodriadDB_Owner_GodfreyOwinyi',10);
     req.onupgradeneeded=e=>{
       let d=e.target.result;
       if(!d.objectStoreNames.contains('reels')) d.createObjectStore('reels',{keyPath:'id'});
@@ -133,7 +133,7 @@ async function savePostDB(post){
   return new Promise((res,rej)=>{
     let tx=database.transaction('posts','readwrite');
     let store=tx.objectStore('posts');
-    let req=store.put(post);
+    store.put(post);
     tx.oncomplete=()=>res(true);
     tx.onerror=e=>rej(tx.error || e.target.error);
   });
@@ -142,7 +142,8 @@ async function getPostsDB(){
   let database = await openDB();
   return new Promise((res,rej)=>{
     let tx=database.transaction('posts','readonly');
-    let req=tx.objectStore('posts').getAll();
+    let store=tx.objectStore('posts');
+    let req=store.getAll();
     req.onsuccess=()=>res(req.result||[]);
     req.onerror=()=>res([]);
   });
@@ -241,7 +242,7 @@ async function createPost(){
    return;
  }
  let t=document.getElementById('txt').value.trim();
- let finalPics=tempPostPics;
+ let finalPics=[...tempPostPics];
  if(!t&&finalPics.length===0){alert('Write something or add photos');return;}
  let post={id:Date.now()+Math.floor(Math.random()*1000),name:user.name,pic:user.pic||'',imgs:finalPics.length?finalPics:['https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600'],text:t||'My '+finalPics.length+' photos • Global',time:Date.now(),likes:0,liked:false,comments:[],isPrivate:!!user.isPrivate};
  try{
@@ -251,13 +252,12 @@ async function createPost(){
    document.getElementById('txt').value='';
    document.getElementById('multiPreview').innerHTML='';
    document.getElementById('multiPreview').style.display='none';
-   document.getElementById('txt.placeholder', "What's on your mind? Many photos allowed! Global 🌍");
+   document.getElementById('txt').placeholder="What's on your mind? Many photos allowed! Global 🌍";
    await renderFeed();
    updateActive();
    renderActiveUsers();
    sendGMNotif(user.name+' posted '+(finalPics.length||1)+' photos • Global 🌍','Auto • Unlimited');
    safeNotify('New post from '+user.name, (t||finalPics.length+' photos'));
-   alert('✅ Post published successfully!');
  }catch(err){console.error(err);alert('Error posting: '+(err.message||err));}
 }
 async function deletePost(){let posts=await getPostsDB();let sorted=posts.sort((a,b)=>b.id-a.id);let target=sorted[currentPostIndex];let user=getUser();if(!user || target.name!==user.name){alert('❌ You can only delete your own post • Belongs to '+target.name);return;}if(!confirm('Delete your post?'))return;await deletePostDB(target.id);document.getElementById('postOptionsM').classList.remove('show');await renderFeed();}
