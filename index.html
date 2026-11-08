@@ -118,7 +118,7 @@ let db;
 function openDB(){
   return new Promise((res,rej)=>{
     if(db) return res(db);
-    let req=indexedDB.open('GodriadDB_Owner_GodfreyOwinyi', 11);
+    let req=indexedDB.open('GodriadDB_Owner_GodfreyOwinyi', 12);
     req.onupgradeneeded=e=>{
       let d=e.target.result;
       if(!d.objectStoreNames.contains('reels')) d.createObjectStore('reels',{keyPath:'id'});
@@ -253,7 +253,7 @@ async function createPost(){
    document.getElementById('multiPreview').innerHTML='';
    document.getElementById('multiPreview').style.display='none';
    document.getElementById('txt').placeholder="What's on your mind? Many photos allowed! Global 🌍";
-   db = null; // force refresh database reference so subsequent reads catch the new post immediately
+   db = null; // force refresh database connection
    await renderFeed();
    updateActive();
    renderActiveUsers();
