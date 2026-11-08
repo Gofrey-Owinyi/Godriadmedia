@@ -113,7 +113,21 @@ function openLikes(){document.getElementById('likesList').innerHTML='<div class=
 function toggleFreeMode(){freeMode=!freeMode;document.getElementById('dataModeText').textContent=freeMode?'Free Mode: ON':'Free Mode: OFF';document.getElementById('freeBtn').textContent=freeMode?'Turn OFF':'Turn ON';document.getElementById('freeLabel').textContent=freeMode?'ON - Free':'OFF';}
 function buyData(b,a){let user=getUser();let email=(user&&user.phone?user.phone+'@godriadmedia.com':'user@godriadmedia.com');let h=PaystackPop.setup({key:PAYSTACK_PUBLIC_KEY,email:email,amount:a*100,currency:'KES',ref:'GM_'+Date.now(),callback:function(r){alert('✅ '+b+' activated! Ref:'+r.reference);document.getElementById('dataM').classList.remove('show');localStorage.setItem('gm_data_bundle',b);sendGMNotif(b+' activated! 🌍','Global');},onClose:function(){}});h.openIframe();}
 function openStory(n){let bundle=localStorage.getItem('gm_data_bundle');let isLive=n.includes('Live')||n.includes('GoTV');if(isLive&&(!bundle||(bundle.indexOf('Live')===-1&&bundle.indexOf('GoTV')===-1))){if(!confirm('Bundle only! Buy KSh 500?')){document.getElementById('dataM').classList.add('show');return;}}document.getElementById('storyName').textContent=n;let img=document.getElementById('storyImg'),ph=document.getElementById('storyPlaceholder');let my=localStorage.getItem('gm_my_story');if(n==='Your Story'&&my){img.src=my;img.style.display='block';ph.style.display='none';}else{img.style.display='none';ph.style.display='block';ph.textContent=n==='Live Worldwide'?'📡 Live':n.includes('GoTV')?'📺 GoTV':'🎩';}document.getElementById('storyView').classList.add('show');setTimeout(()=>document.getElementById('storyView').classList.remove('show'),8000);}
-let db;function openDB(){return new Promise((res,rej)=>{let req=indexedDB.open('GodriadDB_Owner_GodfreyOwinyi',7);req.onupgradeneeded=e=>{let d=e.target.result;if(!d.objectStoreNames.contains('reels')) d.createObjectStore('reels',{keyPath:'id'});if(!d.objectStoreNames.contains('posts')) d.createObjectStore('posts',{keyPath:'id'});};req.onsuccess=e=>{db=e.target.result;res(db)};req.onerror=e=>rej(e);});}
+
+let db;
+function openDB(){
+  return new Promise((res,rej)=>{
+    if(db) return res(db);
+    let req=indexedDB.open('GodriadDB_Owner_GodfreyOwinyi',7);
+    req.onupgradeneeded=e=>{
+      let d=e.target.result;
+      if(!d.objectStoreNames.contains('reels')) d.createObjectStore('reels',{keyPath:'id'});
+      if(!d.objectStoreNames.contains('posts')) d.createObjectStore('posts',{keyPath:'id'});
+    };
+    req.onsuccess=e=>{db=e.target.result;res(db)};
+    req.onerror=e=>rej(e);
+  });
+}
 async function savePostDB(post){if(!db)await openDB();return new Promise((res,rej)=>{let tx=db.transaction('posts','readwrite');tx.objectStore('posts').put(post);tx.oncomplete=()=>res();tx.onerror=()=>rej(tx.error);});}
 async function getPostsDB(){if(!db)await openDB();return new Promise((res,rej)=>{let tx=db.transaction('posts','readonly');let req=tx.objectStore('posts').getAll();req.onsuccess=()=>res(req.result||[]);req.onerror=()=>res([]);});}
 async function deletePostDB(id){if(!db)await openDB();return new Promise((res,rej)=>{let tx=db.transaction('posts','readwrite');tx.objectStore('posts').delete(id);tx.oncomplete=()=>res(true);tx.onerror=e=>rej(e);});}
@@ -228,8 +242,27 @@ function openChatWith(name){document.getElementById('chatM').classList.add('show
 function sendChat(){let t=document.getElementById('chatInp').value.trim();if(!t)return;let chats=getChats();chats.push({name:getUser()?.name||'User',text:t,time:Date.now()});localStorage.setItem('gm_chats',JSON.stringify(chats));document.getElementById('chatInp').value='';renderChats();sendGMNotif('Message sent • Global','Local & Global chat');updateActive();}
 function renderChats(){let list=document.getElementById('chatList');if(!list)return;let chats=getChats();let html='';chats.slice(-30).forEach(c=>{let isMe=c.name===(getUser()?.name||'User');html+='<div class="user-row" style="'+(isMe?'background:rgba(74,222,128,0.1)':'')+'"><div class="ava">'+c.name[0]+'</div><div style="flex:1"><b>'+c.name+(isMe?' (You)':'')+'</b><div style="font-size:12px">'+escapeHtml(c.text)+'</div><div style="font-size:10px;color:#888">'+new Date(c.time).toLocaleTimeString()+'</div></div></div>'});list.innerHTML=html||'<div style="padding:12px;color:#888">No chats yet • Invite friends</div>';}
 function escapeHtml(t){return t.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
-async function init(){updateStats();await renderFeed();renderNotifs();openDB().then(()=>{renderReels();renderFeed();renderGodriadFeed();});checkStoryExpiry();updateActive();renderActiveUsers();if('Notification' in window&&Notification.permission!=='granted'){Notification.requestPermission().then(p=>{if(p==='granted')sendGMNotif('Auto Notifications Enabled! 🔔','Local FREE vs Global bundle calls fixed');});}setInterval(renderActiveUsers,15000);}
-window.addEventListener('load',init);setTimeout(init,500);
+
+async function init(){
+  try {
+    await openDB();
+    updateStats();
+    await renderFeed();
+    renderNotifs();
+    renderReels();
+    renderGodriadFeed();
+    checkStoryExpiry();
+    updateActive();
+    renderActiveUsers();
+    if('Notification' in window&&Notification.permission!=='granted'){
+      Notification.requestPermission().then(p=>{if(p==='granted')sendGMNotif('Auto Notifications Enabled! 🔔','Local FREE vs Global bundle calls fixed');});
+    }
+    setInterval(renderActiveUsers,15000);
+  } catch(e) {
+    console.error("Initialization error:", e);
+  }
+}
+window.addEventListener('load',init);
 if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js').catch(()=>{});});}
 </script>
 </body></html>
